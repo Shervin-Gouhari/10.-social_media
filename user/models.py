@@ -40,15 +40,18 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    avatar = models.ImageField(blank=True,
+                               null=True, upload_to='avatar/%Y/%m/%d')
     phone_number = models.CharField(max_length=11, unique=True,
                                     validators=[RegexValidator(regex="\A(09)(0|1|2|3)[0-9]{7}\d\Z",
                                                                message='incorrect phone number')])
     username = models.CharField(max_length=50, unique=True)
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=254, unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
