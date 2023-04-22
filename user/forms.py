@@ -31,6 +31,7 @@ class UserCreationForm(forms.ModelForm):
 class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['avatar', 'first_name',
+                  'last_name', 'date_of_birth', 'biography']
 
     password = ReadOnlyPasswordHashField()
