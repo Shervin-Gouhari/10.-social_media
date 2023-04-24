@@ -3,7 +3,7 @@ from random import randint
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 
 from user.models import User
@@ -39,12 +39,13 @@ def verification_code(request, phone_number):
             if request.session['verification_code'] == form.cleaned_data['verification_code']:
                 user.is_active = True
                 user.save()
-                authenticated_user = authenticate(
-                    request, username=user.phone_number, password=user.password)
-                login(request, authenticated_user)
-                return redirect(reverse('profile'))
+                logout(request)
+                login(request, user)
+                return redirect(reverse('edit_profile'))
             else:
                 messages.error(request, 'false verification code')
+        else:
+            messages.error(request, form.errors)
     else:
         form = VerificationForm()
     return render(request, 'account/verification_code.html', {'form': form})
