@@ -409,13 +409,13 @@ span.language {
                       <form class="form" method="POST">
                         {% csrf_token %}
                         <div class="input-box">
-                          <input type="text" id="name" aria-describedby="" placeholder="Phone number" aria-required="true" maxlength="30" autocapitalize="off" autocorrect="off" name="phone_number" value="" required>
+                          <input type="text" id="name" aria-describedby="" placeholder="Phone number" aria-required="true" maxlength="30" autocapitalize="off" autocorrect="off" name="phone_number" value="{{data.phone_number}}" required>
                         </div>  
                         <div class="input-box">
-                          <input type="text" id="name" aria-describedby="" placeholder="username" aria-required="true" maxlength="30" autocapitalize="off" autocorrect="off" name="username" value="" required>
+                          <input type="text" id="name" aria-describedby="" placeholder="username" aria-required="true" maxlength="30" autocapitalize="off" autocorrect="off" name="username" value="{{data.username}}" required>
                         </div>  
                         <div class="input-box">
-                          <input type="text" id="name" aria-describedby="" placeholder="email" aria-required="true" maxlength="30" autocapitalize="off" autocorrect="off" name="email" value="" required>
+                          <input type="text" id="name" aria-describedby="" placeholder="email" aria-required="true" maxlength="30" autocapitalize="off" autocorrect="off" name="email" value="{{data.email}}" required>
                         </div>  
     
                         <div class="input-box">

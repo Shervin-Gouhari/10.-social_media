@@ -12,6 +12,7 @@ from .forms import *
 
 
 def registration(request):
+    data = {}
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid() and form.clean_password2():
@@ -20,10 +21,13 @@ def registration(request):
             request.session['verification_code'] = randint(11111, 99999)
             return redirect(reverse('verification_code', kwargs={'phone_number': phone_number}))
         else:
-            messages.error(request, 'passwords do not match')
-    else:
-        form = UserCreationForm()
-    return render(request, 'account/registration.html', {'form': form})
+            messages.error(request, form.errors)
+        data = {
+            'phone_number': request.POST['phone_number'],
+            'username': request.POST['username'],
+            'email': request.POST['email']
+        }
+    return render(request, 'account/registration.html', {'data': data})
 
 
 def verification_code(request, phone_number):
