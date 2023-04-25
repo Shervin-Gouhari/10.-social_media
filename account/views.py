@@ -77,4 +77,5 @@ def edit_profile(request):
             messages.error(request, form.errors)
     else:
         form = UserChangeForm(instance=request.user)
+        del form.fields['password']
     return render(request, 'account/edit_profile.html', {'form': form})
