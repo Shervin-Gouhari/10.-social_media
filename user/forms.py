@@ -2,13 +2,14 @@ from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from .models import User
+from .functions import *
 
 
 class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['avatar', 'phone_number', 'username',
-                  'email', 'first_name', 'last_name', 'date_of_birth']
+        fields = ['avatar', 'phone_number', 'username', 'email',
+                  'first_name', 'last_name', 'date_of_birth', 'biography']
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(
         label="Password confirmation", widget=forms.PasswordInput)
@@ -31,7 +32,9 @@ class UserCreationForm(forms.ModelForm):
 class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['avatar', 'first_name',
+        fields = ['avatar', 'phone_number', 'username', 'email', 'first_name',
                   'last_name', 'date_of_birth', 'biography']
 
     password = ReadOnlyPasswordHashField()
+    date_of_birth = forms.DateField(
+        widget=forms.SelectDateWidget(years=YEARS()), required=False)

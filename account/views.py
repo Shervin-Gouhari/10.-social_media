@@ -43,7 +43,7 @@ def verification_code(request, phone_number):
                 login(request, user)
                 return redirect(reverse('edit_profile'))
             else:
-                messages.error(request, 'false verification code')
+                messages.error(request, 'False verification code.')
         else:
             messages.error(request, form.errors)
     else:
@@ -59,14 +59,22 @@ def profile(request):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
+        phone_number = request.user.phone_number
         form = UserChangeForm(instance=request.user,
                               data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Profile updated successfully.')
-            return redirect(reverse('profile'))
+            if phone_number != form.cleaned_data['phone_number']:
+                request.user.is_active = False
+                user = form.save()
+                phone_number = user.phone_number
+                request.session['verification_code'] = randint(11111, 99999)
+                return redirect(reverse('verification_code', kwargs={'phone_number': phone_number}))
+            else:
+                form.save()
+                messages.success(request, 'Profile updated successfully.')
+                return redirect(reverse('profile'))
         else:
-            messages.error(request, 'An error occurred.')
+            messages.error(request, form.errors)
     else:
         form = UserChangeForm(instance=request.user)
     return render(request, 'account/edit_profile.html', {'form': form})

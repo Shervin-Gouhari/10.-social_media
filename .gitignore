@@ -1,5 +1,6 @@
 env/
 .vscode/
+media/
 
 **/__pycache__/
 *.pyc

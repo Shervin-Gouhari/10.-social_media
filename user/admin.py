@@ -21,7 +21,7 @@ class UserAdmin(BaseUserAdmin):
          'username', 'email', 'password1', 'password2')}),
 
         ('Optional Info', {'fields': ('avatar',
-         'first_name', 'last_name', 'data_of_birth', 'biography')}),
+         'first_name', 'last_name', 'date_of_birth', 'biography')}),
     )
     form = UserChangeForm
     fieldsets = (
