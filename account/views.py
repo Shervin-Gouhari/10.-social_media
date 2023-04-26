@@ -1,5 +1,3 @@
-from random import randint
-
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
@@ -19,7 +17,6 @@ def registration(request):
         if form.is_valid() and form.clean_password2():
             user = form.save()
             phone_number = user.phone_number
-            request.session['verification_code'] = randint(11111, 99999)
             return redirect(reverse('verification_code', kwargs={'phone_number': phone_number}))
         else:
             messages.error(request, form.errors)
@@ -32,13 +29,13 @@ def registration(request):
 
 
 def verification_code(request, phone_number):
-    verification_code = request.session['verification_code']
-    user = User.objects.get(phone_number=phone_number)
-    send_sms(phone_number, verification_code)
+    ver_code = send_sms(request, phone_number)
+    form = VerificationForm()
     if request.method == 'POST':
+        user = User.objects.get(phone_number=phone_number)
         form = VerificationForm(request.POST)
         if form.is_valid():
-            if verification_code == form.cleaned_data['verification_code']:
+            if ver_code == form.cleaned_data['verification_code']:
                 user.is_active = True
                 user.save()
                 logout(request)
@@ -48,8 +45,6 @@ def verification_code(request, phone_number):
                 messages.error(request, 'False verification code.')
         else:
             messages.error(request, form.errors)
-    else:
-        form = VerificationForm()
     return render(request, 'account/verification_code.html', {'form': form})
 
 
@@ -60,6 +55,8 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
+    form = UserChangeForm(instance=request.user)
+    del form.fields['password']
     if request.method == 'POST':
         phone_number = request.user.phone_number
         form = UserChangeForm(instance=request.user,
@@ -69,7 +66,6 @@ def edit_profile(request):
                 request.user.is_active = False
                 user = form.save()
                 phone_number = user.phone_number
-                request.session['verification_code'] = randint(11111, 99999)
                 return redirect(reverse('verification_code', kwargs={'phone_number': phone_number}))
             else:
                 form.save()
@@ -77,7 +73,4 @@ def edit_profile(request):
                 return redirect(reverse('profile'))
         else:
             messages.error(request, form.errors)
-    else:
-        form = UserChangeForm(instance=request.user)
-        del form.fields['password']
     return render(request, 'account/edit_profile.html', {'form': form})
