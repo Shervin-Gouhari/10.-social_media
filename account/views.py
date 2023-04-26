@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from user.models import User
 from user.forms import *
 from .forms import *
+from .kavenegar import send_sms
 
 
 def registration(request):
@@ -31,12 +32,13 @@ def registration(request):
 
 
 def verification_code(request, phone_number):
-    print(request.session['verification_code'])
+    verification_code = request.session['verification_code']
     user = User.objects.get(phone_number=phone_number)
+    send_sms(phone_number, verification_code)
     if request.method == 'POST':
         form = VerificationForm(request.POST)
         if form.is_valid():
-            if request.session['verification_code'] == form.cleaned_data['verification_code']:
+            if verification_code == form.cleaned_data['verification_code']:
                 user.is_active = True
                 user.save()
                 logout(request)

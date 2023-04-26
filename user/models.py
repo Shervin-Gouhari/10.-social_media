@@ -41,8 +41,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    avatar = models.ImageField(blank=True,
-                               null=True, upload_to='avatar/%Y/%m/%d')
+    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='avatar/default.jpg')
     phone_number = models.CharField(max_length=11, unique=True,
                                     validators=[RegexValidator(regex="\A(09)(0|1|2|3)[0-9]{7}\d\Z",
                                                                message='incorrect phone number')])
