@@ -11,3 +11,4 @@
     {% csrf_token %} {{form}}
     <button type="submit">Verify</button>
 </form>
+<a href="{% url 'verification_code' %}">Resend verification code</a>

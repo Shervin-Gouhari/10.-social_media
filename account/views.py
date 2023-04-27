@@ -1,3 +1,5 @@
+from random import randint
+
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
@@ -31,14 +33,13 @@ def registration(request):
 
 def verification_code(request):
     unsaved_user = request.session['unsaved_user']
-    ver_code = send_sms(request, unsaved_user['phone_number'])
-    form = VerificationForm()
     if request.method == 'POST':
         form = VerificationForm(request.POST)
         if form.is_valid():
-            if ver_code == form.cleaned_data['verification_code']:
+            if request.session['verification_code'] == form.cleaned_data['verification_code']:
                 unsaved_user['is_active'] = True
-                user = User.objects.create(**unsaved_user)
+                user = User(**unsaved_user)
+                user.save()
                 del request.session['unsaved_user']
                 logout(request)
                 login(request, user)
@@ -47,6 +48,11 @@ def verification_code(request):
                 messages.error(request, 'False verification code.')
         else:
             messages.error(request, form.errors)
+    else:
+        request.session['verification_code'] = randint(11111, 99999)
+        ver_code = request.session['verification_code']
+        send_sms(request, unsaved_user['phone_number'], ver_code)
+        form = VerificationForm()
     return render(request, 'account/verification_code.html', {'form': form})
 
 
@@ -66,9 +72,9 @@ def edit_profile(request):
         if form.is_valid():
             if phone_number != form.cleaned_data['phone_number']:
                 request.user.is_active = False
-                user = form.save()
-                phone_number = user.phone_number
-                return redirect(reverse('verification_code', kwargs={'phone_number': phone_number}))
+                unsaved_user = form.save(commit=False)
+                request.session['unsaved_user'] = model_to_dict(unsaved_user)
+                return redirect(reverse('verification_code'))
             else:
                 form.save()
                 messages.success(request, 'Profile updated successfully.')
