@@ -38,11 +38,13 @@ def verification_code(request):
         if form.is_valid():
             if request.session['verification_code'] == form.cleaned_data['verification_code']:
                 unsaved_user['is_active'] = True
-                user = User(**unsaved_user)
-                user.save()
+                if unsaved_user['id'] == None:
+                    user = User.objects.create(**unsaved_user)
+                    logout(request)
+                    login(request, user)
+                else:
+                    User.objects.get(id=unsaved_user['id']).update(**unsaved_user)
                 del request.session['unsaved_user']
-                logout(request)
-                login(request, user)
                 return redirect(reverse('edit_profile'))
             else:
                 messages.error(request, 'False verification code.')
@@ -70,10 +72,13 @@ def edit_profile(request):
         form = UserChangeForm(instance=request.user,
                               data=request.POST, files=request.FILES)
         if form.is_valid():
+            request.user.avatar = form.cleaned_data.get('avatar', request.user.avatar)
+            request.user.save(update_fields=["avatar"])
             if phone_number != form.cleaned_data['phone_number']:
                 request.user.is_active = False
                 unsaved_user = form.save(commit=False)
-                request.session['unsaved_user'] = model_to_dict(unsaved_user)
+                exclude = ['avatar', 'password']
+                request.session['unsaved_user'] = model_to_dict(unsaved_user, exclude=exclude)
                 return redirect(reverse('verification_code'))
             else:
                 form.save()

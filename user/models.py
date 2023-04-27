@@ -71,3 +71,10 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+    
+    def update(self, **kwargs):
+        del kwargs['id']
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+        self.save()        
+        return self
