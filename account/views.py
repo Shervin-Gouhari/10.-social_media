@@ -18,8 +18,8 @@ def registration(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid() and form.clean_password2():
-            unsaved_user = form.save(commit=False)
-            request.session['unsaved_user'] = model_to_dict(unsaved_user, exclude='avatar')
+            new_user = form.save(commit=False)
+            request.session['new_user'] = model_to_dict(new_user, exclude='avatar')
             return redirect(reverse('verification_code'))
         else:
             messages.error(request, form.errors)
@@ -32,19 +32,24 @@ def registration(request):
 
 
 def verification_code(request):
-    unsaved_user = request.session['unsaved_user']
+    new_user = request.session['new_user']
     if request.method == 'POST':
         form = VerificationForm(request.POST)
         if form.is_valid():
             if request.session['verification_code'] == form.cleaned_data['verification_code']:
-                unsaved_user['is_active'] = True
-                if unsaved_user['id'] == None:
-                    user = User.objects.create(**unsaved_user)
+                new_user['is_active'] = True
+                if new_user['id'] == None:
+                    user = User.objects.create(**new_user)
+                    del request.session['new_user']
                     logout(request)
                     login(request, user)
+                    messages.success(request, 'Profile successfully created.')
                 else:
-                    User.objects.get(id=unsaved_user['id']).update(**unsaved_user)
-                del request.session['unsaved_user']
+                    user = User.objects.get(id=new_user['id'])
+                    setattr(user, 'phone_number', new_user['new_num'])
+                    user.save()
+                    del request.session['new_user']
+                    messages.success(request, 'Profile successfully updated.')
                 return redirect(reverse('edit_profile'))
             else:
                 messages.error(request, 'False verification code.')
@@ -53,7 +58,7 @@ def verification_code(request):
     else:
         request.session['verification_code'] = randint(11111, 99999)
         ver_code = request.session['verification_code']
-        send_sms(request, unsaved_user['phone_number'], ver_code)
+        send_sms(request, new_user['phone_number'], ver_code)
         form = VerificationForm()
     return render(request, 'account/verification_code.html', {'form': form})
 
@@ -72,16 +77,18 @@ def edit_profile(request):
         form = UserChangeForm(instance=request.user,
                               data=request.POST, files=request.FILES)
         if form.is_valid():
-            request.user.avatar = form.cleaned_data.get('avatar', request.user.avatar)
-            request.user.save(update_fields=["avatar"])
+            update_fields = ['avatar', 'username', 'email','first_name', 'last_name', 'date_of_birth', 'biography']
+            user = form.save(commit=False)
+            user.save(update_fields=update_fields)
             if phone_number != form.cleaned_data['phone_number']:
-                request.user.is_active = False
-                unsaved_user = form.save(commit=False)
-                exclude = ['avatar', 'password']
-                request.session['unsaved_user'] = model_to_dict(unsaved_user, exclude=exclude)
+                new_user = {
+                    'id': request.user.id,
+                    'is_active': False,
+                    'phone_number': phone_number,
+                    'new_num': form.cleaned_data['phone_number']}
+                request.session['new_user'] = new_user
                 return redirect(reverse('verification_code'))
             else:
-                form.save()
                 messages.success(request, 'Profile updated successfully.')
                 return redirect(reverse('profile'))
         else:

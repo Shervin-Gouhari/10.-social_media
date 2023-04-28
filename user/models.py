@@ -4,7 +4,7 @@ from django.core.validators import RegexValidator
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, phone_number, username, email, first_name, last_name, password=None):
+    def create_user(self, phone_number, username, email, password=None):
         if not phone_number:
             raise ValueError("phone number is required")
         if not username:
@@ -16,20 +16,16 @@ class UserManager(BaseUserManager):
             phone_number=phone_number,
             username=username,
             email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone_number, username, email, first_name="", last_name="", password=None):
+    def create_superuser(self, phone_number, username, email, password=None):
         user = self.create_user(
             phone_number=phone_number,
             username=username,
             email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name
         )
         user.is_active = True
         user.is_staff = True
@@ -41,10 +37,10 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='avatar/default.jpg')
-    phone_number = models.CharField(max_length=11, unique=True,
-                                    validators=[RegexValidator(regex="\A(09)(0|1|2|3)[0-9]{7}\d\Z",
-                                                               message='Incorrect phone number.')])
+    avatar = models.ImageField(
+        upload_to='avatar/%Y/%m/%d', default='avatar/default.jpg')
+    phone_number = models.CharField(max_length=11, unique=True, validators=[RegexValidator(
+        regex="\A(09)(0|1|2|3)[0-9]{7}\d\Z", message='Incorrect phone number.')])
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=254, unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -71,10 +67,3 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-    
-    def update(self, **kwargs):
-        del kwargs['id']
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-        self.save()        
-        return self
