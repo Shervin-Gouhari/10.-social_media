@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from .local_settings import *
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -99,7 +100,7 @@ AUTH_USER_MODEL = 'user.User'
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'profile'
+LOGOUT_REDIRECT_URL = 'pages:home'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -108,3 +109,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Static
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]

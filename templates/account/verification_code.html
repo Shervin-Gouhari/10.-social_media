@@ -1,14 +1,41 @@
-<h1>Verification Form</h1>
-<hr />
-{% if messages %}
-<ul>
-    {% for message in messages %}
-    <li>{{message}}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<form action="" method="POST">
-    {% csrf_token %} {{form}}
-    <button type="submit">Verify</button>
-</form>
-<a href="{% url 'verification_code' %}">Resend verification code</a>
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Verify {% endblock title %}
+{% block style %}<link rel="stylesheet" href="{% static 'css/verification_code.css' %}">{% endblock style %}
+
+{% block content %}
+<span id="root">
+  <section class="section-all">
+    <main class="main" role="main">
+      <div class="wrapper">
+        <article class="article">
+          <div class="content">
+            <div class="login-box">
+              <div class="header">
+                <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png" alt="Instagram">
+              </div>
+              {% include "components/messages.html" %}
+              <div class="form-wrap">
+                <form class="form" method="POST">
+                  {% csrf_token %}
+                  <div class="input-box">
+                    <input type="text" id="name" aria-describedby="" placeholder="Enter your code" aria-required="true" maxlength="30" autocapitalize="off" autocorrect="off" name="verification_code" value="" required>
+                  </div>  
+                  <span class="button-box">
+                    <button class="btn" type="submit" name="submit">Verify</button>
+                  </span>
+                  <a class="forgot" href="{% url 'password_reset' %}">Forgot password?</a>
+                </form>
+              </div>
+            </div>
+            <div class="login-box">
+              <p class="text">Didn't you receive sms?<a href="{% url 'verification_code' %}">Resend</a></p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+  </section>
+</span>
+<script src="{% static 'js/verification_code.js' %}"></script>
+{% endblock content %}
