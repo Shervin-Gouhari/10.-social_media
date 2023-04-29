@@ -14,25 +14,20 @@
             <div class="profile-user-settings">
                 <h1 class="profile-user-name">{{user}}</h1>
                 {% if request.user == user %}
-                <a href="{% url 'edit_profile' %}" class="btn profile-edit-btn">Edit Profile</a>
-                <button class="btn profile-settings-btn" aria-label="profile settings" onclick="create_post()"><i
-                        class="fas fa-plus-circle" aria-hidden="true"></i></button>
+                    <a href="{% url 'edit_profile' %}" class="btn profile-edit-btn">Edit Profile</a>
+                    <button class="btn profile-settings-btn" aria-label="profile settings" onclick="create_post()"><i class="fas fa-plus-circle" aria-hidden="true"></i></button>
                 {% else %}
                     <button class="follow-btn" id="follow-btn-id" data-id="{{user.id}}" data-action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
-                            {% if request.user in user.followers.all %}
-                              Unfollow
-                            {% else %}
-                              Follow
-                            {% endif %}
-                            
+                        {% if request.user in user.followers.all %}
+                            Unfollow
+                        {% else %}
+                            Follow
+                        {% endif %}  
                     </button>
                 {% endif %}
-
-                {% comment %} <button class="btn profile-settings-btn" aria-label="profile settings"><i
-                        class="fas fa-cog" aria-hidden="true"></i></button> {% endcomment %}
-
-
-
+                {% comment %} 
+                    <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button> 
+                {% endcomment %}
 
                 <script>
                     let create_post = () => {
@@ -50,80 +45,47 @@
                 </script>
 
             </div>
-
             <div class="profile-stats">
-
                 <ul>
                     <li><span class="profile-stat-count">{{user.user_posts.all|length}}</span> posts</li>
                     <li data-bs-toggle="modal" data-bs-target="#followers"><span class="profile-stat-count" id="follwers-id">{{user.followers.all|length}}</span> followers</li>
                     <li data-bs-toggle="modal" data-bs-target="#followings"><span class="profile-stat-count" id="follwing-id">{{user.following.all|length}}</span> following</li>
                 </ul>
-
             </div>
-
             <div class="profile-bio">
-
-                <p><span class="profile-real-name">
-                    
-                    {% if user.first_name %}
-                        {{user.first_name}}
-                    {% endif %}
-                    
-                    {% if user.last_name %}
-                        {{user.last_name}}
-                    {% endif %}
-                        
+                <p>
+                    <span class="profile-real-name">
+                        {% if user.first_name %}
+                            {{user.first_name}}
+                        {% endif %}
+                        {% if user.last_name %}
+                            {{user.last_name}}
+                        {% endif %}
                     </span>
                     {{user.bio}}
                 </p>
-
             </div>
-
         </div>
-        <!-- End of profile section -->
-
     </div>
-    <!-- End of container -->
-
 </header>
-
 <main>
-
     <div class="container">
-
         <div class="gallery">
-
             {% for post in posts %}
-
             <a class="gallery-item" tabindex="0" href="{{ post.get_absolute_url }}">
-
                 <img src="{{post.image.url}}" class="gallery-image" alt="">
-
                 <div class="gallery-item-info">
-
                     <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i
-                                class="fas fa-heart" aria-hidden="true"></i> {{post.user_like.all|length}}</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i
-                                class="fas fa-comment" aria-hidden="true"></i> {{post.comments.all|length}}</li>
+                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.user_like.all|length}}</li>
+                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{post.comments.all|length}}</li>
                     </ul>
-
                 </div>
-
             </a>
             {% endfor %}
-
         </div>
-        <!-- End of gallery -->
-
-        <!-- <div class="loader"></div> -->
-
     </div>
-    <!-- End of container -->
-
 </main>
 
-<!-- scripts -->
 <script>
     let container = document.getElementsByClassName("container")[1];
     let gallery = document.getElementsByClassName("gallery")[0];
@@ -197,61 +159,54 @@
 
 </script>
 
-
-<!-- modal show followers -->
-  <!-- Modal -->
-  <div class="modal fade" id="followers" tabindex="-1" aria-labelledby="followersLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="followersLabel">Followers</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            {% for follower in user.followers.all %}
-            <div class="row">
-                <div class="col mb-3">
-                    <a href="{% url 'profile' follower %}" class="modal-item-info">
-                        <img src="{{follower.photo.url}}" alt="">
-                        {{follower}}
-                    </a>
-                </div>
-            </div>
-          {% endfor %}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
+<div class="modal fade" id="followers" tabindex="-1" aria-labelledby="followersLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="followersLabel">Followers</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          {% for follower in user.followers.all %}
+          <div class="row">
+              <div class="col mb-3">
+                  <a href="{% url 'profile' follower %}" class="modal-item-info">
+                      <img src="{{follower.photo.url}}" alt="">
+                      {{follower}}
+                  </a>
+              </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
-
-
-<!-- modal show followings -->
-  <!-- Modal -->
-  <div class="modal fade" id="followings" tabindex="-1" aria-labelledby="followingsLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="followingsLabel">Followings</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          {% for following in user.following.all %}
-            <div class="row">
-                <div class="col mb-3">
-                    <a href="{% url 'profile' following %}" class="modal-item-info">
-                        <img src="{{following.photo.url}}" alt="">
-                        {{following}}
-                    </a>
-                </div>
-            </div>
-          {% endfor %}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
+</div>
+<div class="modal fade" id="followings" tabindex="-1" aria-labelledby="followingsLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="followingsLabel">Followings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for following in user.following.all %}
+          <div class="row">
+              <div class="col mb-3">
+                  <a href="{% url 'profile' following %}" class="modal-item-info">
+                      <img src="{{following.photo.url}}" alt="">
+                      {{following}}
+                  </a>
+              </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+</div>
 {% endblock content %}
