@@ -1,6 +1,6 @@
 from random import randint
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -71,20 +71,19 @@ def custom_login(request):
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                logout(request)
                 login(request, user)
                 messages.success(request, "You are logged in successfully.")
                 return redirect("pages:home")
             else:
                 messages.error(request, "No user found with said credentials.")
-    else:
-        if request.user.is_authenticated:
-            logout(request)
     return render(request, 'registration/login.html', {'form':form})
 
 
 @login_required
-def profile(request):
-    return render(request, 'account/profile.html')
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    return render(request, 'account/profile.html', {'user': user})
 
 
 @login_required
