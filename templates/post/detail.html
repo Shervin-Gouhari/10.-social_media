@@ -4,6 +4,7 @@
 {% block style %}<link rel="stylesheet" href="{% static 'css/detail.css' %}">{% endblock style %}
 
 {% block content %}
+<div id="request-user-id" hidden>{{request.user.id}}</div>
 <section>
   <div class="header">
     <div class="user">
@@ -25,8 +26,7 @@
     <img src="{{post.image.url}}" alt="Publication Photo">
   </div>
   <div class="toolbar">
-    <a {% if request.user in post.user_like.all %} class="like active" {% else %} class="like" {% endif %} href="#"
-      data-id="{{post.id}}" data-action="{% if request.user in post.user_like.all %}dislike{% else %}like{% endif %}">
+    <a {% if request.user in post.likes.all %} class="like active" {% else %} class="like" {% endif %} href="#" data-id="{{post.id}}">
       <svg height="24" role="img" viewBox="0 0 48 48" width="24" id="like">
         <path
           d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z">
@@ -57,9 +57,9 @@
   </div>
   <div id="like-container">
     <div class="description" id="like-body">
-      <strong id="like-numbers">{{post.user_like.all|length}}</strong>
-      <span id="like-word">
-        {% if post.user_like.all|length > 1 %}
+      <strong id="like-number">{{post.likes.all|length}}</strong>
+      <span id="like-or-likes">
+        {% if post.likes.all|length > 1 %}
         Likes
         {% else %}
         Like
@@ -79,35 +79,78 @@
 </div>
 <div id="comments-container-id">
   {% for cm in post.comments.all %}
-  <div class="comments">
-    <div class="comment-profile">
-        <img src="{{cm.user.photo.url}}" alt="">
-    </div>
-    <div class="comment-main">
-        <div class="comment-text">
-            <a class="user" href="{% url 'profile' cm.user %}"><strong>{{cm.user}}</strong></a>
-            {{cm.text}}
-        </div>
-        <div class="comment-info">
-            <div class="comment-date">{{cm.created|timesince}}</div>
-            <div class="comment-likes">
-              {% if cm.likes.all|length > 1 %}
-                <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Likes</span>
-              {% else %}
-                <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Like</span>
-              {% endif %}
-            </div>
-            <div class="comment-reply">Reply</div>
-        </div>
-    </div>
-    <div class="comment-like" data-id="{{cm.id}}" data-action="{% if request.user in cm.likes.all %}dis{% endif %}like">
-      {% if request.user in cm.likes.all %}
-        <i class="fas fa-heart heart-active"></i>
-      {% else %}
-        <i class="far fa-heart"></i>
-      {% endif %}
-    </div>
-  </div>
+    <div class="comments">
+      <div class="comment-profile">
+          <img src="{{cm.user.avatar.url}}" alt="">
+      </div>
+      <div class="comment-main">
+          <div class="comment-text">
+              <a class="user" href="{% url 'profile' cm.user %}"><strong>{{cm.user}}</strong></a>
+              {{cm.text}}
+          </div>
+          <div class="comment-info">
+              <div class="comment-date">{{cm.created|timesince}}</div>
+              <div class="comment-likes">
+                {% if cm.likes.all|length > 1 %}
+                  <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Likes</span>
+                {% else %}
+                  <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Like</span>
+                {% endif %}
+              </div>
+              <div class="comment-reply">Reply</div>
+          </div>
+      </div>
+      <div class="comment-like" data-id="{{cm.id}}" data-action="{% if request.user in cm.likes.all %}dis{% endif %}like">
+        {% if request.user in cm.likes.all %}
+          <i class="fas fa-heart heart-active"></i>
+        {% else %}
+          <i class="far fa-heart"></i>
+        {% endif %}
+      </div>
+    </div><hr>
   {% endfor %}
 </div>
+
+<script>
+let request_user_id = document.getElementById("request-user-id").innerText;
+let like_btn = document.querySelector("a.like");
+let like_number = document.getElementById("like-number");
+let like_or_likes = document.getElementById("like-or-likes");
+like_btn.addEventListener("click", (e) => {
+    if (request_user_id != "None") {
+        e.preventDefault();
+        var fd = new FormData();
+        fd.append("csrfmiddlewaretoken", "{{csrf_token}}");
+        fd.append("post_id", like_btn.getAttribute("data-id"));
+        let action;
+        if (like_btn.classList.contains("active")) {
+            action = "dislike";
+        } else {
+            action = "like";
+        }
+        fd.append("action", action);
+        axios
+            .post("/post/like/", fd)
+            .then((res) => {
+                like_btn.classList.toggle("active");
+                if (action == "like") {
+                    like_number.innerText = parseInt(like_number.innerText) + 1;
+                    if (parseInt(like_number.innerText) > 1) {
+                        like_or_likes.innerText = "Likes";
+                    }
+                } else {
+                    like_number.innerText = parseInt(like_number.innerText) - 1;
+                    if (parseInt(like_number.innerText) < 2) {
+                        like_or_likes.innerText = "Like";
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    } else {
+        alert("You have to login first before liking.");
+    }
+});    
+</script>
 {% endblock content %}

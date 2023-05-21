@@ -10,7 +10,7 @@ class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='posts', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='posts/images/%Y/%m/%d')
     caption = models.TextField(blank=True)
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likes', blank=True)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='post_likes', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     is_edited = models.BooleanField(default=False)
     edited = models.DateTimeField(auto_now=True)
@@ -28,3 +28,16 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("post:detail", kwargs={"slug": self.slug})
     
+    
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE)
+    text = models.TextField()
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='comment_likes', blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    is_edited = models.BooleanField(default=False)
+    edited = models.DateTimeField(auto_now=True)
+    
+    
+    def __str__(self):
+        return f'{self.post} {self.user}'
