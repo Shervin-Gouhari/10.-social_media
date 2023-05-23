@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load post_tags %}
 {% block title %} Post Detail {% endblock title %}
 {% block style %}<link rel="stylesheet" href="{% static 'css/detail.css' %}">{% endblock style %}
 
@@ -67,18 +68,20 @@
       </span>
     </div>
   </div>
-  <div class="description"><strong><a href="{% url 'profile' post.user %}">{{post.user}}&nbsp;&nbsp;</a></strong>{{post.caption}}</div>
+  <div class="description">
+    <strong><a href="{% url 'profile' post.user %}">{{post.user}}&nbsp;&nbsp;</a></strong>{{post.caption}}<br>
+    <span style="font-weight: 500; color: #7c818e;">{{post.created|customtimesince}} ago</span>
+  </div>
 </section>
 <div class="comment-form">
   <form action="" method="POST">
       {% csrf_token %}
-      <textarea name="text" id="comment-textarea-id" class="comment-textarea" placeholder="Comment here"></textarea>
-      {% comment %} {{form.as_p}} {% endcomment %}
-      <button class="comment-submit" id="comment-submit-id" type="submit">post</button>
+      <textarea name="text" id="comment-text-form" class="comment-textarea" placeholder="Comment here"></textarea>
+      <button class="comment-submit" id="comment-post-button" type="submit">post</button>
   </form>
 </div>
-<div id="comments-container-id">
-  {% for cm in post.comments.all %}
+<div id="comment-container">
+  {% for cm in comments_orderByCreationAscending %}
     <div class="comments">
       <div class="comment-profile">
           <img src="{{cm.user.avatar.url}}" alt="">
@@ -89,7 +92,7 @@
               {{cm.text}}
           </div>
           <div class="comment-info">
-              <div class="comment-date">{{cm.created|timesince}}</div>
+              <div class="comment-date">{{cm.created|customtimesince}} ago</div>
               <div class="comment-likes">
                 {% if cm.likes.all|length > 1 %}
                   <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Likes</span>
@@ -112,18 +115,19 @@
 </div>
 
 <script>
-let request_user_id = document.getElementById("request-user-id").innerText;
-let like_btn = document.querySelector("a.like");
-let like_number = document.getElementById("like-number");
-let like_or_likes = document.getElementById("like-or-likes");
-like_btn.addEventListener("click", (e) => {
-    if (request_user_id != "None") {
+let requestUserId = document.getElementById("request-user-id").innerText;
+let likeButton = document.querySelector("a.like");
+let likeNumber = document.getElementById("like-number");
+let likeOrLikes = document.getElementById("like-or-likes");
+
+likeButton.addEventListener("click", (e) => {
+    if (requestUserId != "None") {
         e.preventDefault();
         var fd = new FormData();
         fd.append("csrfmiddlewaretoken", "{{csrf_token}}");
-        fd.append("post_id", like_btn.getAttribute("data-id"));
+        fd.append("post_id", likeButton.getAttribute("data-id"));
         let action;
-        if (like_btn.classList.contains("active")) {
+        if (likeButton.classList.contains("active")) {
             action = "dislike";
         } else {
             action = "like";
@@ -132,16 +136,16 @@ like_btn.addEventListener("click", (e) => {
         axios
             .post("/post/like/", fd)
             .then((res) => {
-                like_btn.classList.toggle("active");
+                likeButton.classList.toggle("active");
                 if (action == "like") {
-                    like_number.innerText = parseInt(like_number.innerText) + 1;
-                    if (parseInt(like_number.innerText) > 1) {
-                        like_or_likes.innerText = "Likes";
+                    likeNumber.innerText = parseInt(likeNumber.innerText) + 1;
+                    if (parseInt(likeNumber.innerText) > 1) {
+                        likeOrLikes.innerText = "Likes";
                     }
                 } else {
-                    like_number.innerText = parseInt(like_number.innerText) - 1;
-                    if (parseInt(like_number.innerText) < 2) {
-                        like_or_likes.innerText = "Like";
+                    likeNumber.innerText = parseInt(likeNumber.innerText) - 1;
+                    if (parseInt(likeNumber.innerText) < 2) {
+                        likeOrLikes.innerText = "Like";
                     }
                 }
             })
@@ -151,6 +155,59 @@ like_btn.addEventListener("click", (e) => {
     } else {
         alert("You have to login first before liking.");
     }
-});    
+});
+</script>
+
+<script>
+let commentPostButton = document.getElementById("comment-post-button");
+let commentTextForm = document.getElementById("comment-text-form");
+let commentContainer = document.getElementById("comment-container");
+
+commentPostButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    fd = new FormData();
+    fd.append("csrfmiddlewaretoken", "{{csrf_token}}");
+    fd.append("text", commentTextForm.value);
+    axios
+        .post("", fd)
+        .then((res) => {
+            let newComment = `
+            <div class="comments animate__animated animate__fadeInDown">
+                <div class="comment-profile">
+                    <img src="{{request.user.avatar.url}}" alt="">
+                </div>
+                <div class="comment-main">
+                    <div class="comment-text">
+                        <a class="user" href="{% url 'profile' request.user %}"><strong>{{request.user}}</strong></a>
+                        ${commentTextForm.value}
+                    </div>
+                    <div class="comment-info">
+                        <div class="comment-date">{{cm.created|timesince}}</div>
+                            <div class="comment-likes">
+                                {% if cm.likes.all|length > 1 %}
+                                    <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Likes</span>
+                                {% else %}
+                                    <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Like</span>
+                                {% endif %}
+                            </div>
+                        <div class="comment-reply">Reply</div>
+                    </div>
+                </div>
+                <div class="comment-like" data-id="{{cm.id}}" data-action="{% if request.user in cm.likes.all %}dis{% endif %}like">
+                    {% if request.user in cm.likes.all %}
+                        <i class="fas fa-heart heart-active"></i>
+                    {% else %}
+                        <i class="far fa-heart"></i>
+                    {% endif %}
+                </div>
+            </div><hr>
+            `;
+            commentContainer.innerHTML = newComment + commentContainer.innerHTML;
+            commentTextForm.value = "";
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
 </script>
 {% endblock content %}

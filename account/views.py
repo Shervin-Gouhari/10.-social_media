@@ -8,6 +8,7 @@ from django.forms.models import model_to_dict
 
 from user.models import User
 from user.forms import *
+from post.models import Post
 from .forms import *
 from .kavenegar import send_sms
 
@@ -83,7 +84,10 @@ def custom_login(request):
 @login_required
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    return render(request, 'account/profile.html', {'user': user})
+    posts_orderByCreationAscending = Post.objects.filter(user=user).order_by("-created")
+    context = {"user": user,
+               "posts_orderByCreationAscending": posts_orderByCreationAscending}
+    return render(request, 'account/profile.html', context)
 
 
 @login_required

@@ -24,18 +24,28 @@ def post_create(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
+    comments_orderByCreationAscending = post.comments.all().order_by("-created")
+    comments_orderByLikesAscending = post.comments.all().order_by("-likes")
     form = CommentCreateForm()
     if request.method == 'POST':
         form = CommentCreateForm(request.POST)
         if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.user = request.user
-            comment.save()
-            form = CommentCreateForm()
+            try:
+                comment = form.save(commit=False)
+                comment.post = post
+                comment.user = request.user
+                comment.save()
+                form = CommentCreateForm()
+                return JsonResponse({'status': 'success'})
+            except:
+                return JsonResponse({'status': 'failure'})
         else:
-            [messages.error(request, form.errors[error]) for error in form.errors]    
-    return render(request, 'post/detail.html', {'post': post, 'form': form})
+            [messages.error(request, form.errors[error]) for error in form.errors]
+    context = {'post': post,
+               'form': form,
+               'comments_orderByCreationAscending': comments_orderByCreationAscending,
+               'comments_orderByLikesAscending': comments_orderByLikesAscending}
+    return render(request, 'post/detail.html', context)
 
 
 @login_required
@@ -53,4 +63,4 @@ def post_like(request):
             return JsonResponse({'status': 'success'})
         except:
             pass
-        return JsonResponse({'status': 'error'})
+        return JsonResponse({'status': 'failure'})
