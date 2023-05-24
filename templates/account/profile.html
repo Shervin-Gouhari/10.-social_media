@@ -14,7 +14,7 @@
             <div class="profile-user-settings">
                 <h1 class="profile-user-name">{{user}}</h1>
                 {% if request.user == user %}
-                    <a href="{% url 'edit_profile' %}" class="btn profile-edit-btn">Edit Profile</a>
+                    <a href="{% url 'edit_profile' request.user %}" class="btn profile-edit-btn">Edit Profile</a>
                     <button class="btn profile-settings-btn" aria-label="profile settings" onclick="post_create()"><i class="fas fa-plus-circle" aria-hidden="true"></i></button>
                 {% else %}
                     <button class="follow-btn" id="follow-btn-id" data-id="{{user.id}}" data-action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">

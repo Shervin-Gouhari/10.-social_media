@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 
 from .forms import PostCreateForm, CommentCreateForm
-from .models import Post
+from .models import Post, Comment
 
 
 @login_required
@@ -51,16 +51,33 @@ def post_detail(request, slug):
 @login_required
 @require_POST
 def post_like(request):
-    post_id = request.POST['post_id']
-    action = request.POST['action']
-    if post_id and action:
+    post_id = request.POST.get('post_id', None)
+    post_action = request.POST.get('post_action', None)
+    if post_id and post_action:
         try:
             post = Post.objects.get(id=post_id)
-            if action == 'like':
+            if post_action == 'like':
                 post.likes.add(request.user)
             else:
                 post.likes.remove(request.user)
             return JsonResponse({'status': 'success'})
         except:
-            pass
-        return JsonResponse({'status': 'failure'})
+            return JsonResponse({'status': 'failure'})
+        
+
+
+@login_required
+@require_POST
+def comment_like(request):
+    comment_id = request.POST.get('comment_id', None)
+    comment_action = request.POST.get('comment_action', None)
+    if comment_id and comment_action:
+        try:
+            comment = Comment.objects.get(id=comment_id)
+            if comment_action == 'like':
+                comment.likes.add(request.user)
+            else:
+                comment.likes.remove(request.user)
+            return JsonResponse({'status': 'success'})
+        except:
+            return JsonResponse({'status': 'failure'})    
