@@ -4,7 +4,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import model_to_dict
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 from user.models import User
 from user.forms import *
@@ -81,17 +84,24 @@ def custom_login(request):
     return render(request, 'registration/login.html', {'form':form})
 
 
-@login_required
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    posts_orderByCreationAscending = Post.objects.filter(user=user).order_by("-created")
+    posts = Post.objects.filter(user=user).order_by("-created")
+    paginator = Paginator(posts, 4)
+    page = request.GET.get("page", None)
+    if page:
+        try:
+            posts_orderByCreationAscending = paginator.page(page)
+        except(EmptyPage, PageNotAnInteger):
+            return JsonResponse({"response": "failure"})
+        return JsonResponse({"response": render_to_string("account/post_loader.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)}) 
     context = {"user": user,
-               "posts_orderByCreationAscending": posts_orderByCreationAscending}
+               "posts_orderByCreationAscending": paginator.page(1)}
     return render(request, 'account/profile.html', context)
 
 
 @login_required
-def edit_profile(request):
+def edit_profile(request, username): 
     form = UserChangeForm(instance=request.user)
     del form.fields['password']
     if request.method == 'POST':

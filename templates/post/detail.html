@@ -163,6 +163,7 @@ postLikeButton.addEventListener("click", (e) => {
 let commentPostButton = document.getElementById("comment-post-button");
 let commentTextForm = document.getElementById("comment-text-form");
 let commentContainer = document.getElementById("comment-container");
+let comments = document.getElementsByClassName("comments");
 
 commentPostButton.addEventListener("click", (e) => {
     if (requestUserId != "None") {
@@ -205,15 +206,22 @@ commentPostButton.addEventListener("click", (e) => {
                 `;
                 commentContainer.innerHTML = newComment + commentContainer.innerHTML;
                 commentTextForm.value = "";
+                window.setInterval(() => {
+                    for (let item of comments) {
+                        if (item.classList.contains("animate__fadeInDown")) {
+                            item.classList.remove("animate__fadeInDown");
+                        }
+                    }
+                }, 1000);
             })
             .catch((err) => {
                 console.log(err);
             });
     } else {
         e.preventDefault();
-        alert("You have to login first before commenting.")
+        alert("You have to login first before commenting.");
     }
-});  
+});
 </script>
 
 <script>

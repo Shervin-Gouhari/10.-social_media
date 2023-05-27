@@ -28,23 +28,6 @@
                 {% comment %} 
                     <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button> 
                 {% endcomment %}
-
-                <script>
-                    let post_create = () => {
-                        Swal.fire({
-                            title: "Post Create",
-                            html: `
-                                <form action="{% url 'post:create' %}" method="POST" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <input class="form-control" type="file"  name="image"><hr/>
-                                    <textarea class="form-control z-depth-1" name="caption" rows="3" placeholder="Caption..."></textarea><hr/>
-                                    <button type="submit">Post</button>
-                                </form>`,
-                            showConfirmButton: false,
-                        })
-                    }
-                </script>
-
             </div>
             <div class="profile-stats">
                 <ul>
@@ -88,80 +71,6 @@
         </div>
     </div>
 </main>
-
-<script>
-    let container = document.getElementsByClassName("container")[1];
-    let gallery = document.getElementsByClassName("gallery")[0];
-    let page = 1;
-    let emptyPage = false;
-    let blockRequest = false;
-
-    document.addEventListener("scroll", function () {
-        let contentHeight = window.innerHeight;
-        let yOffset = window.pageYOffset;
-        let clientHight = document.body.clientHeight;
-        let galleryItems = document.getElementsByClassName("gallery-item");
-
-        if (contentHeight + yOffset > clientHight * 0.9 && emptyPage == false && blockRequest == false) {
-            console.log("ajax")
-            blockRequest = true;
-            page += 1;
-            axios.get("", {
-                params: {
-                    page: page,
-                }
-            }).then((result) => {
-                if (result.data.status === "empty") {
-                    emptyPage = true;
-                } else {
-                    gallery.innerHTML += result.data.status;
-                    blockRequest = false;
-                    window.setTimeout(() => {
-                        for (let i = 0; i < galleryItems.length; i++) {
-                            if (galleryItems[i].classList.contains("animate__fadeInUp")) {
-                                galleryItems[i].classList.remove("animate__fadeInUp");
-                            }
-                        }
-                    }, 1000);
-                }
-            }).catch((err) => {
-                console.log("error")
-            });
-        }
-    });
-
-
-    let btn_follow = document.getElementById("follow-btn-id");
-    let followers_counts = document.getElementById("follwers-id");
-
-    btn_follow.addEventListener("click", (e)=>{
-        let follow_action = btn_follow.getAttribute("data-action");
-        e.preventDefault();
-        var fd = new FormData();
-        fd.append("id", btn_follow.getAttribute("data-id"));
-        fd.append("action", btn_follow.getAttribute("data-action"));
-        fd.append("csrfmiddlewaretoken", "{{csrf_token}}");
-        axios.post("/account/follow/", fd)
-        .then((res)=>{
-            if (follow_action == "follow"){
-                btn_follow.innerText = "Unfollow";
-                btn_follow.setAttribute("data-action", "unfollow");
-                followers_counts.innerHTML = parseInt(followers_counts.innerHTML) + 1;
-            }else{
-                console.log(follow_action)
-                btn_follow.innerText = "Follow";
-                btn_follow.setAttribute("data-action", "follow");
-                followers_counts.innerHTML = parseInt(followers_counts.innerHTML) -1;
-            }
-            
-        })
-        .catch((res)=>{
-            console.log(res)
-        })
-    })
-
-</script>
-
 <div class="modal fade" id="followers" tabindex="-1" aria-labelledby="followersLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -212,4 +121,58 @@
     </div>
   </div>
 </div>
+
+<script>
+let post_create = () => {
+    Swal.fire({
+        title: "Post Create",
+        html: `
+            <form action="{% url 'post:create' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input class="form-control" type="file"  name="image"><hr/>
+                <textarea class="form-control z-depth-1" name="caption" rows="3" placeholder="Caption..."></textarea><hr/>
+                <button type="submit">Post</button>
+            </form>`,
+        showConfirmButton: false,
+    });
+};
+</script>
+
+<script>
+let gallery = document.getElementsByClassName("gallery")[0];
+let blockRequest = false;
+let page = 1;
+window.addEventListener("scroll", (e) => {
+    let innerHeight = window.innerHeight;
+    let pageYOffset = window.pageYOffset;
+    let clientHeight = document.body.clientHeight;
+    let galleryItem = document.getElementsByClassName("gallery-item");
+    if (innerHeight + pageYOffset == clientHeight && blockRequest == false) {
+        blockRequest = true;
+        page += 1;
+        axios
+            .get("", {
+                params: {
+                    page: page,
+                },
+            })
+            .then((res) => {
+                if (res.data.response !== "failure") {
+                    gallery.innerHTML += res.data.response;
+                    window.setInterval(() => {
+                        for (let item of galleryItem) {
+                            if (item.classList.contains("animate__fadeInUp")) {
+                                item.classList.remove("animate__fadeInUp");
+                            }
+                        }
+                    }, 1000);
+                }
+                blockRequest = false;
+            })
+            .catch((err) => {
+                console.log(err.data);
+            });
+    }
+});
+</script>
 {% endblock content %}
