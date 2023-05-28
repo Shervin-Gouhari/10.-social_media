@@ -4,12 +4,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import model_to_dict
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 
-from user.models import User
+from user.models import User, Contact
 from user.forms import *
 from post.models import Post
 from .forms import *
@@ -78,7 +79,7 @@ def custom_login(request):
                 logout(request)
                 login(request, user)
                 messages.success(request, "You are logged in successfully.")
-                return redirect("pages:home")
+                return redirect("page:home")
             else:
                 messages.error(request, "No user found with said credentials.")
     return render(request, 'registration/login.html', {'form':form})
@@ -94,7 +95,7 @@ def profile(request, username):
             posts_orderByCreationAscending = paginator.page(page)
         except(EmptyPage, PageNotAnInteger):
             return JsonResponse({"response": "failure"})
-        return JsonResponse({"response": render_to_string("account/post_loader.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)}) 
+        return JsonResponse({"response": render_to_string("account/loader/post/profile.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)}) 
     context = {"user": user,
                "posts_orderByCreationAscending": paginator.page(1)}
     return render(request, 'account/profile.html', context)
@@ -126,3 +127,21 @@ def edit_profile(request, username):
         else:
             [messages.error(request, form.errors[error]) for error in form.errors]
     return render(request, 'account/edit_profile.html', {'form': form})
+
+
+@login_required
+@require_POST
+def follow(request):
+    user_id = request.POST.get("user_id", None)
+    user_action = request.POST.get("user_action", None)
+    if user_id and user_action:
+        try:
+            user = User.objects.get(id=user_id)
+            if user_action == "follow":
+                Contact.objects.get_or_create(user_from=request.user, user_to=user)
+            else:
+                Contact.objects.get(user_from=request.user, user_to=user).delete()
+            return JsonResponse({"status": "success"})
+        except:
+            pass
+    return JsonResponse({"status": "failure"})

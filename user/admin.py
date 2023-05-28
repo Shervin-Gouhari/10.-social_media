@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User
+from .models import User, Contact
 from . forms import *
 
 
@@ -36,3 +36,8 @@ class UserAdmin(BaseUserAdmin):
 
         ('Additional Info', {'fields': ('date_joined', 'last_login')})
     )
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    pass

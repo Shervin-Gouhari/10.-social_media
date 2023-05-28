@@ -17,7 +17,7 @@
                     <a href="{% url 'edit_profile' request.user %}" class="btn profile-edit-btn">Edit Profile</a>
                     <button class="btn profile-settings-btn" aria-label="profile settings" onclick="post_create()"><i class="fas fa-plus-circle" aria-hidden="true"></i></button>
                 {% else %}
-                    <button class="follow-btn" id="follow-btn-id" data-id="{{user.id}}" data-action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
+                    <button class="follow-btn" id="follow-btn" data-userId="{{user.id}}" data-userAction="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
                         {% if request.user in user.followers.all %}
                             Unfollow
                         {% else %}
@@ -32,8 +32,8 @@
             <div class="profile-stats">
                 <ul>
                     <li><span class="profile-stat-count">{{user.posts.all|length}}</span> posts</li>
-                    <li data-bs-toggle="modal" data-bs-target="#followers"><span class="profile-stat-count" id="follwers-id">{{user.followers.all|length}}</span> followers</li>
-                    <li data-bs-toggle="modal" data-bs-target="#followings"><span class="profile-stat-count" id="follwing-id">{{user.following.all|length}}</span> following</li>
+                    <li data-bs-toggle="modal" data-bs-target="#followers"><span class="profile-stat-count" id="followers-counter">{{user.followers.all|length}}</span> followers</li>
+                    <li data-bs-toggle="modal" data-bs-target="#followings"><span class="profile-stat-count" id="following-counter">{{user.following.all|length}}</span> following</li>
                 </ul>
             </div>
             <div class="profile-bio">
@@ -173,6 +173,36 @@ window.addEventListener("scroll", (e) => {
                 console.log(err.data);
             });
     }
+});
+</script>
+
+<script>
+let userFollowButton = document.getElementById("follow-btn");
+let userAction = userFollowButton.getAttribute("data-userAction");
+let followersCounter = document.getElementById("followers-counter");
+
+userFollowButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    var fd = new FormData();
+    fd.append("csrfmiddlewaretoken", "{{csrf_token}}");
+    fd.append("user_id", userFollowButton.getAttribute("data-userId"));
+    fd.append("user_action", userAction);
+    axios
+        .post("/account/follow/", fd)
+        .then((res) => {
+            if (userAction === "follow") {
+                userAction = "unfollow";
+                userFollowButton.innerText = "Unfollow";
+                followersCounter.innerText = parseInt(followersCounter.innerText) + 1;
+            } else {
+                userAction = "follow";
+                userFollowButton.innerText = "Follow";
+                followersCounter.innerText = parseInt(followersCounter.innerText) - 1;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 });
 </script>
 {% endblock content %}

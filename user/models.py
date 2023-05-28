@@ -53,6 +53,7 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    following = models.ManyToManyField("self", through="Contact", related_name="followers", symmetrical=False)
 
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['username', 'email']
@@ -67,3 +68,12 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+    
+    
+class Contact(models.Model):
+    user_from = models.ForeignKey(User, related_name="rel_from_set", on_delete=models.CASCADE)
+    user_to = models.ForeignKey(User, related_name="rel_to_set", on_delete=models.CASCADE)
+    followed_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.user_from} follows {self.user_to}'
