@@ -166,11 +166,12 @@ window.addEventListener("scroll", (e) => {
                             }
                         }
                     }, 1000);
+                    blockRequest = false;
                 }
-                blockRequest = false;
             })
             .catch((err) => {
-                console.log(err.data);
+                console.log(err);
+                blockRequest = false;
             });
     }
 });

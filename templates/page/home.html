@@ -4,6 +4,7 @@
 {% block style %}<link rel="stylesheet" href="{% static 'css/home.css' %}">{% endblock style %}
 
 {% block content %}
+{% include "components/messages.html" %}
 <div class="main-container">
     <div class="main-page">
         <div class="story">
@@ -53,18 +54,14 @@
                             <i class="far fa-bookmark"></i>
                         </div>
                     </div>
-                    {% if cm.likes.all|length > 1 %}
-                    <div class="post-likes">
-                        {{post.likes.all|length}} likes
-                    </div>
-                {% else %}
-                    <div class="post-likes">
-                        {{post.likes.all|length}} like
-                    </div>
-                {% endif %}
+                    {% if post.likes.all|length > 1 %}
+                        <div class="post-likes">{{post.likes.all|length}} likes</div>
+                    {% else %}
+                        <div class="post-likes">{{post.likes.all|length}} like</div>
+                    {% endif %}
                     <div class="post-caption">
                         <a href="#" class="post-caption-username">{{post.user}}</a>
-                        <span class="post-caption-main">{{post.caption}}</span>
+                        <span class="post-caption-main" processed="false">{{post.caption}}</span>
                         <a href="#" class="more-caption">more</a>
                     </div>
                     <div class="post-view-comments">
@@ -72,7 +69,7 @@
                         <a href="#">View all {{post.comments.all|length}} comments</a>
                         {% endif %}
                     </div>
-                    <div class="post-date">{{cm.created|timesince}}</div>
+                    <div class="post-date">{{post.created|timesince}} ago</div>
                     <div class="post-add-comment"> 
                         <div class="emoji">
                             <a href=""><i class='far fa-smile'></i></a>
@@ -153,7 +150,7 @@ window.addEventListener("scroll", (e) => {
     let innerHeight = window.innerHeight;
     let pageYOffset = window.pageYOffset;
     let clientHeight = document.body.clientHeight;
-    if (innerHeight + pageYOffset == clientHeight && blockRequest == false) {
+    if (pageYOffset > (clientHeight * 6) / 10 && blockRequest == false) {
         blockRequest = true;
         page += 1;
         axios
@@ -165,20 +162,35 @@ window.addEventListener("scroll", (e) => {
             .then((res) => {
                 if (res.data.response !== "failure") {
                     posts.innerHTML += res.data.response;
-                    window.setInterval(() => {
-                        for (let item of posts) {
-                            if (item.classList.contains("animate__fadeInUp")) {
-                                item.classList.remove("animate__fadeInUp");
-                            }
-                        }
-                    }, 1000);
+                    captionLoader();
+                    blockRequest = false;
                 }
-                blockRequest = false;
             })
             .catch((err) => {
-                console.log(err.data);
+                console.log(err);
+                blockRequest = false;
             });
     }
 });
+</script>
+
+<script>
+const captionLoader = function () {
+    let captions = document.getElementsByClassName("post-caption-main");
+    let mores = document.getElementsByClassName("more-caption");
+    Array.from(captions).forEach((caption, num) => {
+        if (caption.getAttribute("processed") === "false") {
+            let captionText = caption.innerText;
+            if (captionText.trim().length > 13) {
+                caption.innerText = captionText.slice(0, 10) + "...";
+            } else {
+                mores[num].innerText = "";
+            }
+            caption.setAttribute("processed", "true");
+        }
+        console.log(caption.innerText, num);
+    });
+};
+captionLoader();
 </script>
 {% endblock content %}

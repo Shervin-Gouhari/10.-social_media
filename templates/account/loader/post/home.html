@@ -1,5 +1,5 @@
 {% for post in posts_orderByCreationAscending %}
-    <div class="post_in_main animate__animated animate__fadeInUp">
+    <div class="post_in_main">
         <div class="post-owner-details">
             <div class="post-owner-details-img">
                 <a href="{% url 'profile' post.user %}">
@@ -26,14 +26,14 @@
                 <i class="far fa-bookmark"></i>
             </div>
         </div>
-        {% if cm.likes.all|length > 1 %}
+        {% if post.likes.all|length > 1 %}
             <div class="post-likes">{{post.likes.all|length}} likes</div>
         {% else %}
             <div class="post-likes">{{post.likes.all|length}} like</div>
         {% endif %}
         <div class="post-caption">
             <a href="#" class="post-caption-username">{{post.user}}</a>
-            <span class="post-caption-main">{{post.caption}}</span>
+            <span class="post-caption-main" processed="false">{{post.caption}}</span>
             <a href="#" class="more-caption">more</a>
         </div>
         <div class="post-view-comments">
@@ -41,7 +41,7 @@
                 <a href="#">View all {{post.comments.all|length}} comments</a>
             {% endif %}
         </div>
-        <div class="post-date">{{cm.created|timesince}}</div>
+        <div class="post-date">{{post.created|timesince}} ago</div>
         <div class="post-add-comment">
             <div class="emoji">
                 <a href=""><i class="far fa-smile"></i></a>

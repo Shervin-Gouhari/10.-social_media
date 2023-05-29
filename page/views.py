@@ -12,7 +12,7 @@ def home(request):
     for friend in request.user.following.all():
         friend_posts = friend_posts | Post.objects.filter(user=friend)
     total_posts = (user_posts | friend_posts).order_by("-created")
-    paginator = Paginator(total_posts, 6)
+    paginator = Paginator(total_posts, 4)
     page = request.GET.get("page", None)
     if page:
         try:
