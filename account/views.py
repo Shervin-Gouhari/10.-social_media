@@ -13,6 +13,8 @@ from django.http import JsonResponse
 from user.models import User, Contact
 from user.forms import *
 from post.models import Post
+from action.utils import action_create
+
 from .forms import *
 from .kavenegar import send_sms
 
@@ -139,8 +141,10 @@ def follow(request):
             user = User.objects.get(id=user_id)
             if user_action == "follow":
                 Contact.objects.get_or_create(user_from=request.user, user_to=user)
+                action_create(request.user, "followed", user)
             else:
                 Contact.objects.get(user_from=request.user, user_to=user).delete()
+                action_create(request.user, "unfollowed", user)
             return JsonResponse({"status": "success"})
         except:
             pass

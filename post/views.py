@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 
+from action.utils import action_create
 from .forms import PostCreateForm, CommentCreateForm
 from .models import Post, Comment
 
@@ -16,6 +17,7 @@ def post_create(request):
         post = form.save(commit=False)
         post.user = request.user
         post.save()
+        action_create(request.user, "posted", post)
         messages.success(request, 'Post saved successfully.')
     else:
         [messages.error(request, form.errors[error]) for error in form.errors]
@@ -58,8 +60,10 @@ def post_like(request):
             post = Post.objects.get(id=post_id)
             if post_action == 'like':
                 post.likes.add(request.user)
+                action_create(request.user, "liked", post)
             else:
                 post.likes.remove(request.user)
+                action_create(request.user, "disliked", post)
             return JsonResponse({'status': 'success'})
         except:
             return JsonResponse({'status': 'failure'})
