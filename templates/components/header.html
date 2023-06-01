@@ -1,0 +1,97 @@
+{% load static %}
+
+<section>
+    <div class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="{% static 'images/Instagram_logo.svg.png' %}" alt="" />
+            </div>
+            <div class="serachbar">
+                <input type="search" name="" id="" placeholder="Search" />
+            </div>
+            <div class="icons">
+                <a href="{% url 'page:home' %}" class="home">
+                    <i class="fas fa-home"></i>
+                </a>
+                <div class="send">
+                    <i class="far fa-paper-plane"></i>
+                </div>
+                <div class="add">
+                    <i class="far fa-plus-square"></i>
+                </div>
+                {% comment %}
+                    <a href="{% url 'page:explore' %}" class="explore">
+                        <i class="far fa-compass"></i>
+                    </a>
+                {% endcomment %}
+                <div class="heart">
+                    <i class="far fa-heart"></i>
+                </div>
+                <div class="profile profile-box">
+                    <img class="profile-box" src="{{request.user.avatar.url}}" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="actions-container animate__animated">
+    {% for action in actions %}
+        <div class="action">
+            <div class="action-user-image">
+                <a href="{% url 'profile' action.user %}">
+                    <img src="{{action.user.avatar.url}}" alt="" />
+                </a>
+            </div>
+            <div class="action-act">{{action.act}}</div>
+            <div class="action-target">
+                {% if action.act == "followed" or action.act == "unfollowed" %}
+                    <a href="{% url 'profile' action.target %}">
+                        <img src="{{action.target.avatar.url}}" alt="" />
+                    </a>
+                {% elif action.act == "liked" or action.act == "disliked" or action.act == "posted" %}
+                    <a href="{{action.target.get_absolute_url}}">
+                        <img src="{{action.target.image.url}}" alt="" />
+                    </a>
+                {% endif %}
+            </div>
+            <div class="action-date">{{action.created|timesince}} ago</div>
+        </div>
+    {% endfor %}
+</div>
+<div class="profile-modal-container profile-box display-none">
+    <a href="{% url 'profile' request.user %}" class="profile-box profile-link profile-item">
+        <i class="far fa-user-circle"></i>
+        <span>Profile</span>
+    </a>
+    <a href="" class="profile-box profile-saves profile-item">
+        <i class="far fa-bookmark"></i>
+        <span>Saved</span>
+    </a>
+    <a href="" class="profile-box profile-settings profile-item">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+    </a>
+    <a href="" class="profile-box profile-switch-accounts profile-item">
+        <!-- <i class="fas fa-repeat-alt"></i> -->
+        <i class="fas fa-random"></i>
+        <span>Switch Accounts</span>
+    </a>
+    <a href="{% url 'logout' %}" class="profile-box logoutbox profile-item">
+        <span></span>
+        <div>Log Out</div>
+    </a>
+</div><hr>
+{% include "components/messages.html" %}
+
+<script>
+let heart = document.getElementsByClassName("heart")[0];
+let actionsContainer = document.getElementsByClassName("actions-container")[0];
+document.addEventListener("click", (e)=>{
+    if (!e.target.classList.contains("fa-heart") && !e.target.classList.contains("actions-container") && actionsContainer.classList.contains("show-box")){
+        actionsContainer.classList.remove("show-box");
+    }
+});
+heart.addEventListener("click", (e)=>{
+    actionsContainer.classList.toggle("show-box");
+});
+</script>

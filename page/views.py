@@ -23,7 +23,7 @@ def home(request):
         return JsonResponse({"response": render_to_string("account/loader/post/home.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)})
     actions = Action.objects.exclude(user=request.user)
     friends_ids = request.user.following.values_list("id", flat=True)
-    actions = actions.filter(user_id__in=friends_ids)[:10]
+    actions = actions.filter(user_id__in=friends_ids).order_by("-created")[:10]
     context = {"posts_orderByCreationAscending": paginator.page(1),
                "actions": actions}
     return render(request, "page/home.html", context)
