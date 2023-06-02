@@ -18,7 +18,7 @@
                                     <span class="story-username">{{follow|truncatechars:7}}</span>
                                 </li>
                             </a>
-                        {% endfor %}                    
+                        {% endfor %}
                     </ul>
                 </div>
             </section>
@@ -141,6 +141,15 @@
             </div>
         {% endfor %}
     </div>
+
+<script>
+var splide = new Splide('.splide', {
+    drag: 'free',
+    snap: true,
+    perPage: 6,
+});
+splide.mount();
+</script>
 
 <script>
 let posts = document.getElementsByClassName("posts")[0];

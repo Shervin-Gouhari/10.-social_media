@@ -25,7 +25,7 @@ def registration(request):
         form = UserCreationForm(request.POST)
         if form.is_valid() and form.clean_password2():
             new_user = form.save(commit=False)
-            request.session['new_user'] = model_to_dict(new_user, exclude='avatar')
+            request.session['new_user'] = model_to_dict(new_user, exclude=['avatar', 'following'])
             return redirect('verification_code')
         else:
             [messages.error(request, form.errors[error]) for error in form.errors]
@@ -56,7 +56,7 @@ def verification_code(request):
                     user.save()
                     del request.session['new_user']
                     messages.success(request, 'Profile updated successfully.')
-                return redirect('edit_profile')
+                return redirect('edit_profile', user)
             else:
                 messages.error(request, 'False verification code.')
         else:
