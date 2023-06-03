@@ -50,11 +50,11 @@ img {
 
 /* Profile Section */
 
-.profile {
+.container > .profile {
     padding: 5rem 0;
 }
 
-.profile::after {
+.container > .profile::after {
     content: "";
     display: block;
     clear: both;
@@ -221,13 +221,13 @@ img {
 /* Media Query */
 
 @media screen and (max-width: 40rem) {
-    .profile {
+    .container > .profile {
         display: flex;
         flex-wrap: wrap;
         padding: 4rem 0;
     }
 
-    .profile::after {
+    .container > .profile::after {
         display: none;
     }
 
@@ -309,7 +309,7 @@ img {
 }
 
 @supports (display: grid) {
-    .profile {
+    .container > .profile {
         display: grid;
         grid-template-columns: 1fr 2fr;
         grid-template-rows: repeat(3, auto);
@@ -338,7 +338,7 @@ img {
     }
 
     @media (max-width: 40rem) {
-        .profile {
+        .container > .profile {
             grid-template-columns: auto 1fr;
             grid-row-gap: 1.5rem;
         }

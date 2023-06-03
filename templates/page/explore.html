@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Explore {% endblock title %}
+{% block style %}<link rel="stylesheet" href="{% static 'css/explore.css' %}">{% endblock style %}
+
+{% block content %}
+    <div class="explore-container">
+        {% for post in posts %}
+        <a href="{{post.get_absolute_url}}" class="explore-item">
+            <div class="overlay"></div>
+            <img src="{{post.image.url}}" alt="">
+        </a>
+        {% endfor %}
+    </div>
+{% endblock content %}

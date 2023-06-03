@@ -112,7 +112,7 @@ ul {
 
 body,
 button,
-input {
+.input-box > input {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 18px;
@@ -209,7 +209,7 @@ footer {
     /* align-items: center; */
 }
 
-.header {
+.login-box > .header {
     margin: 14.45px auto 12px;
 }
 
@@ -217,6 +217,7 @@ footer {
     background: cover no-repeat;
     width: 175px;
     height: auto;
+    padding-right: 42px;
 }
 
 .form {
@@ -231,7 +232,7 @@ footer {
     margin: auto 40px 6px;
 }
 
-input {
+.input-box > input {
     height: 36px;
     border: 1px solid #efefef;
     border-radius: 3px;
@@ -245,8 +246,8 @@ input {
     text-overflow: ellipsis;
     box-sizing: border-box;
 }
-input#name:focus,
-input#password:focus {
+.input-box > input#name:focus,
+.input-box > input#password:focus {
     border-color: #bbb;
 }
 
@@ -438,7 +439,7 @@ span.language {
         position: relative;
     }
 
-    input {
+    .input-box > input {
         border: 0;
         background-color: #fafafa;
         width: 100%;

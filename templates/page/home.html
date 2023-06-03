@@ -4,7 +4,6 @@
 {% block style %}<link rel="stylesheet" href="{% static 'css/home.css' %}">{% endblock style %}
 
 {% block content %}
-{% include "components/header.html" %}
 <div class="main-container">
     <div class="main-page">
         <div class="story">
@@ -117,20 +116,20 @@
                 </div>
             </div>
         </div>
-        {% for suggest in suggests %}
+        {% for suggestion in suggestion_list %}
             <div class="friend-suggest-container">
-                <a href="{% url 'profile' suggest %}" class="friend-suggest-image">
-                    <img src="{{suggest.photo.url}}" alt="">
+                <a href="{% url 'profile' suggestion %}" class="friend-suggest-image">
+                    <img src="{{suggestion.avatar.url}}" alt="">
                 </a>
                 <div class="friend-suggest-info">
-                    <a href="{% url 'profile' suggest %}" class="friend-suggest-info-username">
-                        {{suggest}}
+                    <a href="{% url 'profile' suggestion %}" class="friend-suggest-info-username">
+                        {{suggestion}}
                     </a>
                     <div class="friend-suggest-info-followed-by">
                         Followed by 
-                        {% for account in suggest.followers.all %}
-                            {% if account in user.following.all %}
-                                {{account}}
+                        {% for follower in suggestion.followers.all %}
+                            {% if follower in user.following.all %}
+                                {{follower}}
                             {% endif %}
                         {% endfor %}
                     </div>
