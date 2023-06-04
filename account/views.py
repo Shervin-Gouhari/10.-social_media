@@ -71,6 +71,8 @@ def verification_code(request):
 
 def custom_login(request):
     form = LoginForm()
+    if request.method == "GET" and request.user.is_authenticated == False:
+        messages.info(request, "You have to login first.")
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():

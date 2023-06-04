@@ -5,7 +5,7 @@
     <div class="header">
         <div class="header-container">
             <div class="logo">
-                <img src="{% static 'images/Instagram_logo.svg.png' %}" alt="" />
+                <img src="{% static 'image/Instagram_logo.png' %}" alt="" />
             </div>
             <div class="search-bar">
                 <input type="search" name="" id="" placeholder="Search" />
@@ -23,12 +23,17 @@
                 <a href="{% url 'page:explore' %}" class="explore">
                     <i class="far fa-compass"></i>
                 </a>
-                <div class="heart">
-                    <i class="far fa-heart"></i>
-                </div>
-                <div class="profile profile-box">
-                    <img class="profile-box" src="{{request.user.avatar.url}}" alt="" />
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="heart">
+                        <i class="far fa-heart"></i>
+                    </div>
+                    <div class="profile profile-box">
+                        <img class="profile-box" src="{{request.user.avatar.url}}" alt="" />
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}"><i class="far fa-heart"></i></a>
+                    <a href="{% url 'login' %}"><img class="no-user-avatar" src="{% static 'image/no_user_avatar.png' %}" alt="" /></a>
+                {% endif %}
             </div>
         </div>
     </div>

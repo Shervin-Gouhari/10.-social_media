@@ -333,3 +333,7 @@ body {
     font-weight: 600;
     margin-top: 1em;
 }
+
+body {
+    background-color: #fafafa;
+}

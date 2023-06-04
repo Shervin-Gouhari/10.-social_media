@@ -383,7 +383,8 @@
     cursor: pointer;
 }
 
-.profile > img {
+.profile > img,
+.no-user-avatar {
     height: 1em;
     width: 1em;
     border-radius: 50%;
