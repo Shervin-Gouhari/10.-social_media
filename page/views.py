@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 from user.models import User
 from post.models import Post
 from action.models import Action
 
 
+@login_required
 def home(request):
     user_posts = Post.objects.filter(user=request.user)
     friend_posts = Post.objects.none()

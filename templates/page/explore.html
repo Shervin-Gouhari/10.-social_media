@@ -4,7 +4,7 @@
 {% block style %}<link rel="stylesheet" href="{% static 'css/explore.css' %}">{% endblock style %}
 
 {% block content %}
-    <div class="explore-container">
+    <div class="explore-container mt-4">
         {% for post in posts %}
         <a href="{{post.get_absolute_url}}" class="explore-item">
             <div class="overlay"></div>
