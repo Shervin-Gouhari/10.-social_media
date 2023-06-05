@@ -1,13 +1,42 @@
+
+<script>
+    const swalMessage = function (message) {
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: message,
+            showConfirmButton: false,
+            timer: 2500,
+        });
+    };
+</script>
+
 {% if messages %}
-<ul>
-    {% for message in messages %} {% if message.tags == "error" %}
-    <li class="alert alert-danger messages" role="alert">{{message}}</li>
-    {% elif message.tags == "warning" %}
-    <li class="alert alert-warning messages" role="alert">{{message}}</li>
-    {% elif message.tags == "info" %}
-    <li class="alert alert-info messages" role="alert">{{message}}</li>
-    {% elif message.tags == "success" %}
-    <li class="alert alert-success messages" role="alert">{{message}}</li>
-    {% endif %} {% endfor %}
-</ul>
+    <ul>
+        {% for message in messages %} 
+            {% if message.tags == "error" %}
+                <li class="alert alert-danger messages" role="alert">{{message}}</li>
+            {% elif message.tags == "warning" %}
+                <li class="alert alert-warning messages" role="alert">{{message}}</li>
+            {% elif message.tags == "info" %}
+                <li class="alert alert-info messages" role="alert">{{message}}</li>
+
+            {% elif message.tags == "success" %}
+                {% if message.message == "You are logged in successfully." %}
+                    <script>
+                        console.log("login")
+                        swalMessage("{{message}}");
+                    </script>
+                {% elif message.message == "You are logged out successfully." %}
+                    <script>
+                        console.log("logout")
+                        swalMessage("{{message}}");
+                    </script>
+                {% else %}
+                    <li class="alert alert-success messages" role="alert">{{message}}</li>
+                {% endif %}
+            {% endif %}
+            
+        {% endfor %}
+    </ul>
 {% endif %}
