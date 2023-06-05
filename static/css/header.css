@@ -383,10 +383,14 @@
     cursor: pointer;
 }
 
-.profile > img,
 .no-user-avatar {
     height: 1em;
     width: 1em;
+    border-radius: 50%;
+}
+.profile > img{
+    height: 2em;
+    width: 2em;
     border-radius: 50%;
 }
 
