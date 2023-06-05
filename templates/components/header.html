@@ -23,7 +23,7 @@
                 <a href="{% url 'page:explore' %}" class="explore">
                     <i class="far fa-compass"></i>
                 </a>
-                {% if user.is_authenticated %}
+                {% if request.user.is_authenticated %}
                     <div class="heart">
                         <i class="far fa-heart"></i>
                     </div>
