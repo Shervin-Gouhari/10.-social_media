@@ -88,8 +88,7 @@ def post_like(request):
                 action_create(request.user, "disliked", post)
             return JsonResponse({'status': 'success'})
         except:
-            return JsonResponse({'status': 'failure'})
-        
+            return JsonResponse({'status': 'failure'}) 
 
 
 @login_required
