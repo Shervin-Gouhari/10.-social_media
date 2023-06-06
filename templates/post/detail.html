@@ -282,6 +282,7 @@ const orderBy = function (by) {
             if (res.data.response != undefined) {
                 let comments = res.data.response;
                 commentContainer.innerHTML = comments;
+                commentLikeListener();
             } else {
                 console.log("error");
             }
@@ -293,11 +294,9 @@ const orderBy = function (by) {
 
 topComments.addEventListener("click", (e) => {
     orderBy("comments_orderByLikesAscending");
-    commentLikeListener();
 });
 newestComments.addEventListener("click", (e) => {
     orderBy("comments_orderByCreationAscending");
-    commentLikeListener();
 });
 </script>
 {% endblock content %}

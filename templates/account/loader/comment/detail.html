@@ -15,17 +15,17 @@
                     <div class="comment-date">{{cm.created|customtimesince}}</div>
                 {% endcomment %}
                 <div class="comment-likes">
-                    {% if cm.likes.all|length > 1 %}
-                        <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Likes</span>
+                    {% if cm.likes|length > 1 %}
+                        <span class="like-counts">{{cm.likes|length}}</span> <span class="like-word">Likes</span>
                     {% else %}
-                        <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Like</span>
+                        <span class="like-counts">{{cm.likes|length}}</span> <span class="like-word">Like</span>
                     {% endif %}
                 </div>
                 <div class="comment-reply">Reply</div>
             </div>
         </div>
-        <div class="comment-like" data-commentId="{{cm.id}}" data-commentAction="{% if request.user in cm.likes.all %}dis{% endif %}like">
-            {% if request.user in cm.likes.all %}
+        <div class="comment-like" data-commentId="{{cm.id}}" data-commentAction="{% if request.user.id in cm.likes %}dis{% endif %}like">
+            {% if request.user.id in cm.likes %}
                 <i class="fas fa-heart heart-active"></i>
             {% else %}
                 <i class="far fa-heart"></i>
