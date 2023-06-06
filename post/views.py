@@ -37,8 +37,8 @@ def post_detail(request, slug):
                 comment.post = post
                 comment.user = request.user
                 comment.save()
-                form = CommentCreateForm()
-                return JsonResponse({'status': 'success'})
+                return JsonResponse({'status': 'success',
+                                     "newCommentId": comment.id})
             except:
                 return JsonResponse({'status': 'failure'})
         else:

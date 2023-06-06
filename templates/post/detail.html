@@ -180,6 +180,7 @@ commentPostButton.addEventListener("click", (e) => {
         axios
             .post("", fd)
             .then((res) => {
+                let newCommentId = res.data.newCommentId
                 let newComment = `
                 <div class="comments animate__animated animate__fadeInDown">
                     <div class="comment-profile">
@@ -192,20 +193,14 @@ commentPostButton.addEventListener("click", (e) => {
                         </div>
                         <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e">
                             <div class="comment-date">now</div>
-                            <div class="comment-likes">0 like</div>
+                            <div class="comment-likes">
+                                <span class="like-counts">0</span> <span class="like-word">Like</span>
+                            </div>
                             <div class="comment-reply">Reply</div>
                         </div>
                     </div>
-                    <div
-                        class="comment-like"
-                        data-commentId="{{cm.id}}"
-                        data-commentAction="{% if request.user in cm.likes.all %}dis{% endif %}like"
-                    >
-                        {% if request.user in cm.likes.all %}
-                            <i class="fas fa-heart heart-active"></i>
-                        {% else %}
-                            <i class="far fa-heart"></i>
-                        {% endif %}
+                    <div class="comment-like" data-commentId="${newCommentId}" data-commentAction="like">  
+                        <i class="far fa-heart"></i>
                     </div>
                 </div>
                 <hr />          
