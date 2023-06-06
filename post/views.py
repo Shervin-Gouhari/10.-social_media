@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 from rest_framework.views import APIView
 
@@ -55,14 +56,20 @@ def post_detail(request, slug):
 
 class PostDetailAPI(APIView):
     def get(self, request, slug):
+        by = request.GET.get('by', None)
         post = get_object_or_404(Post, slug=slug)
-        a = post.comments.all().order_by("-created", "-likes")
-        b = post.comments.all().order_by("-likes", "-created")
-        aa = CommentSerializer(instance=a, many=True, context={'request': request}).data
-        bb = CommentSerializer(instance=b, many=True, context={'request': request}).data
-        return JsonResponse({'status': 'success',
-                             'comments_orderByCreationAscending': aa,
-                             'comments_orderByLikesAscending': bb})
+        if by == 'comments_orderByCreationAscending':
+            a = post.comments.all().order_by("-created", "-likes")
+            aa = CommentSerializer(instance=a, many=True, context={'request': request}).data
+            context = {'comments': aa}
+        elif by == 'comments_orderByLikesAscending':
+            b = post.comments.all().order_by("-likes", "-created")
+            bb = CommentSerializer(instance=b, many=True, context={'request': request}).data
+            context = {'comments': bb}
+        else:
+            return JsonResponse({'status': 'failure'})
+        response = render_to_string("account/loader/comment/detail.html", context, request=request)
+        return JsonResponse({'status': 'success', 'response': response})
 
 
 @login_required

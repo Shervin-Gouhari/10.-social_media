@@ -275,77 +275,20 @@ commentLikeListener();
 <script>
 let topComments = document.getElementById("topComments");
 let newestComments = document.getElementById("newestComments");
-
 const orderBy = function (by) {
-    if (by == "comments_orderByLikesAscending") {
-        commentContainer.innerHTML = `
-        {% for cm in comments_orderByLikesAscending %}
-            <div class="comments">
-                <div class="comment-profile">
-                    <img src="{{cm.user.avatar.url}}" alt="">
-                </div>
-                <div class="comment-main">
-                    <div class="comment-text">
-                        <a class="user" href="{% url 'profile' cm.user %}"><strong>{{cm.user}}</strong></a>
-                        {{cm.text}}
-                    </div>
-                    <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e;">
-                        <div class="comment-date">{{cm.created|customtimesince}}</div>
-                        <div class="comment-likes">
-                            {% if cm.likes.all|length > 1 %}
-                                <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Likes</span>
-                            {% else %}
-                                <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Like</span>
-                            {% endif %}
-                        </div>
-                        <div class="comment-reply">Reply</div>
-                    </div>
-                </div>
-                <div class="comment-like" data-commentId="{{cm.id}}" data-commentAction="{% if request.user in cm.likes.all %}dis{% endif %}like">
-                    {% if request.user in cm.likes.all %}
-                        <i class="fas fa-heart heart-active"></i>
-                    {% else %}
-                        <i class="far fa-heart"></i>
-                    {% endif %}
-                </div>
-            </div><hr>
-        {% endfor %}
-        `;
-    } else {
-        commentContainer.innerHTML = `
-        {% for cm in comments_orderByCreationAscending %}
-            <div class="comments">
-                <div class="comment-profile">
-                    <img src="{{cm.user.avatar.url}}" alt="">
-                </div>
-                <div class="comment-main">
-                    <div class="comment-text">
-                        <a class="user" href="{% url 'profile' cm.user %}"><strong>{{cm.user}}</strong></a>
-                        {{cm.text}}
-                    </div>
-                    <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e;">
-                        <div class="comment-date">{{cm.created|customtimesince}}</div>
-                        <div class="comment-likes">
-                            {% if cm.likes.all|length > 1 %}
-                                <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Likes</span>
-                            {% else %}
-                                <span class="like-counts">{{cm.likes.all|length}}</span> <span class="like-word">Like</span>
-                            {% endif %}
-                        </div>
-                        <div class="comment-reply">Reply</div>
-                    </div>
-                </div>
-                <div class="comment-like" data-commentId="{{cm.id}}" data-commentAction="{% if request.user in cm.likes.all %}dis{% endif %}like">
-                    {% if request.user in cm.likes.all %}
-                        <i class="fas fa-heart heart-active"></i>
-                    {% else %}
-                        <i class="far fa-heart"></i>
-                    {% endif %}
-                </div>
-            </div><hr>
-        {% endfor %}
-        `;
-    }
+    axios
+        .get(`/post/detail/{{post.slug}}/API`, { params: { by: by } })
+        .then((res) => {
+            if (res.data.response != undefined) {
+                let comments = res.data.response;
+                commentContainer.innerHTML = comments;
+            } else {
+                console.log("error");
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 };
 
 topComments.addEventListener("click", (e) => {
