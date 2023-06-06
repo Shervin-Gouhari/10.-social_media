@@ -11,9 +11,7 @@
                 {{cm.text}}
             </div>
             <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e">
-                {% comment %}
-                    <div class="comment-date">{{cm.created|customtimesince}}</div>
-                {% endcomment %}
+                <div class="comment-date">{{cm.created|customtimesince}}</div>
                 <div class="comment-likes">
                     {% if cm.likes|length > 1 %}
                         <span class="like-counts">{{cm.likes|length}}</span> <span class="like-word">Likes</span>
