@@ -26,8 +26,8 @@ def post_create(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    comments_orderByCreationAscending = post.comments.all().order_by("-created")
-    comments_orderByLikesAscending = post.comments.all().order_by("-likes")
+    comments_orderByCreationAscending = post.comments.all().order_by("-created", "-likes")
+    comments_orderByLikesAscending = post.comments.all().order_by("-likes", "-created")
     form = CommentCreateForm()
     if request.method == 'POST':
         form = CommentCreateForm(request.POST)

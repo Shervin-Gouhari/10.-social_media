@@ -172,6 +172,10 @@ a {
     color: red;
 }
 
+.comment-like > svg {
+    cursor: pointer;
+}
+
 body {
     background-color: #fafafa;
 }
