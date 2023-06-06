@@ -4,9 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 
+from rest_framework.views import APIView
+
 from action.utils import action_create
 from .forms import PostCreateForm, CommentCreateForm
 from .models import Post, Comment
+from .serializers import CommentSerializer
 
 
 @login_required
@@ -48,6 +51,18 @@ def post_detail(request, slug):
                'comments_orderByCreationAscending': comments_orderByCreationAscending,
                'comments_orderByLikesAscending': comments_orderByLikesAscending}
     return render(request, 'post/detail.html', context)
+
+
+class PostDetailAPI(APIView):
+    def get(self, request, slug):
+        post = get_object_or_404(Post, slug=slug)
+        a = post.comments.all().order_by("-created", "-likes")
+        b = post.comments.all().order_by("-likes", "-created")
+        aa = CommentSerializer(instance=a, many=True, context={'request': request}).data
+        bb = CommentSerializer(instance=b, many=True, context={'request': request}).data
+        return JsonResponse({'status': 'success',
+                             'comments_orderByCreationAscending': aa,
+                             'comments_orderByLikesAscending': bb})
 
 
 @login_required
