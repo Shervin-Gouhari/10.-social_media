@@ -1,4 +1,5 @@
 {% load static %}
+{% load post_tags %}
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
 
 <section id="header-header">
@@ -57,7 +58,7 @@
                         </a>
                     {% endif %}
                 </div>
-                <div class="action-date">{{action.created|timesince}} ago</div>
+                <div class="action-date">{{action.created|customtimesince}} ago</div>
             </div>
         {% endfor %}
     </div>

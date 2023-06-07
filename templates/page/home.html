@@ -68,7 +68,7 @@
                         <a href="#">View all {{post.comments.all|length}} comments</a>
                         {% endif %}
                     </div>
-                    <div class="post-date">{{post.created|timesince}} ago</div>
+                    <div class="post-date">{{post.created|customtimesince}} ago</div>
                     <div class="post-add-comment"> 
                         <div class="emoji">
                             <a href=""><i class='far fa-smile'></i></a>

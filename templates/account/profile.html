@@ -14,7 +14,7 @@
                 <h1 class="profile-user-name font-weight-bold">{{user}}</h1>
                 {% if request.user == user %}
                     <a href="{% url 'edit_profile' request.user %}" class="btn profile-edit-btn">Edit Profile</a>
-                    <button class="btn profile-settings-btn" aria-label="profile settings" onclick="post_create()"><i class="fas fa-plus-circle" aria-hidden="true"></i></button>
+                    <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-plus-circle" aria-hidden="true"></i></button>
                 {% else %}
                     <button class="follow-btn" id="follow-btn" data-userId="{{user.id}}" data-userAction="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
                         {% if request.user in user.followers.all %}
@@ -122,19 +122,21 @@
 </div>
 
 <script>
-let post_create = () => {
+let postPopUpButton = document.getElementsByClassName("btn profile-settings-btn")[0];
+postPopUpButton.addEventListener("click", (e) => {
     Swal.fire({
-        title: "Post Create",
+        width: 600,
+        title: "Create Post",
         html: `
             <form action="{% url 'post:create' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input class="form-control" type="file"  name="image"><hr/>
-                <textarea class="form-control z-depth-1" name="caption" rows="3" placeholder="Caption..."></textarea><hr/>
-                <button type="submit">Post</button>
+                <input type="file" name="image" class="swal2-file mb-4">
+                <textarea name="caption" class="form-control z-depth-1 mb-4" rows="4" placeholder="Caption..."></textarea>
+                <button type="submit" class="swal2-confirm swal2-styled">Post</button>
             </form>`,
         showConfirmButton: false,
     });
-};
+});  
 </script>
 
 <script>
