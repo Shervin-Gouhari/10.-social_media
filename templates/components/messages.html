@@ -24,12 +24,10 @@
             {% elif message.tags == "success" %}
                 {% if message.message == "You are logged in successfully." %}
                     <script>
-                        console.log("login")
                         swalMessage("{{message}}");
                     </script>
                 {% elif message.message == "You are logged out successfully." %}
                     <script>
-                        console.log("logout")
                         swalMessage("{{message}}");
                     </script>
                 {% else %}
