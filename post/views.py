@@ -41,7 +41,7 @@ def post_detail(request, slug):
                 comment.post = post
                 comment.user = request.user
                 comment.save()
-                response = render_to_string("loader/comment/detail/new.html", {"comment": comment}, request=request)
+                response = render_to_string("loader/comment/detail/new.html", {"cm": comment}, request=request)
                 return JsonResponse({'status': 'success', 'response': response})
             except:
                 return JsonResponse({'status': 'failure'})

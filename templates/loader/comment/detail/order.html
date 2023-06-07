@@ -3,14 +3,14 @@
 {% for cm in comments %}
     <div class="comments">
         <div class="comment-profile">
-            <img src="{{cm.user.avatar}}" alt="" />
+            <a href="{% url 'profile' cm.user.username %}"><img src="{{cm.user.avatar}}" alt=""></a>
         </div>
         <div class="comment-main">
             <div class="comment-text">
                 <a class="user" href="{% url 'profile' cm.user.username %}"><strong>{{cm.user.username}}</strong></a>
-                {{cm.text}}
+                <div>{{cm.text}}</div>
             </div>
-            <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e">
+            <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e;">
                 <div class="comment-date">{{cm.created|customtimesince}}</div>
                 <div class="comment-likes">
                     {% if cm.likes|length > 1 %}

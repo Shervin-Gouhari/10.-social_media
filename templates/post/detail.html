@@ -174,55 +174,34 @@ let commentContainer = document.getElementById("comment-container");
 let comments = document.getElementsByClassName("comments");
 
 commentPostButton.addEventListener("click", (e) => {
+    e.preventDefault();
     if (requestUserId != "None") {
-        e.preventDefault();
         fd = new FormData();
         fd.append("csrfmiddlewaretoken", "{{csrf_token}}");
         fd.append("text", commentTextForm.value);
         axios
             .post("", fd)
             .then((res) => {
-                let newCommentId = res.data.newCommentId
-                let newComment = `
-                <div class="comments animate__animated animate__fadeInDown">
-                    <div class="comment-profile">
-                        <img src="{{request.user.avatar.url}}" alt="" />
-                    </div>
-                    <div class="comment-main">
-                        <div class="comment-text">
-                            <a class="user" href="{% url 'profile' request.user %}"><strong>{{request.user}}</strong></a>
-                            ${commentTextForm.value}
-                        </div>
-                        <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e">
-                            <div class="comment-date">now</div>
-                            <div class="comment-likes">
-                                <span class="like-counts">0</span> <span class="like-word">Like</span>
-                            </div>
-                            <div class="comment-reply">Reply</div>
-                        </div>
-                    </div>
-                    <div class="comment-like" data-commentId="${newCommentId}" data-commentAction="like">  
-                        <i class="far fa-heart"></i>
-                    </div>
-                </div>
-                <hr />          
-                `;
-                commentContainer.innerHTML = newComment + commentContainer.innerHTML;
-                commentTextForm.value = "";
-                commentLikeListener();
-                window.setInterval(() => {
-                    for (let item of comments) {
-                        if (item.classList.contains("animate__fadeInDown")) {
-                            item.classList.remove("animate__fadeInDown");
+                if (res.data.response != undefined) {
+                    let newComment = res.data.response;
+                    commentContainer.innerHTML = newComment + commentContainer.innerHTML;
+                    commentTextForm.value = "";
+                    commentLikeListener();
+                    window.setInterval(() => {
+                        for (let item of comments) {
+                            if (item.classList.contains("animate__fadeInDown")) {
+                                item.classList.remove("animate__fadeInDown");
+                            }
                         }
-                    }
-                }, 1000);
+                    }, 1000);
+                } else {
+                    console.log("error");
+                }
             })
             .catch((err) => {
                 console.log(err);
             });
     } else {
-        e.preventDefault();
         alert("You have to login first before commenting.");
     }
 });
