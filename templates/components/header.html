@@ -13,20 +13,24 @@
             </div>
             <div class="icons">
                 <a href="{% url 'page:home' %}" class="home">
-                    <i class="fas fa-home"></i>
+                    <i style="color: rgb(0, 106, 255);" class="fas fa-home"></i>
                 </a>
                 <div class="send">
-                    <i class="far fa-paper-plane"></i>
+                    <i style="color: purple;" class="far fa-paper-plane"></i>
                 </div>
                 <div class="add">
-                    <i class="far fa-plus-square"></i>
+                    <i style="color: green;" class="far fa-plus-square"></i>
                 </div>
                 <a href="{% url 'page:explore' %}" class="explore">
-                    <i class="far fa-compass"></i>
+                    <i style="color: aqua;" class="far fa-compass"></i>
                 </a>
                 {% if request.user.is_authenticated %}
                     <div class="heart">
-                        <i class="far fa-heart"></i>
+                        {% if actions %}
+                            <i class="fa-solid fa-heart fa-beat heart-active"></i>
+                        {% else %}
+                            <i style="color: red;" class="far fa-heart"></i>
+                        {% endif %}
                     </div>
                     <div class="profile profile-box">
                         <img class="profile-box" src="{{request.user.avatar.url}}" alt="" />
@@ -88,11 +92,12 @@
 {% include "components/messages.html" %}
 
 <script>
-let heart = document.getElementsByClassName("heart")[0];
+let heart = document.querySelector(".heart");
 let actionsContainer = document.getElementsByClassName("actions-container")[0];
 document.addEventListener("click", (e)=>{
     if (!e.target.classList.contains("fa-heart") && !e.target.classList.contains("actions-container") && actionsContainer.classList.contains("show-box")){
         actionsContainer.classList.remove("show-box");
+        heart.innerHTML = '<i style="color: red;" class="far fa-heart"></i>';
     }
 });
 heart.addEventListener("click", (e)=>{

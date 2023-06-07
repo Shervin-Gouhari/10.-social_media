@@ -3,35 +3,22 @@
     align-content: normal;
     align-items: normal;
     align-self: auto;
-    animation-composition: replace;
-    animation-delay: 0s;
-    animation-direction: normal;
-    animation-duration: 0s;
-    animation-fill-mode: none;
-    animation-iteration-count: 1;
-    animation-name: none;
-    animation-play-state: running;
-    animation-timing-function: ease;
     appearance: none;
     backdrop-filter: none;
     backface-visibility: visible;
     background-attachment: scroll;
     background-blend-mode: normal;
     background-clip: border-box;
-    background-color: rgba(0, 0, 0, 0);
     background-image: none;
     background-origin: padding-box;
     background-position: 0% 0%;
     background-repeat: repeat;
     background-size: auto;
     block-size: 65px;
-    border-block-end-color: rgb(33, 37, 41);
     border-block-end-style: none;
     border-block-end-width: 0px;
-    border-block-start-color: rgb(33, 37, 41);
     border-block-start-style: none;
     border-block-start-width: 0px;
-    border-bottom-color: rgb(33, 37, 41);
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     border-bottom-style: none;
@@ -44,21 +31,16 @@
     border-image-slice: 100%;
     border-image-source: none;
     border-image-width: 1;
-    border-inline-end-color: rgb(33, 37, 41);
     border-inline-end-style: none;
     border-inline-end-width: 0px;
-    border-inline-start-color: rgb(33, 37, 41);
     border-inline-start-style: none;
     border-inline-start-width: 0px;
-    border-left-color: rgb(33, 37, 41);
     border-left-style: none;
     border-left-width: 0px;
-    border-right-color: rgb(33, 37, 41);
     border-right-style: none;
     border-right-width: 0px;
     border-start-end-radius: 0px;
     border-start-start-radius: 0px;
-    border-top-color: rgb(33, 37, 41);
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     border-top-style: none;
@@ -70,16 +52,13 @@
     break-before: auto;
     break-inside: auto;
     caption-side: top;
-    caret-color: rgb(33, 37, 41);
     clear: none;
     clip: auto;
     clip-path: none;
     clip-rule: nonzero;
-    color: rgb(33, 37, 41);
     color-interpolation-filters: linearrgb;
     column-count: auto;
     column-gap: normal;
-    column-rule-color: rgb(33, 37, 41);
     column-rule-style: none;
     column-rule-width: 0px;
     column-span: none;
@@ -94,7 +73,6 @@
     direction: ltr;
     display: block;
     empty-cells: show;
-    fill: rgb(0, 0, 0);
     fill-opacity: 1;
     fill-rule: nonzero;
     filter: none;
@@ -104,7 +82,6 @@
     flex-shrink: 1;
     flex-wrap: nowrap;
     float: none;
-    flood-color: rgb(0, 0, 0);
     flood-opacity: 1;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -148,7 +125,6 @@
     justify-self: auto;
     left: auto;
     letter-spacing: normal;
-    lighting-color: rgb(255, 255, 255);
     line-break: auto;
     line-height: 24px;
     list-style-image: none;
@@ -186,7 +162,6 @@
     opacity: 1;
     order: 0;
     orphans: 2;
-    outline-color: rgb(33, 37, 41);
     outline-offset: 0px;
     outline-style: none;
     outline-width: 0px;
@@ -230,7 +205,6 @@
     shape-margin: 0px;
     shape-outside: none;
     shape-rendering: auto;
-    stop-color: rgb(0, 0, 0);
     stop-opacity: 1;
     stroke: none;
     stroke-dasharray: none;
@@ -245,12 +219,9 @@
     text-align: left;
     text-align-last: auto;
     text-anchor: start;
-    text-decoration: none solid rgb(33, 37, 41);
-    text-decoration-color: rgb(33, 37, 41);
     text-decoration-line: none;
     text-decoration-skip-ink: auto;
     text-decoration-style: solid;
-    text-emphasis-color: rgb(33, 37, 41);
     text-emphasis-position: over;
     text-emphasis-style: none;
     text-indent: 0px;
@@ -281,37 +252,6 @@
     writing-mode: horizontal-tb;
     z-index: auto;
     zoom: 1;
-    -webkit-border-horizontal-spacing: 0px;
-    -webkit-border-vertical-spacing: 0px;
-    -webkit-box-align: stretch;
-    -webkit-box-direction: normal;
-    -webkit-box-flex: 0;
-    -webkit-box-ordinal-group: 1;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: start;
-    -webkit-box-reflect: none;
-    -webkit-font-smoothing: auto;
-    -webkit-highlight: none;
-    -webkit-line-break: auto;
-    -webkit-line-clamp: none;
-    -webkit-locale: "en";
-    -webkit-mask-box-image: none;
-    -webkit-mask-box-image-outset: 0;
-    -webkit-mask-box-image-repeat: stretch;
-    -webkit-mask-box-image-slice: 0 fill;
-    -webkit-mask-box-image-source: none;
-    -webkit-mask-box-image-width: auto;
-    -webkit-rtl-ordering: logical;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-text-combine: none;
-    -webkit-text-decorations-in-effect: none;
-    -webkit-text-fill-color: rgb(33, 37, 41);
-    -webkit-text-security: none;
-    -webkit-text-stroke-color: rgb(33, 37, 41);
-    -webkit-text-stroke-width: 0px;
-    -webkit-user-drag: auto;
-    -webkit-user-modify: read-only;
-    -webkit-writing-mode: horizontal-tb;
 }
 
 .header {
@@ -388,7 +328,7 @@
     width: 1em;
     border-radius: 50%;
 }
-.profile > img{
+.profile > img {
     height: 2em;
     width: 2em;
     border-radius: 50%;
@@ -493,4 +433,8 @@
 
 .profile-item:last-child {
     border-top: 1px solid #afafaf;
+}
+
+.heart-active {
+    color: red;
 }
