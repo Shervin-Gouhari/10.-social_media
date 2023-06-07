@@ -68,7 +68,7 @@ class PostDetailAPI(APIView):
             context = {'comments': bb}
         else:
             return JsonResponse({'status': 'failure'})
-        response = render_to_string("account/loader/comment/detail.html", context, request=request)
+        response = render_to_string("loader/comment/detail/order.html", context, request=request)
         return JsonResponse({'status': 'success', 'response': response})
 
 

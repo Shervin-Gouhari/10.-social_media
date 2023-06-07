@@ -92,14 +92,14 @@ def custom_login(request):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(user=user).order_by("-created")
-    paginator = Paginator(posts, 4)
+    paginator = Paginator(posts, 6)
     page = request.GET.get("page", None)
     if page:
         try:
             posts_orderByCreationAscending = paginator.page(page)
         except(EmptyPage, PageNotAnInteger):
             return JsonResponse({"response": "failure"})
-        return JsonResponse({"response": render_to_string("account/loader/post/profile.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)}) 
+        return JsonResponse({"response": render_to_string("loader/post/profile.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)}) 
     context = {"user": user,
                "posts_orderByCreationAscending": paginator.page(1)}
     return render(request, 'account/profile.html', context)
