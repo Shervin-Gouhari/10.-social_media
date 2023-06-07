@@ -71,7 +71,7 @@
     </div>
     <div class="description">
       <strong><a href="{% url 'profile' post.user %}">{{post.user}}&nbsp;&nbsp;</a></strong>{{post.caption}}<br><br>
-      <span style="font-size: small; font-weight: 500; color: #7c818e;">{{post.created|customtimesince}} ago</span>
+      <span>{{post.created|customtimesince}} ago</span>
     </div>
   </section>
   <div class="comment-form">
@@ -98,7 +98,7 @@
                 <a class="user" href="{% url 'profile' cm.user %}"><strong>{{cm.user}}</strong></a>
                 <div>{{cm.text}}</div>
             </div>
-            <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e;">
+            <div class="comment-info">
                 <div class="comment-date">{{cm.created|customtimesince}}</div>
                 <div class="comment-likes">
                   {% if cm.likes.all|length > 1 %}

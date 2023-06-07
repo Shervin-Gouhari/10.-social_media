@@ -10,7 +10,7 @@
                 <a class="user" href="{% url 'profile' cm.user.username %}"><strong>{{cm.user.username}}</strong></a>
                 <div>{{cm.text}}</div>
             </div>
-            <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e;">
+            <div class="comment-info">
                 <div class="comment-date">{{cm.created|customtimesince}}</div>
                 <div class="comment-likes">
                     {% if cm.likes|length > 1 %}

@@ -76,6 +76,11 @@ body section .description strong a {
     font-weight: 900;
     font-size: 15px;
 }
+.description > span {
+    font-size: small;
+    font-weight: 500;
+    color: #7c818e;
+}
 .check-like {
     animation-duration: 0.2s;
     animation-name: like;
@@ -146,6 +151,9 @@ a {
 .comment-info {
     display: grid;
     grid-template-columns: 20% 20% 15%;
+    font-size: small;
+    font-weight: 500;
+    color: #7c818e;
 }
 
 .comment-form {
