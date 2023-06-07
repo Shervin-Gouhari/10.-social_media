@@ -82,9 +82,10 @@
     </form>
   </div>
   {% if comments_orderByLikesAscending|length > 1 %}
-    <div class="text-right mb-3">
-      <div id="topComments" class="d-inline-block btn btn-dark rounded">Top</div>
-      <div id="newestComments" class="d-inline-block btn btn-dark rounded">Newest</div>
+    <div class="d-flex mb-3">
+      <div id="numberOfComments" class="mr-auto">Number of comments: <div class="d-inline-block">{{post.comments.all|length}}</div></div>
+      <div id="topComments" class="btn btn-dark rounded mr-1">Top</div>
+      <div id="newestComments" class="btn btn-dark rounded">Newest</div>
     </div>
   {% endif %}
   <div id="comment-container">
@@ -172,6 +173,7 @@ let commentPostButton = document.getElementById("comment-post-button");
 let commentTextForm = document.getElementById("comment-text-form");
 let commentContainer = document.getElementById("comment-container");
 let comments = document.getElementsByClassName("comments");
+let numberOfComments = document.querySelector("#numberOfComments > div")
 
 commentPostButton.addEventListener("click", (e) => {
     e.preventDefault();
@@ -186,6 +188,7 @@ commentPostButton.addEventListener("click", (e) => {
                     let newComment = res.data.response;
                     commentContainer.innerHTML = newComment + commentContainer.innerHTML;
                     commentTextForm.value = "";
+                    numberOfComments.innerText = parseInt(numberOfComments.innerText) + 1
                     commentLikeListener();
                     window.setInterval(() => {
                         for (let item of comments) {

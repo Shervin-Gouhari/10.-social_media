@@ -196,6 +196,12 @@ a {
     margin-top: 10px;
 }
 
+#numberOfComments {
+    font-size: small;
+    font-weight: 500;
+    color: #7c818e;
+}
+
 body {
     background-color: #fafafa;
 }
