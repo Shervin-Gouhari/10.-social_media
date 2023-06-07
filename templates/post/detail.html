@@ -91,12 +91,12 @@
     {% for cm in comments_orderByLikesAscending %}
       <div class="comments">
         <div class="comment-profile">
-            <img src="{{cm.user.avatar.url}}" alt="">
+            <a href="{% url 'profile' cm.user %}"><img src="{{cm.user.avatar.url}}" alt=""></a>
         </div>
         <div class="comment-main">
             <div class="comment-text">
                 <a class="user" href="{% url 'profile' cm.user %}"><strong>{{cm.user}}</strong></a>
-                {{cm.text}}
+                <div>{{cm.text}}</div>
             </div>
             <div class="comment-info" style="font-size: small; font-weight: 500; color: #7c818e;">
                 <div class="comment-date">{{cm.created|customtimesince}}</div>

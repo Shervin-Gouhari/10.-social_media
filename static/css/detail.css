@@ -70,7 +70,7 @@ body section .description {
     padding: 6px;
     border: 0;
     font-size: 16px;
-    word-wrap: break-word
+    word-wrap: break-word;
 }
 body section .description strong a {
     font-weight: 900;
@@ -131,7 +131,7 @@ a {
     align-items: center;
     margin-bottom: 3em;
 }
-.comment-profile > img {
+.comment-profile > a > img {
     height: 3em;
     width: 3em;
     border-radius: 50%;
@@ -175,6 +175,16 @@ a {
 
 .comment-like > svg {
     cursor: pointer;
+}
+
+.comment-text > a > strong {
+    font-weight: 900;
+    font-size: 15px;
+}
+
+.comment-text > div {
+    width: 520px;
+    word-wrap: break-word;
 }
 
 body {
