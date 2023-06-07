@@ -70,9 +70,10 @@ body section .description {
     padding: 6px;
     border: 0;
     font-size: 16px;
+    word-wrap: break-word
 }
-body section .description strong {
-    font-weight: bold;
+body section .description strong a {
+    font-weight: 900;
     font-size: 15px;
 }
 .check-like {
@@ -156,7 +157,7 @@ a {
     grid-template-columns: auto auto;
     align-items: center;
 }
-.user > img {
+.user > a > img {
     height: 3em;
     width: 3em;
     border-radius: 50%;

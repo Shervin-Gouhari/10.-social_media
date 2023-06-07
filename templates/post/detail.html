@@ -10,7 +10,7 @@
     <div id="request-user-id" hidden>{{request.user.id}}</div>
     <div class="header">
       <div class="user">
-        <img src="{{post.user.avatar.url}}" alt="">
+        <a href="{% url 'profile' post.user %}"><img src="{{post.user.avatar.url}}" alt=""></a>
         <a href="{% url 'profile' post.user %}">
           <strong>{{post.user}}</strong>
         </a>
@@ -70,7 +70,7 @@
       </div>
     </div>
     <div class="description">
-      <strong><a href="{% url 'profile' post.user %}">{{post.user}}&nbsp;&nbsp;</a></strong>{{post.caption}}<br>
+      <strong><a href="{% url 'profile' post.user %}">{{post.user}}&nbsp;&nbsp;</a></strong>{{post.caption}}<br><br>
       <span style="font-size: small; font-weight: 500; color: #7c818e;">{{post.created|customtimesince}} ago</span>
     </div>
   </section>
@@ -81,7 +81,7 @@
         <button class="comment-submit" id="comment-post-button" type="submit">post</button>
     </form>
   </div>
-  {% if comments_orderByLikesAscending %}
+  {% if comments_orderByLikesAscending|length > 1 %}
     <div class="text-right mb-3">
       <div id="topComments" class="d-inline-block btn btn-dark rounded">Top</div>
       <div id="newestComments" class="d-inline-block btn btn-dark rounded">Newest</div>
