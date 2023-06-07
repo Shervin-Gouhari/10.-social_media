@@ -9,7 +9,7 @@ from django.utils.text import slugify
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='posts', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='posts/images/%Y/%m/%d')
-    caption = models.TextField(max_length=500, blank=True)
+    caption = models.TextField(max_length=2000, blank=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='post_likes', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     is_edited = models.BooleanField(default=False)
@@ -32,7 +32,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE)
-    text = models.TextField(max_length=300)
+    text = models.TextField(max_length=1000)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='comment_likes', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     is_edited = models.BooleanField(default=False)

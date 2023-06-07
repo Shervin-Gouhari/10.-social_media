@@ -76,8 +76,7 @@
   </section>
   <div class="comment-form">
     <form action="" method="POST">
-        {% csrf_token %}
-        <textarea name="text" id="comment-text-form" class="comment-textarea" placeholder="Comment here"></textarea>
+        {% csrf_token %} {{form.as_p}}
         <button class="comment-submit" id="comment-post-button" type="submit">post</button>
     </form>
   </div>
