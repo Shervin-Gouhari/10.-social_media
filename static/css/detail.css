@@ -59,6 +59,9 @@ body section .toolbar .signet {
     margin: 8px;
     padding: 0;
     border: 0;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
 }
 body section .toolbar .signet {
     position: absolute;
@@ -99,10 +102,6 @@ body section .description strong a {
     to {
         transform: scale(1);
     }
-}
-
-.active {
-    fill: red;
 }
 
 a {
