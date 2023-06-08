@@ -8,8 +8,7 @@ from .utils import YEARS
 class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['avatar', 'phone_number', 'username', 'email',
-                  'first_name', 'last_name', 'date_of_birth', 'biography']
+        fields = ['phone_number', 'username', 'email']
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(
         label="Password confirmation", widget=forms.PasswordInput)
