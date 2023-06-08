@@ -127,7 +127,7 @@ def edit_profile(request, username):
                 return redirect('verification_code')
             else:
                 messages.success(request, 'Profile updated successfully.')
-                return redirect('profile')
+                return redirect('profile', request.user)
         else:
             [messages.error(request, form.errors[error]) for error in form.errors]
     return render(request, 'account/edit_profile.html', {'form': form})
