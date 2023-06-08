@@ -10,8 +10,7 @@ class UserCreationForm(forms.ModelForm):
         model = User
         fields = ['phone_number', 'username', 'email']
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
-    password2 = forms.CharField(
-        label="Password confirmation", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
@@ -31,9 +30,7 @@ class UserCreationForm(forms.ModelForm):
 class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['avatar', 'phone_number', 'username', 'email', 'first_name',
-                  'last_name', 'date_of_birth', 'biography']
+        fields = ['avatar', 'phone_number', 'username', 'email', 'first_name', 'last_name', 'date_of_birth', 'biography']
 
     password = ReadOnlyPasswordHashField()
-    date_of_birth = forms.DateField(
-        widget=forms.SelectDateWidget(years=YEARS()), required=False)
+    date_of_birth = forms.DateField(widget=forms.SelectDateWidget(years=YEARS()), required=False)
