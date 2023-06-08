@@ -83,7 +83,7 @@
             <i class="fas fa-repeat-alt"></i>
             <span>Switch Accounts</span>
         </a>
-        <a href="{% url 'logout' %}" class="profile-box logoutbox profile-item">
+        <a href="{% url 'logout' %}?next={% url 'page:explore' %}" class="profile-box logoutbox profile-item">
             <span></span>
             <div>Log Out</div>
         </a>

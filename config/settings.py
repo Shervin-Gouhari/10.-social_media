@@ -103,11 +103,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.User'
 
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = 'page:explore'
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
