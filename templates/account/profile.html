@@ -148,7 +148,7 @@ window.addEventListener("scroll", (e) => {
     let pageYOffset = window.pageYOffset;
     let clientHeight = document.body.clientHeight;
     let galleryItem = document.getElementsByClassName("gallery-item");
-    if (innerHeight + pageYOffset > clientHeight + 10 && blockRequest == false) {
+    if (innerHeight + pageYOffset >= clientHeight && blockRequest == false) {
         blockRequest = true;
         page += 1;
         axios
