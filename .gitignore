@@ -1,5 +1,4 @@
 env/
-.vscode/
 media/
 
 **/__pycache__/
@@ -8,3 +7,5 @@ media/
 db.sqlite3
 config/local_settings.py
 account/kavenegar.py
+static/test.html
+static/test.js
