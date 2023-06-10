@@ -173,7 +173,7 @@ let commentPostButton = document.getElementById("comment-post-button");
 let commentTextForm = document.getElementById("comment-text-form");
 let commentContainer = document.getElementById("comment-container");
 let comments = document.getElementsByClassName("comments");
-let numberOfComments = document.querySelector("#numberOfComments > div")
+let numberOfComments = document.querySelector("#numberOfComments > div");
 
 commentPostButton.addEventListener("click", (e) => {
     e.preventDefault();
@@ -188,7 +188,9 @@ commentPostButton.addEventListener("click", (e) => {
                     let newComment = res.data.response;
                     commentContainer.innerHTML = newComment + commentContainer.innerHTML;
                     commentTextForm.value = "";
-                    numberOfComments.innerText = parseInt(numberOfComments.innerText) + 1
+                    if (numberOfComments != undefined) {
+                        numberOfComments.innerText = parseInt(numberOfComments.innerText) + 1;
+                    }
                     commentLikeListener();
                     window.setInterval(() => {
                         for (let item of comments) {
