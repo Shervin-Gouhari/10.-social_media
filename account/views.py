@@ -39,7 +39,6 @@ def registration(request):
 
 def verification_code(request):
     new_user = request.session['new_user']
-    print("\n", new_user, "\n")
     if request.method == 'POST':
         form = VerificationForm(request.POST)
         if form.is_valid():
