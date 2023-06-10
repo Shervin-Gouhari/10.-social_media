@@ -59,8 +59,7 @@ body section .toolbar .signet {
     margin: 8px;
     padding: 0;
     border: 0;
-    width: 24px;
-    height: 24px;
+    font-size: 24px;
     cursor: pointer;
 }
 body section .toolbar .signet {
@@ -175,10 +174,6 @@ a {
     color: #333;
 }
 
-.heart-active {
-    color: red;
-}
-
 .comment-like > svg {
     cursor: pointer;
 }
@@ -200,8 +195,14 @@ a {
     color: #7c818e;
 }
 
-.active {
-    fill: red;
+.fa-solid {
+    color: red;
+}
+.fa-solid:hover {
+    color: red;
+}
+.fa-regular:hover {
+    color: black;
 }
 
 body {
