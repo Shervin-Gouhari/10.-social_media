@@ -30,7 +30,7 @@ def post_create(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    comments_orderByCreationAscending = post.comments.order_by("-created")
+    comments_orderByCreationAscending = post.comments.order_by("-created", "-total_likes")
     comments_orderByLikesAscending = post.comments.order_by("-total_likes", "-created")
     form = CommentCreateForm()
     if request.method == 'POST':
@@ -59,7 +59,7 @@ class PostDetailAPI(APIView):
         by = request.GET.get('by', None)
         post = get_object_or_404(Post, slug=slug)
         if by == 'comments_orderByCreationAscending':
-            a = post.comments.order_by("-created")
+            a = post.comments.order_by("-created", "-total_likes")
             aa = CommentSerializer(instance=a, many=True, context={'request': request}).data
             context = {'comments': aa}
         elif by == 'comments_orderByLikesAscending':

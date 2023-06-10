@@ -20,17 +20,21 @@ class UserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
+        password = self.cleaned_data['password2']
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password2'])
+        if password != '':
+            user.set_password(password)
         if commit:
             user.save()
         return user
 
 
-class UserChangeForm(forms.ModelForm):
+
+class UserChangeForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['avatar', 'phone_number', 'username', 'email', 'first_name', 'last_name', 'date_of_birth', 'biography']
 
-    password = ReadOnlyPasswordHashField()
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput, required=False)
+    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput, required=False)
     date_of_birth = forms.DateField(widget=forms.SelectDateWidget(years=YEARS()), required=False)

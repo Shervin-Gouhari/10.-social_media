@@ -9,7 +9,7 @@ from post.models import Post
 from action.models import Action
 
 
-@login_required
+@login_required(login_url='login')
 def home(request):
     user_posts = Post.objects.filter(user=request.user)
     friend_posts = Post.objects.none()
@@ -44,5 +44,5 @@ def home(request):
 
 
 def explore(request):
-    posts = Post.objects.order_by("-total_likes")
+    posts = Post.objects.order_by("-total_likes", "-created")
     return render(request, "page/explore.html", {"posts": posts})

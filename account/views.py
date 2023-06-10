@@ -39,6 +39,7 @@ def registration(request):
 
 def verification_code(request):
     new_user = request.session['new_user']
+    print("\n", new_user, "\n")
     if request.method == 'POST':
         form = VerificationForm(request.POST)
         if form.is_valid():
@@ -106,20 +107,21 @@ def profile(request, username):
 
 
 @login_required
-def edit_profile(request, username): 
+def edit_profile(request, username):
     form = UserChangeForm(instance=request.user)
-    del form.fields['password']
     if request.method == 'POST':
         phone_number = request.user.phone_number
-        form = UserChangeForm(instance=request.user,
-                              data=request.POST, files=request.FILES)
+        form = UserChangeForm(instance=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
-            update_fields = ['avatar', 'username', 'email','first_name', 'last_name', 'date_of_birth', 'biography']
+            password = form.cleaned_data['password2']
+            update_fields = ['avatar', 'username', 'email','first_name', 'last_name', 'date_of_birth', 'biography', 'password']
+            if password != '': form.clean_password2()
             user = form.save(commit=False)
             user.save(update_fields=update_fields)
+            if password != '': login(request, user)
             if phone_number != form.cleaned_data['phone_number']:
                 new_user = {
-                    'id': request.user.id,
+                    'id': user.id,
                     'is_active': False,
                     'phone_number': phone_number,
                     'new_num': form.cleaned_data['phone_number']}
@@ -127,7 +129,7 @@ def edit_profile(request, username):
                 return redirect('verification_code')
             else:
                 messages.success(request, 'Profile updated successfully.')
-                return redirect('profile', request.user)
+                return redirect('edit_profile', user)
         else:
             [messages.error(request, form.errors[error]) for error in form.errors]
     return render(request, 'account/edit_profile.html', {'form': form})
