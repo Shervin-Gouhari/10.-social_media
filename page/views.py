@@ -44,5 +44,5 @@ def home(request):
 
 
 def explore(request):
-    posts = Post.objects.order_by("-likes")
+    posts = Post.objects.order_by("-total_likes")
     return render(request, "page/explore.html", {"posts": posts})

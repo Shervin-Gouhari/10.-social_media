@@ -15,6 +15,7 @@ class Post(models.Model):
     is_edited = models.BooleanField(default=False)
     edited = models.DateTimeField(auto_now=True)
     slug = models.SlugField()
+    total_likes = models.PositiveIntegerField(default=0)
     
 
     def __str__(self):
@@ -37,6 +38,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     is_edited = models.BooleanField(default=False)
     edited = models.DateTimeField(auto_now=True)
+    total_likes = models.PositiveIntegerField(default=0)
     
     
     def __str__(self):
