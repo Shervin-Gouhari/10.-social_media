@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load post_tags %}
+{% load crispy_forms_tags %}
 {% block title %} Post Detail {% endblock title %}
 {% block style %}<link rel="stylesheet" href="{% static 'css/detail.css' %}">{% endblock style %}
 
@@ -76,7 +77,7 @@
   </section>
   <div class="comment-form">
     <form action="" method="POST">
-        {% csrf_token %} {{form.as_p}}
+        {% csrf_token %} {{form|crispy}}
         <button class="comment-submit" id="comment-post-button" type="submit">post</button>
     </form>
   </div>

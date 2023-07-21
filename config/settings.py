@@ -21,6 +21,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'rest_framework',
+    
+    'crispy_forms',
+    'crispy_bootstrap5',
 
     'user.apps.UserConfig',
     'account.apps.AccountConfig',
@@ -114,3 +117,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Static
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+
+# Bootstrap
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
