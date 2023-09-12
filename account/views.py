@@ -58,8 +58,6 @@ def verification_code(request):
                 return redirect('edit_profile', user)
             else:
                 messages.error(request, 'False verification code.')
-        else:
-            [messages.error(request, form.errors[error]) for error in form.errors]
     else:
         request.session['verification_code'] = randint(11111, 99999)
         ver_code = request.session['verification_code']
@@ -70,8 +68,6 @@ def verification_code(request):
 
 def custom_login(request):
     form = LoginForm()
-    if request.method == "GET" and request.user.is_authenticated == False:
-        messages.info(request, "You have to login first.")
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -85,7 +81,7 @@ def custom_login(request):
                 return redirect("page:home")
             else:
                 messages.error(request, "No user found with said credentials.")
-    return render(request, 'registration/login.html', {'form':form})
+    return render(request, 'registration/login.html')
 
 
 def profile(request, username):
