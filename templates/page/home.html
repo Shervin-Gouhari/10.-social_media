@@ -60,9 +60,9 @@
                         <div class="post-likes">{{post.likes.all|length}} like</div>
                     {% endif %}
                     <div class="post-caption">
-                        <a href="#" class="post-caption-username">{{post.user}}</a>
-                        <span class="post-caption-main" processed="false">{{post.caption}}</span>
-                        <a href="#" class="more-caption">more</a>
+                        <a href="{% url 'profile' post.user %}" class="post-caption-username">{{post.user}}</a>
+                        <span class="post-caption-main" processed="false" full-caption="{{post.caption}}">{{post.caption}}</span>
+                        <div class="more-caption">more</div>
                     </div>
                     <div class="post-view-comments">
                         {% if post.comments.all|length > 0 %}
@@ -191,15 +191,22 @@ const captionLoader = function () {
     Array.from(captions).forEach((caption, num) => {
         if (caption.getAttribute("processed") === "false") {
             let captionText = caption.innerText;
-            if (captionText.trim().length > 13) {
-                caption.innerText = captionText.slice(0, 10) + "...";
+            if (captionText.trim().length > 103) {
+                caption.innerText = captionText.slice(0, 100) + "...";
             } else {
                 mores[num].innerText = "";
             }
             caption.setAttribute("processed", "true");
         }
     });
+    Array.from(mores).forEach((more, num) => {
+        more.addEventListener("click", (e) => {
+            let fullCaption = captions[num].getAttribute("full-caption");
+            captions[num].innerText = fullCaption;
+            mores[num].innerText = "";
+        });
+    });
 };
-captionLoader();
+captionLoader();    
 </script>
 {% endblock content %}
