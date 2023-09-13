@@ -62,7 +62,7 @@
                     <div class="post-caption">
                         <a href="{% url 'profile' post.user %}" class="post-caption-username">{{post.user}}</a>
                         <span class="post-caption-main" processed="false" full-caption="{{post.caption}}">{{post.caption}}</span>
-                        <div class="more-caption">more</div>
+                        <a class="more-caption">more</s>
                     </div>
                     <div class="post-view-comments">
                         {% if post.comments.all|length > 0 %}
