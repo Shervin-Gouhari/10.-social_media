@@ -1,11 +1,19 @@
 from django import forms
-from .models import Post, Comment
+from .models import Post, Media, Comment
 
 
 class PostCreateForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['image', 'caption']
+        fields = ['caption', 'location']
+        
+        
+class MediaCreateForm(forms.ModelForm):
+    class Meta:
+        model = Media
+        fields = ['media']
+
+    media = forms.ImageField(label="", widget=forms.ClearableFileInput(attrs={'multiple': True, 'accept': 'image/*, video/*'}))
 
 
 class CommentCreateForm(forms.ModelForm):

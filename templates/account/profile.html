@@ -58,7 +58,7 @@
         <div class="gallery">
             {% for post in posts_orderByCreationAscending %}
                 <a class="gallery-item" tabindex="0" href="{{ post.get_absolute_url }}">
-                    <img src="{{post.image.url}}" class="gallery-image" alt="">
+                    <img src="{{post.media.first.media.url}}" class="gallery-image" alt="">
                     <div class="gallery-item-info">
                         <ul>
                             <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.likes.all|length}}</li>
@@ -128,12 +128,36 @@ postPopUpButton.addEventListener("click", (e) => {
         width: 600,
         title: "Create Post",
         html: `
-            <form action="{% url 'post:create' %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="file" name="image" class="form-control-lg mb-4" accept="image/*" aria-required="true" required id="id_image">
-                <textarea name="caption" class="form-control form-control-lg z-depth-1 mb-4" rows="10" maxlength="2000" placeholder="Caption..."></textarea>
-                <button type="submit" class="swal2-confirm swal2-styled">Post</button>
-            </form>`,
+        <form action="{% url 'post:create' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input
+                id="id_media"
+                class="form-control-lg mb-4"
+                type="file"
+                name="media"
+                accept="image/*, video/*"
+                multiple
+                required
+                aria-required="true"
+            />
+            <textarea
+                class="form-control form-control-lg z-depth-1 mb-4"
+                name="caption"
+                placeholder="Caption..."
+                rows="10"
+                maxlength="2000"
+            ></textarea>
+            <input
+                id="id_location"
+                class="form-control mb-4"
+                type="text"
+                name="location"
+                placeholder="Location"
+                maxlength="50"
+            />
+            <button type="submit" class="swal2-confirm swal2-styled">Post</button>
+        </form>
+        `,
         showConfirmButton: false,
     });
 });  

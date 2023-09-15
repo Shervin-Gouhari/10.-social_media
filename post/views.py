@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from rest_framework.views import APIView
 
 from action.utils import action_create
-from .forms import PostCreateForm, CommentCreateForm
+from .forms import PostCreateForm, MediaCreateForm, CommentCreateForm
 from .models import Post, Comment
 from .serializers import CommentSerializer
 
@@ -16,15 +16,22 @@ from .serializers import CommentSerializer
 @login_required
 @require_POST
 def post_create(request):
-    form = PostCreateForm(data=request.POST, files=request.FILES)
-    if form.is_valid():
-        post = form.save(commit=False)
+    post_form = PostCreateForm(data=request.POST)
+    media_form = MediaCreateForm(files=request.FILES)
+    files = request.FILES.getlist('media')
+    if post_form.is_valid() and media_form.is_valid() and files:
+        post = post_form.save(commit=False)
         post.user = request.user
         post.save()
+        media = media_form.save(commit=False)
+        media.post = post
+        media.save()
+        print(post.media.first().media.url)
         action_create(request.user, "posted", post)
         messages.success(request, 'Post saved successfully.')
     else:
-        [messages.error(request, form.errors[error]) for error in form.errors]
+        [messages.error(request, post_form.errors[error]) for error in post_form.errors]
+        [messages.error(request, media_form.errors[error]) for error in media_form.errors]
     return redirect('profile', request.user)
 
 

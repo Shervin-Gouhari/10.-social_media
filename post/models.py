@@ -8,8 +8,8 @@ from django.utils.text import slugify
 
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='posts', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='posts/images/%Y/%m/%d')
     caption = models.TextField(max_length=2000, blank=True)
+    location = models.CharField(max_length=50, blank=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='post_likes', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     is_edited = models.BooleanField(default=False)
@@ -28,6 +28,11 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("post:detail", kwargs={"slug": self.slug})
+    
+    
+class Media(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='media')
+    media = models.FileField(upload_to='posts/%Y/%m/%d')
     
     
 class Comment(models.Model):
