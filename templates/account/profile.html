@@ -61,7 +61,7 @@
                     <img src="{{post.media.first.media.url}}" class="gallery-image" alt="">
                     <div class="gallery-item-info">
                         <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.likes.all|length}}</li>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.total_likes}}</li>
                             <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{post.comments.all|length}}</li>
                         </ul>
                     </div>
@@ -135,7 +135,7 @@ postPopUpButton.addEventListener("click", (e) => {
                 class="form-control-lg mb-4"
                 type="file"
                 name="media"
-                accept="image/*, video/*"
+                accept=".jpeg, .jpg, .png, .mkv, .mp4"
                 multiple
                 required
                 aria-required="true"

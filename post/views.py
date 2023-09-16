@@ -17,21 +17,42 @@ from .serializers import CommentSerializer
 @require_POST
 def post_create(request):
     post_form = PostCreateForm(data=request.POST)
-    media_form = MediaCreateForm(files=request.FILES)
     files = request.FILES.getlist('media')
-    if post_form.is_valid() and media_form.is_valid() and files:
+    supported_extensions = ['jpeg', 'jpg', 'png', 'mkv', 'mp4']
+    
+    for file in files:
+        if not str(file.name.split('.')[-1].lower()) in supported_extensions:
+            messages.error(request, "This type of file is not supported.")
+            return redirect('profile', request.user)
+    if len(files) > 10: 
+        messages.error(request, "You can select a maximum of 10 files.")
+        return redirect('profile', request.user)
+    for file in files:
+        if file.size > 10**8:
+            messages.error(request, "Files cannot be larger than 100MB.")
+            return redirect('profile', request.user)
+    if post_form.is_valid() and files:
         post = post_form.save(commit=False)
         post.user = request.user
+        
+        cleaned_data = []
+        for file in files:
+            media_form = MediaCreateForm(files={'media': file})
+            if media_form.is_valid():
+                cleaned_data.append(media_form)
+            else:
+                [messages.error(request, media_form.errors[error]) for error in media_form.errors]    
+                return redirect('profile', request.user)
+        
         post.save()
-        media = media_form.save(commit=False)
-        media.post = post
-        media.save()
-        print(post.media.first().media.url)
+        for clean_data in cleaned_data:
+            media = clean_data.save(commit=False)
+            media.post = post
+            media.save()
         action_create(request.user, "posted", post)
         messages.success(request, 'Post saved successfully.')
     else:
         [messages.error(request, post_form.errors[error]) for error in post_form.errors]
-        [messages.error(request, media_form.errors[error]) for error in media_form.errors]
     return redirect('profile', request.user)
 
 

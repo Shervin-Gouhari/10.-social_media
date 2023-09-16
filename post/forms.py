@@ -13,7 +13,7 @@ class MediaCreateForm(forms.ModelForm):
         model = Media
         fields = ['media']
 
-    media = forms.ImageField(label="", widget=forms.ClearableFileInput(attrs={'multiple': True, 'accept': 'image/*, video/*'}))
+    media = forms.FileField(label="", widget=forms.ClearableFileInput(attrs={'multiple': True, 'accept': '.jpeg, .jpg, .png, .mkv, .mp4'}))
 
 
 class CommentCreateForm(forms.ModelForm):
