@@ -26,7 +26,13 @@
       </div>
     </div>
     <div class="img-container">
-      <img src="{{post.image.url}}" alt="Publication Photo">
+      {% for file in post.media.all %}
+        {% if file|extension == 'image' %}
+          <img class="es-post-media-image" src="{{i.media.url}}" />
+        {% else %}
+          <video width="800px" class="es-post-media-video" src="{{i.media.url}}" controls></video>
+        {% endif %}
+      {% endfor %}
     </div>
     <div class="toolbar">
       <a href="#" class="like" data-postId="{{post.id}}">
