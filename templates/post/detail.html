@@ -33,8 +33,10 @@
           <video width="800px" class="media {% if forloop.counter0 != 0 %} hide {% endif %}" src="{{file.media.url}}" controls></video>
         {% endif %}
       {% endfor %}
-      <div id="previous-slider" href="" class="btn btn-primary">previous</div><br>
-      <div id="next-slider" href="" class="btn btn-primary">next</div>
+      {% if post.media.count > 1 %}
+        <div id="previous-slider" href="" class="btn btn-primary hide">previous</div>
+        <div id="next-slider" href="" class="btn btn-primary">next</div>
+      {% endif %}
     </div>
     <div class="toolbar">
       <a href="#" class="like" data-postId="{{post.id}}">
@@ -132,28 +134,35 @@
 </div>
 
 <script>
-  let previousSlider = document.getElementById('previous-slider')
-  let nextSlider = document.getElementById('next-slider')
-  let media = document.getElementsByClassName('media')
-  let index = 0;
-  previousSlider.addEventListener('click', (e) => {
-    media[index].classList.toggle('hide')
-    media[index-1].classList.toggle('hide')
-    if (index - 2 == 0) {
-      previousSlider.remove()
-    } else {
-      index -= 1
+let previousSlider = document.getElementById("previous-slider");
+let nextSlider = document.getElementById("next-slider");
+let media = document.getElementsByClassName("media");
+let index = 0;
+previousSlider.addEventListener("click", (e) => {
+    if (index == media.length - 1) {
+        nextSlider.classList.toggle("hide");
     }
-  })
-  nextSlider.addEventListener('click', (e)=> {
-    media[index].classList.toggle('hide')
-    media[index+1].classList.toggle('hide')
+    if (index == 1) {
+        previousSlider.classList.toggle("hide");
+    }
+    media[index].classList.toggle("hide");
+    media[index - 1].classList.toggle("hide");
+    if (index - 2 == 1) {
+        previousSlider.classList.toggle("hide");
+    }
+    index -= 1;
+});
+nextSlider.addEventListener("click", (e) => {
+    if (index == 0) {
+        previousSlider.classList.toggle("hide");
+    }
+    media[index].classList.toggle("hide");
+    media[index + 1].classList.toggle("hide");
     if (index + 2 == media.length) {
-      nextSlider.remove()
-    } else {
-      index += 1
+        nextSlider.classList.toggle("hide");
     }
-  })
+    index += 1;
+});
 </script>
 
 <script>
