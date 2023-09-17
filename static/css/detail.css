@@ -208,3 +208,7 @@ a {
 body {
     background-color: #fafafa;
 }
+
+.hide {
+    display: none;
+}

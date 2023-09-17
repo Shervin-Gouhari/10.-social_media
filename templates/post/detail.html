@@ -28,11 +28,13 @@
     <div class="img-container">
       {% for file in post.media.all %}
         {% if file|extension == 'image' %}
-          <img class="es-post-media-image" src="{{i.media.url}}" />
+          <img class="media {% if forloop.counter0 != 0 %} hide {% endif %}" src="{{file.media.url}}" />
         {% else %}
-          <video width="800px" class="es-post-media-video" src="{{i.media.url}}" controls></video>
+          <video width="800px" class="media {% if forloop.counter0 != 0 %} hide {% endif %}" src="{{file.media.url}}" controls></video>
         {% endif %}
       {% endfor %}
+      <div id="previous-slider" href="" class="btn btn-primary">previous</div><br>
+      <div id="next-slider" href="" class="btn btn-primary">next</div>
     </div>
     <div class="toolbar">
       <a href="#" class="like" data-postId="{{post.id}}">
@@ -128,6 +130,31 @@
     {% endfor %}
   </div>
 </div>
+
+<script>
+  let previousSlider = document.getElementById('previous-slider')
+  let nextSlider = document.getElementById('next-slider')
+  let media = document.getElementsByClassName('media')
+  let index = 0;
+  previousSlider.addEventListener('click', (e) => {
+    media[index].classList.toggle('hide')
+    media[index-1].classList.toggle('hide')
+    if (index - 2 == 0) {
+      previousSlider.remove()
+    } else {
+      index -= 1
+    }
+  })
+  nextSlider.addEventListener('click', (e)=> {
+    media[index].classList.toggle('hide')
+    media[index+1].classList.toggle('hide')
+    if (index + 2 == media.length) {
+      nextSlider.remove()
+    } else {
+      index += 1
+    }
+  })
+</script>
 
 <script>
 let requestUserId = document.getElementById("request-user-id").innerText;
