@@ -398,3 +398,163 @@ img {
 body {
     background-color: #fafafa;
 }
+
+.eapps-instagram-feed-posts-item-type-video .eapps-instagram-feed-posts-item-image-icon-video {
+    display: block;
+}
+
+.eapps-instagram-feed-posts-item-image-icon {
+    position: absolute;
+    z-index: 2;
+    top: 0.6em;
+    right: 0.6em;
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+    fill: white;
+}
+
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item,
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item-content,
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item-text,
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item a,
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item a:hover {
+    color: rgb(255, 255, 255);
+}
+
+#eapps-instagram-feed-1 a,
+#eapps-instagram-feed-popup-1 a {
+    text-decoration: none;
+    color: #000;
+    margin: 0;
+}
+
+.eapps-instagram-feed-posts-item a,
+.eapps-instagram-feed-posts-item a:hover {
+    color: #003569;
+}
+
+.eapps-instagram-feed a {
+    text-decoration: none;
+    color: #000;
+    margin: 0;
+}
+
+.eapps-instagram-feed-posts-item-link {
+    cursor: pointer;
+}
+user agent stylesheet a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+}
+
+.eapps-instagram-feed-posts-item-visible.eapps-instagram-feed-posts-item-loaded {
+    opacity: 1;
+    visibility: visible;
+}
+
+.eapps-instagram-feed-posts-item-template-tile {
+    user-select: none;
+}
+
+.eapps-instagram-feed-posts-item {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #fff;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.eapps-instagram-feed {
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+    line-height: 18px;
+    font-weight: 400;
+    width: 100%;
+    max-height: 100%;
+    position: relative;
+    box-sizing: border-box;
+    min-width: 150px;
+    min-height: 100px;
+}
+
+.eapps-instagram-feed-posts-item-type-carousel .eapps-instagram-feed-posts-item-image-icon-carousel {
+    display: block;
+}
+.eapps-instagram-feed-posts-item-image-icon {
+    position: absolute;
+    z-index: 2;
+    top: 0.6em;
+    right: 0.6em;
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+    fill: white;
+}
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item,
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item-content,
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item-text,
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item a,
+#eapps-instagram-feed-1 .eapps-instagram-feed-posts-item a:hover {
+    color: rgb(255, 255, 255);
+}
+#eapps-instagram-feed-1 a,
+#eapps-instagram-feed-popup-1 a {
+    text-decoration: none;
+    color: #000;
+    margin: 0;
+}
+.eapps-instagram-feed-posts-item a,
+.eapps-instagram-feed-posts-item a:hover {
+    color: #003569;
+}
+.eapps-instagram-feed a {
+    text-decoration: none;
+    color: #000;
+    margin: 0;
+}
+.eapps-instagram-feed-posts-item-link {
+    cursor: pointer;
+}
+user agent stylesheet a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+}
+.eapps-instagram-feed-posts-item-visible.eapps-instagram-feed-posts-item-loaded {
+    opacity: 1;
+    visibility: visible;
+}
+.eapps-instagram-feed-posts-item-template-tile {
+    user-select: none;
+}
+.eapps-instagram-feed-posts-item {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #fff;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+.eapps-instagram-feed {
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+    line-height: 18px;
+    font-weight: 400;
+    width: 100%;
+    max-height: 100%;
+    position: relative;
+    box-sizing: border-box;
+    min-width: 150px;
+    min-height: 100px;
+}
