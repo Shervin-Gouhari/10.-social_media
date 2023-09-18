@@ -5,8 +5,6 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
-from ipware import get_client_ip
-
 from rest_framework.views import APIView
 
 from action.utils import action_create
