@@ -75,6 +75,13 @@
           </path>
         </svg>
       </a>
+      <div class="post__indicators">
+        {% if post.media.count > 1 %}
+          {% for file in post.media.all %} 
+            <div class="post__indicator {% if forloop.counter0 == 0 %} post__indicator--active {% endif %}"></div>
+          {% endfor %}
+        {% endif %}
+      </div>
     </div>
     <div id="like-container">
       <div class="description" id="like-body">
@@ -142,35 +149,40 @@
 </div>
 
 <script>
-let previousSlider = document.getElementById("previous-slider");
-let nextSlider = document.getElementById("next-slider");
-let media = document.getElementsByClassName("media");
+let previousSlider = document.getElementById('previous-slider');
+let nextSlider = document.getElementById('next-slider');
+let media = document.getElementsByClassName('media');
+let postIndicators = document.getElementsByClassName('post__indicators');
 let index = 0;
-previousSlider.addEventListener("click", (e) => {
-    if (index == media.length - 1) {
-        nextSlider.classList.toggle("hide");
-    }
-    if (index == 1) {
-        previousSlider.classList.toggle("hide");
-    }
-    media[index].classList.toggle("hide");
-    media[index - 1].classList.toggle("hide");
-    if (index - 2 == 1) {
-        previousSlider.classList.toggle("hide");
-    }
-    index -= 1;
+previousSlider.addEventListener('click', (e) => {
+  if (index == media.length - 1) {
+    nextSlider.classList.toggle('hide');
+  }
+  if (index == 1) {
+    previousSlider.classList.toggle('hide');
+  }
+  media[index].classList.toggle('hide');
+  media[index - 1].classList.toggle('hide');
+  if (index - 2 == 1) {
+    previousSlider.classList.toggle('hide');
+  }
+  postIndicators[0].children[index].classList.toggle('post__indicator--active');
+  index -= 1;
+  postIndicators[0].children[index].classList.toggle('post__indicator--active');
 });
-nextSlider.addEventListener("click", (e) => {
-    if (index == 0) {
-        previousSlider.classList.toggle("hide");
-    }
-    media[index].classList.toggle("hide");
-    media[index + 1].classList.toggle("hide");
-    if (index + 2 == media.length) {
-        nextSlider.classList.toggle("hide");
-    }
-    index += 1;
-});
+nextSlider.addEventListener('click', (e) => {
+  if (index == 0) {
+    previousSlider.classList.toggle('hide');
+  }
+  media[index].classList.toggle('hide');
+  media[index + 1].classList.toggle('hide');
+  if (index + 2 == media.length) {
+    nextSlider.classList.toggle('hide');
+  }
+  postIndicators[0].children[index].classList.toggle('post__indicator--active');
+  index += 1;
+  postIndicators[0].children[index].classList.toggle('post__indicator--active');
+});  
 </script>
 
 <script>

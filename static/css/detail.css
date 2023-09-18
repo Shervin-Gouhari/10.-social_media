@@ -25,6 +25,7 @@ body section {
 body section .header {
     display: flex;
     justify-content: space-between;
+    padding-bottom: 0px;
 }
 body section .header .user {
     margin: 5px;
@@ -211,4 +212,49 @@ body {
 
 .hide {
     display: none;
+}
+
+.post__left-button,
+.post__right-button {
+    width: 33px;
+    height: 33px;
+
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+.post__left-button {
+    left: 16px;
+    opacity: 0.7;
+}
+.post__right-button {
+    right: 16px;
+    opacity: 0.7;
+}
+
+.post__indicators {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
+.post__indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: hsl(0, 0%, 60%);
+}
+.post__indicator--active {
+    background-color: hsl(204, 100%, 48%);
 }
