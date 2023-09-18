@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load post_tags %}
 {% block title %} Profile {% endblock title %}
 {% block style %}<link rel="stylesheet" href="{% static 'css/profile.css' %}">{% endblock style %}
 
@@ -58,7 +59,11 @@
         <div class="gallery">
             {% for post in posts_orderByCreationAscending %}
                 <a class="gallery-item" tabindex="0" href="{{ post.get_absolute_url }}">
-                    <img src="{{post.media.first.media.url}}" class="gallery-image" alt="">
+                    {% if post.media.first|extension == 'image' %}
+                        <img src="{{post.media.first.media.url}}" class="gallery-image" alt="">
+                    {% else %}
+                        <video src="{{post.media.first.media.url}}#t=1" class="gallery-image" alt="" preload="auto"></video>
+                    {% endif %}
                     <div class="gallery-item-info">
                         <ul>
                             <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.total_likes}}</li>

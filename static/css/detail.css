@@ -258,3 +258,27 @@ body {
 .post__indicator--active {
     background-color: hsl(204, 100%, 48%);
 }
+
+.post__content {
+    display: flex;
+    position: relative;
+}
+.post__medias {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: auto;
+
+    width: 100%;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+.post__medias::-webkit-scrollbar {
+    display: none;
+}
+.post__media {
+    width: 100%;
+    flex: none;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
