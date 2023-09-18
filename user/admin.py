@@ -21,7 +21,7 @@ class UserAdmin(BaseUserAdmin):
          'username', 'email', 'password1', 'password2')}),
 
         ('Optional Info', {'fields': ('avatar',
-         'first_name', 'last_name', 'date_of_birth', 'biography')}),
+         'first_name', 'last_name', 'date_of_birth', 'country', 'city', 'biography')}),
     )
     form = UserChangeForm
     fieldsets = (
@@ -29,7 +29,7 @@ class UserAdmin(BaseUserAdmin):
          'fields': ('avatar', 'phone_number', 'username', 'email', 'password')}),
 
         ('Personal Info', {
-         'fields': ('first_name', 'last_name', 'date_of_birth', 'biography')}),
+         'fields': ('first_name', 'last_name', 'date_of_birth', 'country', 'city', 'biography')}),
 
         ('Permissions', {'fields': ('is_active',
          'is_staff', 'is_admin', 'is_superuser')}),

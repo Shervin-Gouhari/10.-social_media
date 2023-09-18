@@ -48,6 +48,8 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
+    country = models.ForeignKey('cities_light.Country', on_delete=models.CASCADE, null=True, blank=True) 
+    city = models.ForeignKey('cities_light.City', on_delete=models.CASCADE, null=True, blank=True)
     biography = models.TextField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
