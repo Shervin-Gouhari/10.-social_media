@@ -38,8 +38,13 @@ class UserChangeForm(UserCreationForm):
         model = User
         fields = ['avatar', 'phone_number', 'username', 'email', 'first_name', 'last_name', 'gender', 'date_of_birth', 'country', 'city', 'biography']
         widgets = {
-            'date_of_birth': forms.DateInput(attrs={'type': 'date', 'max': datetime.now().date(), 'min': datetime(1920, 1, 1).date()})
+            'date_of_birth': forms.DateInput(attrs={'type': 'date', 'max': datetime.now().date(), 'min': datetime(1920, 1, 1).date()}),
             }
+        
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={"placeholder": "leave empty, if you don't wish to change"}), required=False)
     password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput(attrs={"placeholder": "leave empty, if you don't wish to change"}), required=False)
