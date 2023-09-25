@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.validators import RegexValidator
 
+from smart_selects.db_fields import ChainedForeignKey
+
 
 class UserManager(BaseUserManager):
     def create_user(self, phone_number, username, email, password=None):
@@ -37,19 +39,22 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    avatar = models.ImageField(
-        upload_to='avatar/%Y/%m/%d', default='avatar/default.jpg')
-    phone_number = models.CharField(max_length=11, unique=True, validators=[RegexValidator(
-        regex="\A(09)(0|1|2|3)[0-9]{7}\d\Z", message='Incorrect phone number.')])
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female')
+    ]
+    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='avatar/default.jpg')
+    phone_number = models.CharField(max_length=11, unique=True, validators=[RegexValidator(regex="\A(09)(0|1|2|3)[0-9]{7}\d\Z", message='Incorrect phone number.')])
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=254, unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=True, null=True)
+    gender = models.CharField(choices=GENDER_CHOICES, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     country = models.ForeignKey('cities_light.Country', on_delete=models.CASCADE, null=True, blank=True) 
-    city = models.ForeignKey('cities_light.City', on_delete=models.CASCADE, null=True, blank=True)
+    city = ChainedForeignKey('cities_light.City', chained_field="country", chained_model_field="cities_light.Country", show_all=False, sort=True, on_delete=models.CASCADE, null=True, blank=True)
     biography = models.TextField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

@@ -36,7 +36,7 @@ class UserCreationForm(forms.ModelForm):
 class UserChangeForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['avatar', 'phone_number', 'username', 'email', 'first_name', 'last_name', 'date_of_birth', 'biography']
+        fields = ['avatar', 'phone_number', 'username', 'email', 'first_name', 'last_name', 'gender', 'date_of_birth', 'country', 'city', 'biography']
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date', 'max': datetime.now().date(), 'min': datetime(1920, 1, 1).date()})
             }

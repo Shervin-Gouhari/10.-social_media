@@ -103,7 +103,7 @@ span.language {
     vertical-align: top;
 }
 
-.select {
+.language > .select {
     cursor: pointer;
     height: 100%;
     top: 0;
