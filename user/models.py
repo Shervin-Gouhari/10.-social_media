@@ -54,7 +54,7 @@ class User(AbstractBaseUser):
     gender = models.CharField(choices=GENDER_CHOICES, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     country = models.ForeignKey('cities_light.Country', on_delete=models.CASCADE, null=True, blank=True) 
-    city = ChainedForeignKey('cities_light.City', chained_field="country", chained_model_field="cities_light.Country", show_all=False, sort=True, on_delete=models.CASCADE, null=True, blank=True)
+    city = ChainedForeignKey('cities_light.City', chained_field="country", chained_model_field="country", show_all=False, sort=True, on_delete=models.CASCADE, null=True, blank=True)
     biography = models.TextField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

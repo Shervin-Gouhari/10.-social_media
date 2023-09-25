@@ -19,11 +19,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'rest_framework',
-    
+
     'cities_light',
-    
+    'smart_selects',
+
     'crispy_forms',
     'crispy_bootstrap5',
 
@@ -101,9 +102,6 @@ TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
 USE_TZ = False
 
-
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
