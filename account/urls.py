@@ -11,4 +11,5 @@ urlpatterns = [
     path('profile/<str:username>/edit/', views.edit_profile, name='edit_profile'),
     path('chaining/', include('smart_selects.urls')),
     path('follow/', views.follow, name='follow'),
+    path('search/', views.search, name='search'),
 ]
