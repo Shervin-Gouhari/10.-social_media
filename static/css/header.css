@@ -96,7 +96,7 @@
     font-variant-east-asian: normal;
     font-variant-ligatures: normal;
     font-variant-numeric: normal;
-    font-weight: 400;
+    font-weight: 500;
     grid-auto-columns: auto;
     grid-auto-flow: row;
     grid-auto-rows: auto;
@@ -423,6 +423,7 @@
     z-index: 3200;
     text-decoration: none;
     color: #333;
+    font-weight: 500;
 }
 
 .profile-item:hover {
