@@ -453,3 +453,7 @@
     padding: 2em;
     overflow-y: auto;
 }
+
+.errorlist {
+    list-style-type: none;
+}
