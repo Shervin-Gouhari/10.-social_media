@@ -6,10 +6,13 @@
     <div class="header">
         <div class="header-container">
             <div class="logo">
-                <img src="{% static 'image/Instagram_logo.png' %}" alt="" />
+                <img src="{% static 'image/instagram_logo.png' %}" alt="" />
             </div>
-            <div class="search-bar">
-                <input type="search" name="" id="" placeholder="Search" />
+            <div>
+                <form class="search-bar" method="GET">
+                    <input id="search-bar" type="search" name="query" placeholder="Search..." required aria-label="Search" />
+                </form>
+                <div class="search-container display-none"></div>
             </div>
             <div class="icons">
                 <a href="{% url 'page:home' %}" class="home">
@@ -90,31 +93,4 @@
     </div><hr>
 </section>
 {% include "components/messages.html" %}
-
-<script>
-let heart = document.querySelector(".heart");
-let actionsContainer = document.getElementsByClassName("actions-container")[0];
-document.addEventListener("click", (e)=>{
-    if (!e.target.classList.contains("fa-heart") && !e.target.classList.contains("actions-container") && actionsContainer.classList.contains("show-box")){
-        actionsContainer.classList.remove("show-box");
-        heart.innerHTML = '<i style="color: red;" class="far fa-heart"></i>';
-    }
-});
-heart.addEventListener("click", (e)=>{
-    actionsContainer.classList.toggle("show-box");
-});
-</script>
-
-<script>
-let profileModalContainer = document.getElementsByClassName("profile-modal-container")[0];
-let profile = document.getElementsByClassName("profile")[0];
-
-profile.addEventListener("click", () => {
-    profileModalContainer.classList.toggle("display-none");
-});
-document.addEventListener("click", e => {
-    if (!e.target.classList.contains("profile-box")){
-        profileModalContainer.classList.add("display-none");
-    }
-})
-</script>
+<script src="{% static 'js/header.js' %}"></script>

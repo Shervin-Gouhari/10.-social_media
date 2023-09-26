@@ -1,0 +1,28 @@
+<div>
+    <ul>
+        {% if search_result.count >= 1 %}
+            {% for user in search_result %}
+                <li>
+                    <div class="self-profile">
+                        <a class="self-profile-image" href="{% url 'profile' user %}">
+                            <img src="{{user.avatar.url}}" alt="">
+                        </a>
+                        <div class="self-profile-details">
+                            <span class="profile-details-username">
+                                <a href="{% url 'profile' user %}">{{user}}</a>
+                            </span>
+                            {% if user.first_name %}
+                                {{user.first_name}}
+                            {% endif %}
+                            {% if user.last_name %}
+                                {{user.last_name}}
+                            {% endif %}
+                        </div>
+                    </div>
+                </li><hr>
+            {% endfor %}
+        {% else %}
+            <div>No users and tags found.</div>
+        {% endif %}
+    </ul>
+</div>

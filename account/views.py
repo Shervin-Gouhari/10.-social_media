@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import model_to_dict
 from django.template.loader import render_to_string
@@ -145,3 +145,12 @@ def follow(request):
         except:
             pass
     return JsonResponse({"status": "failure"})
+
+
+@require_GET
+def search(request):
+    query = request.GET.get('query', None)
+    if query:
+        search_result = User.objects.filter(username__icontains=query)
+        return JsonResponse({"response": render_to_string("loader/search.html", {"search_result": search_result}, request=request)})
+    return JsonResponse({"response": "failure"})
