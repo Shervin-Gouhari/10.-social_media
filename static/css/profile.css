@@ -162,6 +162,7 @@ img {
 .gallery-item:hover .gallery-item-info,
 .gallery-item:focus .gallery-item-info {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -557,4 +558,14 @@ user agent stylesheet a:-webkit-any-link {
     box-sizing: border-box;
     min-width: 150px;
     min-height: 100px;
+}
+
+.divide1 {
+    height: 50%;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 20px;
+}
+.divide2 {
+    height: 50%;
 }

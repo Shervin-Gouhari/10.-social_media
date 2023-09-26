@@ -101,10 +101,15 @@
                         {% endif %}
                     {% endif %}
                     <div class="gallery-item-info">
-                        <ul>
+                        <ul class="{% if post.caption %} divide1 {% endif %}">
                             <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.total_likes}}</li>
                             <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{post.comments.all|length}}</li>
                         </ul>
+                        {% if post.caption %}
+                            <ul class="divide2">
+                                <li style="text-align: center;"><i aria-hidden="true">{{post.caption|truncatechars:100}}</i></li>
+                            </ul>
+                        {% endif %}
                     </div>
                 </a>
             {% endfor %}
