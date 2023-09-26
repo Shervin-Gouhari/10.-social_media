@@ -4,6 +4,8 @@ from django.core.validators import RegexValidator
 
 from smart_selects.db_fields import ChainedForeignKey
 
+from .validators import username
+
 
 class UserManager(BaseUserManager):
     def create_user(self, phone_number, username, email, password=None):
@@ -45,7 +47,7 @@ class User(AbstractBaseUser):
     ]
     avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='avatar/default.jpg')
     phone_number = models.CharField(max_length=11, unique=True, validators=[RegexValidator(regex="\A(09)(0|1|2|3)[0-9]{7}\d\Z", message='Incorrect phone number.')])
-    username = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=30, unique=True, validators=[username])
     email = models.EmailField(max_length=254, unique=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
