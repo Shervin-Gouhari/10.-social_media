@@ -33,6 +33,8 @@ let searchBar = document.getElementById("search-bar");
 let searchContainer = document.querySelector("div.search-container");
 ["keyup", "paste"].forEach((event) =>
     searchBar.addEventListener(event, (e) => {
+        searchContainer.classList.remove("display-none");
+        searchContainer.innerText = "Searching...";
         let searchQuery = e.target.value;
         axios
             .get("/account/search/", {
@@ -42,7 +44,6 @@ let searchContainer = document.querySelector("div.search-container");
             })
             .then((res) => {
                 if (res.data.response !== "failure") {
-                    searchContainer.classList.remove("display-none");
                     searchContainer.innerHTML = res.data.response;
                 } else {
                     searchContainer.classList.add("display-none");
