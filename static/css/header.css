@@ -340,8 +340,8 @@
     background-color: #fff;
     z-index: 10;
     position: fixed;
-    top: 3.5em;
-    right: 19em;
+    top: 4.5em;
+    right: 24em;
     border-radius: 5px;
     filter: drop-shadow(0px 2px 2px rgb(101, 101, 101));
     padding: 2em;
@@ -437,4 +437,18 @@
 
 .heart-active {
     color: red;
+}
+
+.search-container {
+    height: 400px;
+    width: 25em;
+    background-color: #fff;
+    z-index: 10;
+    position: fixed;
+    top: 4.5em;
+    right: 59em;
+    border-radius: 5px;
+    filter: drop-shadow(0px 2px 2px rgb(101, 101, 101));
+    padding: 2em;
+    overflow-y: auto;
 }
