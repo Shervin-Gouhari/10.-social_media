@@ -75,7 +75,7 @@ def custom_login(request):
                 return redirect("page:home")
             else:
                 messages.error(request, "No user found with said credentials.")
-    return render(request, 'registration/login.html')
+    return render(request, 'registration/login.html', {"form": form})
 
 
 def profile(request, username):
