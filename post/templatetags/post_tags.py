@@ -23,4 +23,14 @@ def extension(value):
         return 'image'
     elif extension in supported_video_extensions:
         return 'video'
-    
+
+
+@register.filter
+def human_format(num, method):
+    if method == "symbolic":
+        magnitude = 0
+        while num >= 1000:
+            magnitude += 1
+            num /= 1000.0
+        return f"{num:.2f}{['', 'K', 'M'][magnitude]}"
+    return f"{num:,}"
