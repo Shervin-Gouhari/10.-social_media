@@ -20,7 +20,6 @@ from .kavenegar import send_sms
 
 
 def registration(request):
-    data = {}
     form = UserCreationForm()
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -28,12 +27,7 @@ def registration(request):
             new_user = form.save(commit=False)
             request.session['new_user'] = model_to_dict(new_user, exclude=['avatar', 'following'])
             return redirect('verification_code')
-        data = {
-            'phone_number': request.POST['phone_number'],
-            'username': request.POST['username'],
-            'email': request.POST['email']
-        }
-    return render(request, 'account/registration.html', {'data': data, 'form': form})
+    return render(request, 'account/registration.html', {'form': form})
 
 
 def verification_code(request):

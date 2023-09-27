@@ -11,9 +11,20 @@ class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['phone_number', 'username', 'email']
-    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
-
+        widgets = {
+            'phone_number': forms.TextInput(attrs={"placeholder": "Phone number"}),
+            'username': forms.TextInput(attrs={"placeholder": "Username"}),
+            'email': forms.EmailInput(attrs={"placeholder": "Email"}),
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for key, field in self.fields.items():
+            field.label = ""
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['aria-required'] = 'true'
+            visible.field.widget.attrs['class'] = 'form-control-sm pl-3'
+            
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
@@ -35,6 +46,9 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+    
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password"}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password confirmation"}))
 
 
 
