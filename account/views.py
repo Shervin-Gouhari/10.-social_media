@@ -16,7 +16,7 @@ from post.models import Post
 from action.utils import action_create
 
 from .forms import *
-from .kavenegar import send_sms
+from .utils import send_sms, send_mail
 
 
 def registration(request):
@@ -43,6 +43,7 @@ def verification_code(request):
                     logout(request)
                     login(request, user)
                     messages.success(request, 'Profile created successfully.')
+                    send_mail(user)
                 else:
                     user = User.objects.get(id=new_user['id'])
                     setattr(user, 'phone_number', new_user['new_num'])
