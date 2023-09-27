@@ -102,8 +102,8 @@
                     {% endif %}
                     <div class="gallery-item-info">
                         <ul class="{% if post.caption %} divide1 {% endif %}">
-                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.total_likes}}</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{post.comments.all|length}}</li>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.total_likes|human_format:"symbolic"}}</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{post.comments.all|length|human_format:"symbolic"}}</li>
                         </ul>
                         {% if post.caption %}
                             <ul class="divide2">

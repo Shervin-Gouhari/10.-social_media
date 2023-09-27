@@ -26,11 +26,14 @@ def extension(value):
 
 
 @register.filter
-def human_format(num, method):
+def human_format(num, method=None):
+    if num == 0: return num
     if method == "symbolic":
         magnitude = 0
         while num >= 1000:
             magnitude += 1
             num /= 1000.0
+        if str(float(num)).split(".")[1] == str(0):
+            return f"{int(num)}{['', 'K', 'M'][magnitude]}"
         return f"{num:.2f}{['', 'K', 'M'][magnitude]}"
     return f"{num:,}"
