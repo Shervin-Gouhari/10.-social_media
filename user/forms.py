@@ -1,9 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
-from datetime import datetime
-from .models import User
+from django.contrib.auth.password_validation import validate_password
 
+from datetime import datetime
+
+from .models import User
 
 
 class UserCreationForm(forms.ModelForm):
@@ -20,6 +21,10 @@ class UserCreationForm(forms.ModelForm):
             raise ValidationError("Passwords do not match.")
         if (password1 == '' and password2 != '') or (password2 == '' and password1 != ''):
             raise ValidationError("Passwords do not match.")
+        try:
+            validate_password(password2, user=self.instance)
+        except ValidationError as error:
+            self.add_error('password1', error)
         return password2
 
     def save(self, commit=True):
