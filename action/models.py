@@ -5,8 +5,9 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 class Action(models.Model):
     class Meta:
+        db_table = 'action'
         ordering = ["-created"]
-        
+    
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="actions", on_delete=models.CASCADE)
     act = models.CharField(max_length=124)
     created = models.DateTimeField(auto_now_add=True)

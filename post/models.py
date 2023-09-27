@@ -7,6 +7,9 @@ from django.utils.text import slugify
 
 
 class Post(models.Model):
+    class Meta:
+        db_table = 'post'
+        
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='posts', on_delete=models.CASCADE)
     caption = models.TextField(max_length=2000, blank=True)
     location = models.CharField(max_length=50, blank=True)
@@ -36,6 +39,9 @@ class Media(models.Model):
     
     
 class Comment(models.Model):
+    class Meta:
+        db_table = 'comment'
+        
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE)
     text = models.TextField(max_length=1000)

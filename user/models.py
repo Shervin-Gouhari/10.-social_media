@@ -41,6 +41,9 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    class Meta:
+        db_table = 'user'
+    
     GENDER_CHOICES = [
         ('Male', 'Male'),
         ('Female', 'Female')
