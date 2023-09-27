@@ -35,7 +35,7 @@ class UserCreationForm(forms.ModelForm):
         try:
             validate_password(password2, user=self.instance)
         except ValidationError as error:
-            self.add_error('password1', error)
+            return self.add_error('password1', error)
         return password2
 
     def save(self, commit=True):
