@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordResetView
 from django.views.decorators.http import require_POST, require_GET
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import model_to_dict
@@ -77,6 +78,10 @@ def custom_login(request):
             else:
                 messages.error(request, "No user found with said credentials.")
     return render(request, 'registration/login.html', {"form": form})
+
+
+class CustomPasswordReset(PasswordResetView):
+    form_class = CustomPasswordResetForm
 
 
 def profile(request, username):
