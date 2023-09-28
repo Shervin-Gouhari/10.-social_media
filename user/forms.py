@@ -32,10 +32,11 @@ class UserCreationForm(forms.ModelForm):
             raise ValidationError("Passwords do not match.")
         if (password1 == '' and password2 != '') or (password2 == '' and password1 != ''):
             raise ValidationError("Passwords do not match.")
-        try:
-            validate_password(password2, user=self.instance)
-        except ValidationError as error:
-            return self.add_error('password1', error)
+        if password1 != '' and password2 != '':
+            try:
+                validate_password(password2, user=self.instance)
+            except ValidationError as error:
+                return self.add_error('password1', error)
         return password2
 
     def save(self, commit=True):
