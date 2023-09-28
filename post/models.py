@@ -11,15 +11,14 @@ class Post(models.Model):
         db_table = 'post'
         
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='posts', on_delete=models.CASCADE)
-    caption = models.TextField(max_length=2000, blank=True)
-    location = models.CharField(max_length=50, blank=True)
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='post_likes', blank=True)
+    caption = models.TextField(max_length=2000, blank=True, null=True)
+    location = models.CharField(max_length=50, blank=True, null=True)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='post_likes', blank=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     is_edited = models.BooleanField(default=False)
     edited = models.DateTimeField(auto_now=True)
     slug = models.SlugField()
     total_likes = models.PositiveIntegerField(default=0)
-    
 
     def __str__(self):
         return f'{self.user} {self.created}'
@@ -45,12 +44,12 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE)
     text = models.TextField(max_length=1000)
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='comment_likes', blank=True)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='comment_likes', blank=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     is_edited = models.BooleanField(default=False)
     edited = models.DateTimeField(auto_now=True)
     total_likes = models.PositiveIntegerField(default=0)
     
-    
     def __str__(self):
         return f'{self.user} {self.created}'
+    
