@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
@@ -25,3 +25,11 @@ class CustomPasswordResetForm(PasswordResetForm):
             "placeholder": "Enter your email",
             "aria-required": "true", }),
     )
+
+
+class CustomSetPasswordForm(SetPasswordForm):
+    def clean_new_password2(self):
+        password2 = super().clean_new_password2()
+        if self.user.check_password(password2):
+            return self.add_error('new_password1', 'You have inserted your current password.')
+        return password2

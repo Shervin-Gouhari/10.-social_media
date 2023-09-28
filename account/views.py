@@ -86,6 +86,7 @@ class PasswordReset(PasswordResetView):
     
     
 class PasswordResetConfirm(PasswordResetConfirmView):
+    form_class = CustomSetPasswordForm
     post_reset_login = True
     success_url = reverse_lazy("page:home")
     
