@@ -421,3 +421,9 @@ body {
 #div_id_verification_code {
     margin-bottom: 6px !important;
 }
+
+.invalid-feedback {
+    width: 248px;
+    height: 28px;
+    margin: auto;
+}
