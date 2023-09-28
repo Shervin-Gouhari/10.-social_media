@@ -1,10 +1,11 @@
 from random import randint
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.views.decorators.http import require_POST, require_GET
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import model_to_dict
@@ -83,6 +84,11 @@ def login(request):
 class PasswordReset(PasswordResetView):
     form_class = CustomPasswordResetForm
     
+    
+class PasswordResetConfirm(PasswordResetConfirmView):
+    post_reset_login = True
+    success_url = reverse_lazy("page:home")
+     
     
 def profile(request, username):
     user = get_object_or_404(User, username=username)
