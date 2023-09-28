@@ -30,6 +30,10 @@
                     <script>
                         swalMessage("{{message}}");
                     </script>
+                {% elif message.message == "Password reset successfully." %}
+                    <script>
+                        swalMessage("{{message}}");
+                    </script>
                 {% else %}
                     <li class="alert alert-success messages" role="alert">{{message}}</li>
                 {% endif %}

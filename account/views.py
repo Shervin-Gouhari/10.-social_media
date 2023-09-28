@@ -88,6 +88,11 @@ class PasswordReset(PasswordResetView):
 class PasswordResetConfirm(PasswordResetConfirmView):
     post_reset_login = True
     success_url = reverse_lazy("page:home")
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Password reset successfully.")
+        return response
      
     
 def profile(request, username):
