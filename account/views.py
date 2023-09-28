@@ -62,7 +62,7 @@ def verification_code(request):
     return render(request, 'account/verification_code.html', {'form': form})
 
 
-def custom_login(request):
+def login(request):
     form = LoginForm()
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -80,10 +80,10 @@ def custom_login(request):
     return render(request, 'registration/login.html', {"form": form})
 
 
-class CustomPasswordReset(PasswordResetView):
+class PasswordReset(PasswordResetView):
     form_class = CustomPasswordResetForm
-
-
+    
+    
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(user=user).order_by("-created")
