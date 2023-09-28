@@ -33,6 +33,8 @@ class UserCreationForm(forms.ModelForm):
         if (password1 == '' and password2 != '') or (password2 == '' and password1 != ''):
             raise ValidationError("Passwords do not match.")
         if password1 != '' and password2 != '':
+            if self.instance.check_password(password2):
+                return self.add_error('password1', 'You have inserted your current password.')
             try:
                 validate_password(password2, user=self.instance)
             except ValidationError as error:
