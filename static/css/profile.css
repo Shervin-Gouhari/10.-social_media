@@ -569,3 +569,15 @@ user agent stylesheet a:-webkit-any-link {
 .divide2 {
     height: 50%;
 }
+
+.form-control {
+    font-size: 1.5rem !important;
+}
+.swal2-styled {
+    font-size: 1.5em !important;
+    width: 150px !important;
+}
+.swal2-title {
+    font-size: 2.875em !important;
+    margin-bottom: 20px !important;
+}
