@@ -14,46 +14,40 @@ from .serializers import CommentSerializer
 
 
 @login_required
-@require_POST
 def post_create(request):
-    post_form = PostCreateForm(data=request.POST)
-    files = request.FILES.getlist('media')
-    supported_extensions = ['jpeg', 'jpg', 'png', 'mkv', 'mp4']
-    
-    for file in files:
-        if not str(file.name.split('.')[-1].lower()) in supported_extensions:
-            messages.error(request, "This type of file is not supported.")
-            return redirect('profile', request.user)
-    if len(files) > 10: 
-        messages.error(request, "You can select a maximum of 10 files.")
+    if request.method == "POST":
+        post_form = PostCreateForm(data=request.POST)
+        media_form = MediaCreateForm(files=request.FILES)
+        files = request.FILES.getlist('media')
+        
+        if post_form.is_valid() and media_form.has_clean_media(files):
+            post = post_form.save(commit=False)
+            post.user = request.user
+            
+            cleaned_data = []
+            for file in files:
+                media_form = MediaCreateForm(files={'media': file})
+                if media_form.is_valid():
+                    cleaned_data.append(media_form)
+                else:
+                    [messages.error(request, media_form.errors[error]) for error in media_form.errors]    
+                    return redirect('profile', request.user)
+            
+            post.save()
+            for clean_data in cleaned_data:
+                media = clean_data.save(commit=False)
+                media.post = post
+                media.save()
+            action_create(request.user, "posted", post)
+            messages.success(request, 'Post saved successfully.')
+        else:
+            [messages.error(request, post_form.errors[error]) for error in post_form.errors]
+            [messages.error(request, media_form.errors[error]) for error in media_form.errors]
         return redirect('profile', request.user)
-    for file in files:
-        if file.size > 10**8:
-            messages.error(request, "Files cannot be larger than 100MB.")
-            return redirect('profile', request.user)
-    if post_form.is_valid() and files:
-        post = post_form.save(commit=False)
-        post.user = request.user
-        
-        cleaned_data = []
-        for file in files:
-            media_form = MediaCreateForm(files={'media': file})
-            if media_form.is_valid():
-                cleaned_data.append(media_form)
-            else:
-                [messages.error(request, media_form.errors[error]) for error in media_form.errors]    
-                return redirect('profile', request.user)
-        
-        post.save()
-        for clean_data in cleaned_data:
-            media = clean_data.save(commit=False)
-            media.post = post
-            media.save()
-        action_create(request.user, "posted", post)
-        messages.success(request, 'Post saved successfully.')
     else:
-        [messages.error(request, post_form.errors[error]) for error in post_form.errors]
-    return redirect('profile', request.user)
+        post_form, media_form = PostCreateForm(), MediaCreateForm()
+        response = render_to_string("loader/post_create.html", {"post_form": post_form, "media_form": media_form}, request=request)
+        return JsonResponse({"response": response})
 
 
 def post_detail(request, slug):
@@ -69,7 +63,7 @@ def post_detail(request, slug):
                 comment.post = post
                 comment.user = request.user
                 comment.save()
-                response = render_to_string("loader/comment/detail/new.html", {"cm": comment}, request=request)
+                response = render_to_string("loader/post_detail.html", {"cm": comment}, request=request)
                 return JsonResponse({'status': 'success', 'response': response})
             except:
                 return JsonResponse({'status': 'failure'})
@@ -96,7 +90,7 @@ class PostDetailAPI(APIView):
             context = {'comments': bb}
         else:
             return JsonResponse({'status': 'failure'})
-        response = render_to_string("loader/comment/detail/order.html", context, request=request)
+        response = render_to_string("loader/PostDetailAPI.html", context, request=request)
         return JsonResponse({'status': 'success', 'response': response})
 
 

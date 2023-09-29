@@ -21,6 +21,19 @@ class MediaCreateForm(forms.ModelForm):
     class Meta:
         model = Media
         fields = ['media']
+        
+    def has_clean_media(self, files):
+        supported_extensions = ['jpeg', 'jpg', 'png', 'mkv', 'mp4']
+        if not files:
+            self.add_error("media", "This field is required.")
+        for file in files:
+            if not str(file.name.split('.')[-1].lower()) in supported_extensions:
+                self.add_error("media", "This type of file is not supported.")
+            if file.size > 10**8:  
+                self.add_error("media", "Files cannot be larger than 100MB.")
+        if len(files) > 10: 
+            self.add_error("media", "You can select a maximum of 10 files.")
+        return (False if self.errors else True)
 
     media = forms.FileField(label="", widget=forms.ClearableFileInput(
         attrs={'multiple': True, 'accept': '.jpeg, .jpg, .png, .mkv, .mp4', 'aria-required': 'true'}))
