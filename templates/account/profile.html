@@ -170,43 +170,20 @@
 <script>
 let postPopUpButton = document.getElementsByClassName("btn profile-settings-btn")[0];
 postPopUpButton.addEventListener("click", (e) => {
-    Swal.fire({
-        width: 600,
-        title: "Create Post",
-        html: `
-        <form action="{% url 'post:create' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input
-                id="id_media"
-                class="form-control-lg mb-4"
-                type="file"
-                name="media"
-                accept=".jpeg, .jpg, .png, .mkv, .mp4"
-                multiple
-                required
-                aria-required="true"
-            />
-            <textarea
-                class="form-control form-control-lg z-depth-1 mb-4"
-                name="caption"
-                placeholder="Caption..."
-                rows="10"
-                maxlength="2000"
-            ></textarea>
-            <input
-                id="id_location"
-                class="form-control mb-4"
-                type="text"
-                name="location"
-                placeholder="Location"
-                maxlength="50"
-            />
-            <button type="submit" class="swal2-confirm swal2-styled">Post</button>
-        </form>
-        `,
-        showConfirmButton: false,
-    });
-});  
+    axios
+        .get("/post/create/")
+        .then((res) => {
+            Swal.fire({
+                width: 600,
+                title: "Create Post",
+                html: res.data.response,
+                showConfirmButton: false,
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
 </script>
 
 <script>

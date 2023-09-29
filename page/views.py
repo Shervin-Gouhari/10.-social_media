@@ -23,7 +23,7 @@ def home(request):
             posts_orderByCreationAscending = paginator.page(page)
         except (EmptyPage, PageNotAnInteger):
             return JsonResponse({"response": "failure"})
-        return JsonResponse({"response": render_to_string("loader/post/home.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)})
+        return JsonResponse({"response": render_to_string("loader/home.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)})
     
     actions = Action.objects.exclude(user=request.user)
     friends_ids = request.user.following.values_list("id", flat=True)

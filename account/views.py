@@ -106,7 +106,7 @@ def profile(request, username):
             posts_orderByCreationAscending = paginator.page(page)
         except(EmptyPage, PageNotAnInteger):
             return JsonResponse({"response": "failure"})
-        return JsonResponse({"response": render_to_string("loader/post/profile.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)}) 
+        return JsonResponse({"response": render_to_string("loader/profile.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)}) 
     context = {"user": user,
                "posts_orderByCreationAscending": paginator.page(1)}
     return render(request, 'account/profile.html', context)
