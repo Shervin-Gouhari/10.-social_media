@@ -1,0 +1,33 @@
+{% load post_tags %}
+
+{% for cm in comments %}
+    <div class="comments">
+        <div class="comment-profile">
+            <a href="{% url 'profile' cm.user.username %}"><img src="{{cm.user.avatar}}" alt=""></a>
+        </div>
+        <div class="comment-main">
+            <div class="comment-text">
+                <a class="user" href="{% url 'profile' cm.user.username %}"><strong>{{cm.user.username}}</strong></a>
+                <div>{{cm.text}}</div>
+            </div>
+            <div class="comment-info">
+                <div class="comment-date">{{cm.created|customtimesince}}</div>
+                <div class="comment-likes">
+                    {% if cm.likes|length > 1 %}
+                        <span class="like-counts">{{cm.likes|length}}</span> <span class="like-word">Likes</span>
+                    {% else %}
+                        <span class="like-counts">{{cm.likes|length}}</span> <span class="like-word">Like</span>
+                    {% endif %}
+                </div>
+                <div class="comment-reply">Reply</div>
+            </div>
+        </div>
+        <div class="comment-like" data-commentId="{{cm.id}}" data-commentAction="{% if request.user.id in cm.likes %}dis{% endif %}like">
+            {% if request.user.id in cm.likes %}
+                <i class="fas fa-heart heart-active"></i>
+            {% else %}
+                <i class="far fa-heart"></i>
+            {% endif %}
+        </div>
+    </div><hr />
+{% endfor %}

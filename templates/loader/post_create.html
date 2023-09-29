@@ -1,0 +1,6 @@
+{% load crispy_forms_tags %}
+
+<form action="{% url 'post:create' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %} {{media_form|crispy}} {{post_form|crispy}}
+    <button type="submit" class="swal2-confirm swal2-styled">Post</button>
+</form>
