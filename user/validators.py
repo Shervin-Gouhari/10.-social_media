@@ -1,18 +1,10 @@
 from django.core.exceptions import ValidationError
 
 
-def username(username):
+def username_validator(username):
     if username[0] == '.' or username[0] == '_':
-        raise ValidationError(
-            (f"Username cannot start with underscore or period."),
-            code="username_start_error",
-            params={"username": username},
-        )
+        raise ValidationError("Username cannot start with underscore or period.")
     allowed_characters = 'abcdefghijklmnopqrstuvwxyz1234567890_.'
     for character in username:
         if character not in allowed_characters:
-            raise ValidationError(
-                (f"You can't include symbols or other punctuation marks as a part of your username."),
-                code="username_character_error",
-                params={"username": username},
-            )
+            raise ValidationError("You can't include symbols or other punctuation marks as a part of your username.")

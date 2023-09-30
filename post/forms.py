@@ -25,9 +25,6 @@ class MediaCreateForm(forms.ModelForm):
     def has_clean_media(self, files):
         if not files:
             self.add_error("media", "This field is required.")
-        for file in files:
-            if file.size > 10**8:  
-                self.add_error("media", "Files cannot be larger than 100MB.")
         if len(files) > 10: 
             self.add_error("media", "You can select up to 10 files only.")
         return (False if self.errors else True)
