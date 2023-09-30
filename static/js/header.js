@@ -21,7 +21,7 @@ document.addEventListener("click", (e) => {
         actionsContainer.classList.contains("show-box")
     ) {
         actionsContainer.classList.remove("show-box");
-        heart.innerHTML = '<i style="color: red;" class="far fa-heart"></i>';
+        heart.innerHTML = '<i class="fa-regular fa-heart"></i>';
     }
 });
 heart.addEventListener("click", (e) => {
