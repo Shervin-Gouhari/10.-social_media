@@ -7,7 +7,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', django_views.LogoutView.as_view(), name='logout'),
     path('password_reset/', views.PasswordReset.as_view(), name='password_reset'),
-    path('password_reset/done/', django_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', views.PasswordResetConfirm.as_view(), name='password_reset_confirm'),
     path('registration/', views.registration, name='registration'),
     path('registration/verification_code/', views.verification_code, name='verification_code'),
