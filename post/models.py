@@ -4,6 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.urls import reverse
 from django.utils.text import slugify
+from django.core.validators import FileExtensionValidator
 
 
 class Post(models.Model):
@@ -34,7 +35,7 @@ class Post(models.Model):
     
 class Media(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='media')
-    media = models.FileField(upload_to='posts/%Y/%m/%d')
+    media = models.FileField(upload_to='posts/%Y/%m/%d', validators=[FileExtensionValidator(['jpeg', 'jpg', 'png', 'mkv', 'mp4'])])
     
     
 class Comment(models.Model):

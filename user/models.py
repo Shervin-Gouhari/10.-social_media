@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, EmailValidator
 
 from smart_selects.db_fields import ChainedForeignKey
 
@@ -51,7 +51,7 @@ class User(AbstractBaseUser):
     avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='avatar/default.jpg')
     phone_number = models.CharField(max_length=11, unique=True, validators=[RegexValidator(regex="\A(09)(0|1|2|3)[0-9]{7}\d\Z", message='Incorrect phone number.')])
     username = models.CharField(max_length=30, unique=True, validators=[username])
-    email = models.EmailField(max_length=254, unique=True)
+    email = models.EmailField(max_length=254, unique=True, validators=[EmailValidator])
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
     first_name = models.CharField(max_length=50, blank=True, null=True)
