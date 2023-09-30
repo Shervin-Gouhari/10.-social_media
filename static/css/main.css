@@ -212,7 +212,7 @@ footer {
     margin: 14.45px auto 12px;
 }
 
-.logo {
+.header > .logo {
     background: cover no-repeat;
     width: 175px;
     height: auto;
