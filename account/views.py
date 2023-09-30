@@ -83,6 +83,13 @@ def login(request):
 
 class PasswordReset(PasswordResetView):
     form_class = CustomPasswordResetForm
+    success_url = reverse_lazy("login")
+    
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        if request.method == "POST":
+            messages.success(request, "Email sent successfully.")
+        return response
     
     
 class PasswordResetConfirm(PasswordResetConfirmView):
@@ -107,7 +114,12 @@ def profile(request, username):
             posts_orderByCreationAscending = paginator.page(page)
         except(EmptyPage, PageNotAnInteger):
             return JsonResponse({"response": "failure"})
-        return JsonResponse({"response": render_to_string("loader/profile.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)}) 
+        try:
+            next_response = paginator.page(int(page) + 1)
+        except(EmptyPage, PageNotAnInteger):
+            next_response = "failure"
+        return JsonResponse({"response": render_to_string("loader/profile.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request),
+                             "next_response": next_response}) 
     context = {"user": user,
                "posts_orderByCreationAscending": paginator.page(1)}
     return render(request, 'account/profile.html', context)
