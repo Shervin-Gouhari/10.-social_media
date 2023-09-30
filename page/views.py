@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET
 
 from user.models import User
 from post.models import Post
@@ -10,6 +11,7 @@ from action.models import Action
 
 
 @login_required(login_url='login')
+@require_GET
 def home(request):
     user_posts = Post.objects.filter(user=request.user)
     friend_posts = Post.objects.none()

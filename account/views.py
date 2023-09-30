@@ -95,7 +95,8 @@ class PasswordResetConfirm(PasswordResetConfirmView):
         messages.success(self.request, "Password reset successfully.")
         return response
      
-    
+   
+@require_GET 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(user=user).order_by("-created")
