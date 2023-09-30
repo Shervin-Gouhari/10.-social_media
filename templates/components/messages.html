@@ -1,12 +1,12 @@
 
 <script>
-    const swalMessage = function (message) {
+    const swalMessage = function (message, timer=2500) {
         Swal.fire({
             position: "center",
             icon: "success",
             title: message,
             showConfirmButton: false,
-            timer: 2500,
+            timer: timer,
         });
     };
 </script>
@@ -22,18 +22,10 @@
                 <li class="alert alert-info messages" role="alert">{{message}}</li>
 
             {% elif message.tags == "success" %}
-                {% if message.message == "You are logged in successfully." %}
-                    <script>
-                        swalMessage("{{message}}");
-                    </script>
-                {% elif message.message == "You are logged out successfully." %}
-                    <script>
-                        swalMessage("{{message}}");
-                    </script>
-                {% elif message.message == "Password reset successfully." %}
-                    <script>
-                        swalMessage("{{message}}");
-                    </script>
+                {% if message.message == "You are logged in successfully." or message.message == "You are logged out successfully." or message.message == "Password reset successfully." %}
+                    <script>swalMessage("{{message}}");</script>
+                {% elif message.message == "Email sent successfully." %}
+                    <script>swalMessage("{{message}}", 15000);</script>
                 {% else %}
                     <li class="alert alert-success messages" role="alert">{{message}}</li>
                 {% endif %}
