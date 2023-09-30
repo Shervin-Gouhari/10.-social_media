@@ -16,23 +16,23 @@
             </div>
             <div class="icons">
                 <a href="{% url 'page:home' %}" class="home">
-                    <i style="color: rgb(0, 106, 255);" class="fas fa-home"></i>
+                    <i class="fas fa-home"></i>
                 </a>
                 <div class="send">
-                    <i style="color: purple;" class="far fa-paper-plane"></i>
+                    <i class="far fa-paper-plane"></i>
                 </div>
                 <div class="add">
-                    <i style="color: green;" class="far fa-plus-square"></i>
+                    <i class="far fa-plus-square"></i>
                 </div>
                 <a href="{% url 'page:explore' %}" class="explore">
-                    <i style="color: aqua;" class="far fa-compass"></i>
+                    <i class="far fa-compass"></i>
                 </a>
                 {% if request.user.is_authenticated %}
                     <div class="heart">
                         {% if actions %}
-                            <i class="fa-solid fa-heart fa-beat heart-active"></i>
+                            <i class="fa-solid fa-heart fa-beat"></i>
                         {% else %}
-                            <i style="color: red;" class="far fa-heart"></i>
+                            <i class="fa-regular fa-heart"></i>
                         {% endif %}
                     </div>
                     <div class="profile profile-box">

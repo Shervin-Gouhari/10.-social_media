@@ -261,7 +261,7 @@
 
 .header-container {
     display: grid;
-    grid-template-columns: 10% 30% 30%;
+    grid-template-columns: 30% 40% 30%;
     column-gap: 0%;
     margin: 0;
     height: 4em;
@@ -277,8 +277,8 @@
 }
 
 .logo {
-    padding-left: 3em;
     flex-direction: row;
+    text-align: center;
 }
 
 .logo > img {
@@ -329,7 +329,7 @@
     border-radius: 50%;
 }
 .profile > img {
-    height: 2em;
+    height: 33px;
     width: 2em;
     border-radius: 50%;
 }
