@@ -3,7 +3,7 @@ from random import randint
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login as auth_login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.views.decorators.http import require_POST, require_GET
@@ -73,7 +73,7 @@ def login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 logout(request)
-                login(request, user)
+                auth_login(request, user)
                 messages.success(request, "You are logged in successfully.")
                 return redirect("page:home")
             else:
