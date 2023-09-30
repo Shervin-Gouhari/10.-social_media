@@ -48,7 +48,7 @@ class User(AbstractBaseUser):
         ('Male', 'Male'),
         ('Female', 'Female')
     ]
-    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='avatar/default.jpg')
+    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', default='avatar/default.png')
     phone_number = models.CharField(max_length=11, unique=True, validators=[RegexValidator(regex="\A(09)(0|1|2|3)[0-9]{7}\d\Z", message='Incorrect phone number.')])
     username = models.CharField(max_length=30, unique=True, validators=[username_validator])
     email = models.EmailField(max_length=254, unique=True, validators=[EmailValidator])
