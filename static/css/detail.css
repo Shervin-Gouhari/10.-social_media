@@ -6,7 +6,7 @@ a {
     cursor: pointer;
 }
 body #detail-first-div {
-    background: #fafafa;
+    background: black;
     margin: 50px auto;
     padding: 0;
     border: 0;
@@ -15,9 +15,9 @@ body #detail-first-div {
     font-family: "Cabin", sans-serif;
 }
 body section {
-    background: #fff;
+    background: black;
     position: relative;
-    border-radius: 2px;
+    border-radius: 5px;
     margin: 10px 0;
     padding: 0;
     border: 1px solid #dbdbdb;
@@ -73,10 +73,12 @@ body section .description {
     border: 0;
     font-size: 16px;
     word-wrap: break-word;
+    color: gray;
 }
 body section .description strong a {
     font-weight: 900;
     font-size: 15px;
+    color: gray;
 }
 .description > span {
     font-size: small;
@@ -172,7 +174,8 @@ a {
 }
 .user > a {
     text-decoration: none;
-    color: #333;
+    color: gray;
+    padding-left: 5px;
 }
 
 .comment-like > svg {
@@ -182,12 +185,14 @@ a {
 .comment-text > a > strong {
     font-weight: 900;
     font-size: 15px;
+    color: gray;
 }
 
 .comment-text > div {
     width: 520px;
     word-wrap: break-word;
     margin-top: 10px;
+    color: gray;
 }
 
 #numberOfComments {
@@ -200,14 +205,17 @@ a {
     color: red;
 }
 .fa-solid:hover {
-    color: red;
+    color: #343a40;
+}
+.fa-regular {
+    color: #343a40;
 }
 .fa-regular:hover {
-    color: black;
+    color: red;
 }
 
 body {
-    background-color: #fafafa;
+    background-color: black;
 }
 
 .hide {
@@ -278,4 +286,27 @@ body {
     flex: none;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+}
+
+::-webkit-scrollbar {
+    width: 1em;
+    background-color: #343a40;
+}
+::-webkit-scrollbar-thumb {
+    background-color: black;
+    border: 1px solid #343a40;
+}
+
+.form-control {
+    background-color: black;
+}
+.form-control:focus {
+    background-color: black;
+    border-color: gray !important;
+    box-shadow: none;
+}
+hr {
+    color: #333;
+    background-color: #333;
+    background: #333;
 }

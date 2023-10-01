@@ -216,6 +216,8 @@ header {
     overflow-x: scroll;
     position: relative;
     margin-bottom: 44px;
+    color: hsl(0, 0%, 56%);
+    justify-content: center;
 }
 @media only screen and (max-width: 735px) {
     .stories {
@@ -284,7 +286,7 @@ header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 28px;
-    margin-bottom: 25px;
+    margin-bottom: 25px !important;
 }
 @media only screen and (max-width: 735px) {
     .gallery {
@@ -400,7 +402,7 @@ input[type="button"],
 input[type="submit"],
 input[type="reset"],
 input[type="file"] {
-    border-radius: 0;
+    border-radius: 5px;
 }
 input[type="text"]::-ms-clear {
     display: none;
@@ -723,4 +725,51 @@ user agent stylesheet a:-webkit-any-link {
 
 img {
     vertical-align: middle;
+}
+header {
+    color: hsl(0, 0%, 56%);
+}
+
+.swal2-show {
+    background-color: black;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+.swal2-title {
+    margin-bottom: 20px;
+}
+.form-control {
+    background-color: black;
+    color: gray;
+}
+.form-control:focus {
+    background-color: black;
+    border: 1px solid gray;
+    box-shadow: none;
+}
+.form-control[type="file"] {
+    background-color: black;
+    color: gray;
+}
+.form-control[type="file"]::file-selector-button {
+    font-weight: bold;
+    color: gray;
+    background-color: black;
+    padding-bottom: 0.5em;
+    border: thin solid grey;
+    border-radius: 3px;
+}
+.form-control[type="file"]::file-selector-button:hover {
+    background-color: white;
+}
+.swal2-confirm[type="submit"] {
+    background-color: #343a40;
+}
+::-webkit-scrollbar {
+    width: 1em;
+    background-color: #343a40;
+}
+::-webkit-scrollbar-thumb {
+    background-color: black;
+    border: 1px solid #343a40;
 }

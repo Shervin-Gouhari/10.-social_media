@@ -1,0 +1,63 @@
+#uniqueee {
+    display: block;
+    width: fit-content;
+    margin: auto;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    padding: 30px;
+    background-color: black;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+::-webkit-scrollbar {
+    width: 1em;
+    background-color: #343a40;
+}
+::-webkit-scrollbar-thumb {
+    background-color: black;
+    border: 1px solid #343a40;
+}
+.swal2-show {
+    background-color: black;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+.swal2-title {
+    margin-bottom: 20px;
+}
+.form-control {
+    background-color: black;
+    color: gray;
+}
+.form-control:focus {
+    background-color: black;
+    border: 1px solid gray;
+    box-shadow: none;
+}
+.form-control[type="file"] {
+    background-color: black;
+    color: gray;
+}
+.form-control[type="file"]::file-selector-button {
+    font-weight: bold;
+    color: gray;
+    background-color: black;
+    padding-bottom: 0.5em;
+    border: thin solid grey;
+    border-radius: 3px;
+}
+.form-control[type="file"]::file-selector-button:hover {
+    background-color: white;
+}
+.swal2-confirm[type="submit"] {
+    background-color: #343a40;
+}
+.input-group-text {
+    background-color: inherit;
+}
+.text-center {
+    margin-top: 30px;
+}
+h1 {
+    text-align: center;
+}

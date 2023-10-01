@@ -255,7 +255,6 @@
 }
 
 .header {
-    background-color: #fff;
     padding-bottom: 3em;
 }
 
@@ -271,15 +270,18 @@
     justify-content: center;
     position: fixed;
     width: 100%;
-    background-color: #fff;
+    background: black;
     z-index: 100;
     color: #333;
 }
 
 .logo {
+    display: flex;
     flex-direction: row;
     text-align: center;
     justify-content: center;
+    height: inherit;
+    align-items: center;
 }
 
 .logo > img {
@@ -294,12 +296,13 @@
 }
 
 .search-bar > input {
-    border: hidden;
+    border: 1px solid gray;
     height: 2.5em;
     border-radius: 5px;
     width: 15em;
-    background-color: #eee;
+    background-color: black;
     padding: 1em;
+    color: gray;
 }
 
 .search-bar > input:focus {
@@ -336,9 +339,10 @@
 }
 
 .actions-container {
+    border: 1px solid gray;
     height: 400px;
     width: 25em;
-    background-color: #fff;
+    background-color: black;
     z-index: 10;
     position: fixed;
     top: 4.5em;
@@ -354,7 +358,7 @@
     content: "";
     width: 20px;
     height: 20px;
-    background-color: #fff;
+    background-color: black;
     position: absolute;
     right: 5.5em;
     top: -10px;
@@ -388,10 +392,11 @@
 .profile-modal-container {
     height: 200px;
     width: 200px;
-    background-color: #fff;
+    background-color: black;
+    border: 1px solid gray;
     position: fixed;
-    top: 3.5em;
-    right: 8.75em;
+    top: 4.5em;
+    right: 127px;
     filter: drop-shadow(0px 2px 2px rgb(101, 101, 101));
     display: grid;
     align-items: center;
@@ -399,10 +404,11 @@
     z-index: 10000;
 }
 .profile-modal-container::before {
+    border: 1px solid gray;
     content: "";
     width: 20px;
     height: 20px;
-    background-color: #fff;
+    background-color: black;
     position: absolute;
     right: 4em;
     top: -10px;
@@ -444,7 +450,9 @@
 .search-container {
     height: fit-content;
     width: 25em;
-    background-color: #fff;
+    background-color: black;
+    color: gray;
+    border: 1px solid gray;
     z-index: 10;
     position: fixed;
     top: 4.5em;
