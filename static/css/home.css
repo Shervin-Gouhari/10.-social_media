@@ -339,3 +339,12 @@ body {
 body {
     background-color: #fafafa;
 }
+
+::-webkit-scrollbar {
+    width: 1em;
+    background-color: #343a40;
+}
+::-webkit-scrollbar-thumb {
+    background-color: black;
+    border: 1px solid #343a40;
+}
