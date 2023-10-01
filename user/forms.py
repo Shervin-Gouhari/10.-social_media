@@ -76,7 +76,7 @@ class UserChangeForm(UserCreationForm):
             Div('first_name', 'last_name', 'gender', 'date_of_birth'),
             Div('country', 'city', 'biography'),
             Div('password1', 'password2'),
-            Div(Submit('save', 'save', css_class="btn btn-primary"))
+            Div(Submit('save', 'save', css_class="btn btn-primary btn-lg"))
         )
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={"placeholder": "leave empty, if you don't wish to change"}), required=False)
