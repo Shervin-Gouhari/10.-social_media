@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 
-from datetime import datetime
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Div, Submit
 
 from .models import User
 
@@ -67,6 +70,14 @@ class UserChangeForm(UserCreationForm):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Div('avatar', 'phone_number', 'username', 'email'),
+            Div('first_name', 'last_name', 'gender', 'date_of_birth'),
+            Div('country', 'city', 'biography'),
+            Div('password1', 'password2'),
+            Div(Submit('post', 'post', css_class="btn btn-dark"))
+        )
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={"placeholder": "leave empty, if you don't wish to change"}), required=False)
     password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput(attrs={"placeholder": "leave empty, if you don't wish to change"}), required=False)

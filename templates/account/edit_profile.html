@@ -7,9 +7,6 @@
 {% block content %}
 <section id="uniqueee">
     <h1 class="text-dark">Edit Profile {{user}}</h1><br />
-    <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %} {{ form.media.js }} {% crispy form %}
-        <div class="text-center"><button type="submit" class="btn btn-dark">Save</button></div>
-    </form>
+    {% crispy form %}
 </section>
 {% endblock content %}

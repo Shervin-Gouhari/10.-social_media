@@ -1,21 +1,12 @@
+body {
+    overflow-y: hidden !important;
+}
 #uniqueee {
     display: block;
     width: fit-content;
     margin: auto;
-    margin-bottom: 25px;
     margin-top: 25px;
     padding: 30px;
-    background-color: black;
-    border: 1px solid gray;
-    border-radius: 5px;
-}
-::-webkit-scrollbar {
-    width: 1em;
-    background-color: #343a40;
-}
-::-webkit-scrollbar-thumb {
-    background-color: black;
-    border: 1px solid #343a40;
 }
 .swal2-show {
     background-color: black;
@@ -60,4 +51,23 @@
 }
 h1 {
     text-align: center;
+}
+form {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    justify-content: center;
+    grid-gap: 20px;
+}
+div:has(input[type="submit"]) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+input[type="submit"] {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+}
+label {
+    font-weight: bold;
 }
