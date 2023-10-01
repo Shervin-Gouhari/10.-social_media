@@ -5,13 +5,11 @@
 {% block style %}<link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">{% endblock style %}
 
 {% block content %}
-<div id="uniqueee">
+<section id="uniqueee">
     <h1 class="text-dark">Edit Profile {{user}}</h1><br />
-    <div>
-        <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %} {{ form.media.js }} {{ form|crispy }}
-            <div class="text-center"><button type="submit" class="btn btn-dark">Save</button></div>
-        </form>
-    </div>
-</div>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.media.js }} {% crispy form %}
+        <div class="text-center"><button type="submit" class="btn btn-dark">Save</button></div>
+    </form>
+</section>
 {% endblock content %}
