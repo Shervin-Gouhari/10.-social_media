@@ -1,6 +1,3 @@
-body {
-    overflow-y: hidden !important;
-}
 #uniqueee {
     display: block;
     width: fit-content;
@@ -22,8 +19,6 @@ body {
 }
 .form-control:focus {
     background-color: black;
-    border: 1px solid gray;
-    box-shadow: none;
 }
 .form-control[type="file"] {
     background-color: black;
@@ -70,4 +65,31 @@ input[type="submit"] {
 }
 label {
     font-weight: bold;
+}
+
+#unique {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden !important;
+    height: 804px;
+}
+#unique > div {
+    padding: 30px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+h3 {
+    padding-bottom: 20px;
+    text-align: center;
+}
+form li {
+    font-weight: bold;
+}
+div > button {
+    margin-top: 10px;
+}
+#unique .form-control {
+    border: 1px solid gray;
 }
