@@ -1,21 +1,3 @@
-// Create Posts
-let postPopUpButton = document.getElementById("post-pop-up-button");
-postPopUpButton.addEventListener("click", (e) => {
-    axios
-        .get("/post/create/")
-        .then((res) => {
-            Swal.fire({
-                width: 700,
-                title: "Create Your Post",
-                html: res.data.response,
-                showConfirmButton: false,
-            });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-});
-
 // Load More Posts
 let gallery = document.getElementById("gallery");
 let loadMoreButton = document.getElementById("load-more-button");
@@ -43,6 +25,24 @@ loadMoreButton.addEventListener("click", (e) => {
             if (res.data.next_response === "failure") {
                 loadMoreButton.remove();
             }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+// Create Posts
+let postPopUpButton = document.getElementById("post-pop-up-button");
+postPopUpButton.addEventListener("click", (e) => {
+    axios
+        .get("/post/create/")
+        .then((res) => {
+            Swal.fire({
+                width: 700,
+                title: "Create Your Post",
+                html: res.data.response,
+                showConfirmButton: false,
+            });
         })
         .catch((err) => {
             console.log(err);

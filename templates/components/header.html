@@ -40,7 +40,7 @@
                     </div>
                 {% else %}
                     <a href="{% url 'login' %}"><i class="far fa-heart"></i></a>
-                    <a href="{% url 'login' %}"><img class="no-user-avatar" src="{% static 'image/no_user_avatar.png' %}" alt="" /></a>
+                    <a href="{% url 'login' %}"><div class="profile profile-box"><img class="profile-box" src="{% static 'image/no_user_avatar.png' %}" /></div>
                 {% endif %}
             </div>
         </div>

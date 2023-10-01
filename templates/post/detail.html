@@ -30,9 +30,9 @@
         <div class="post__medias">
           {% for file in post.media.all %}
             {% if file|extension == 'image' %}
-              <img height="600px" width="800px" class="post__media" src="{{file.media.url}}" />
+              <img height="600px" width="fit-content" class="post__media" src="{{file.media.url}}" />
             {% else %}
-              <video height="600px" width="800px" class="post__media" src="{{file.media.url}}" controls autoplay></video>
+              <video height="600px" width="fit-content" class="post__media" src="{{file.media.url}}" controls autoplay></video>
             {% endif %}
           {% endfor %}
         </div>
@@ -107,7 +107,7 @@
   <div class="comment-form">
     <form action="" method="POST">
         {% csrf_token %} {{form|crispy}}
-        <button class="comment-submit" id="comment-post-button" type="submit">post</button>
+        <button class="btn btn-dark" id="comment-post-button" type="submit">post</button>
     </form>
   </div>
   {% if comments_orderByLikesAscending|length > 1 %}

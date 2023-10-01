@@ -116,6 +116,7 @@ def profile(request, username):
             return JsonResponse({"response": "failure"})
         try:
             next_response = paginator.page(int(page) + 1)
+            next_response = "success"
         except(EmptyPage, PageNotAnInteger):
             next_response = "failure"
         return JsonResponse({"response": render_to_string("loader/profile.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request),

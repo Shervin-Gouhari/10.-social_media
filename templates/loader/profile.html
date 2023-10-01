@@ -44,7 +44,7 @@
             {% endif %}
         {% endif %}
         <div class="gallery-item-info">
-            <ul style="margin-bottom: 0;">
+            <ul style="margin-bottom: 10px;">
                 <li style="color: white; font-size: 20px; padding-right: 10px;"><i class="fas fa-heart" aria-hidden="true"></i> {{post.total_likes|human_format:"symbolic"}}</li>
                 <li style="color: white; font-size: 20px;"><i class="fas fa-comment" aria-hidden="true"></i> {{post.comments.all|length|human_format:"symbolic"}}</li>
             </ul>
