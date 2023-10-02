@@ -12,7 +12,7 @@ api_key = '334F31594E50685144546739357A75617454396841706555536B394E425947436A797
 
 
 def send_sms(request, phone_number, ver_code):
-    WAITING_TIME = 60
+    WAITING_TIME = 5 if IN_DEVELOPMENT == True else 60
 
     end = time.mktime(datetime.datetime.now().timetuple())
     start = request.session.get('start', (end - WAITING_TIME - 1))
