@@ -96,6 +96,7 @@ header {
 }
 .profile-info .title button {
     margin-left: 20px;
+    outline: none;
 }
 @media only screen and (max-width: 735px) {
     .profile-info .title h2 {
