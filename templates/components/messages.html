@@ -16,11 +16,11 @@
         {% for message in messages %} 
         
             {% if message.tags == "error" %}
-                <li class="alert alert-danger messages" role="alert">{{message}}</li>
+                <div class="alert alert-danger messages" role="alert">{{message}}</div>
             {% elif message.tags == "warning" %}
-                <li class="alert alert-warning messages" role="alert">{{message}}</li>
+                <div class="alert alert-warning messages" role="alert">{{message}}</div>
             {% elif message.tags == "info" %}
-                <li class="alert alert-info messages" role="alert">{{message}}</li>
+                <div class="alert alert-info messages" role="alert">{{message}}</div>
 
             {% elif message.tags == "success" %}
                 {% if message.message == "You are logged in successfully." or message.message == "You are logged out successfully." or message.message == "Password reset successfully." %}
@@ -28,7 +28,7 @@
                 {% elif message.message == "Email sent successfully." %}
                     <script>swalMessage("{{message}}", 15000);</script>
                 {% else %}
-                    <li class="alert alert-success messages" role="alert">{{message}}</li>
+                    <div class="alert alert-success messages" role="alert">{{message}}</div>
                 {% endif %}
             {% endif %}
             
