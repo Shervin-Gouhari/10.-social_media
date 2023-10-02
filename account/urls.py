@@ -12,9 +12,9 @@ urlpatterns = [
     path('registration/verification_code/', views.verification_code, name='verification_code'),
     path('profile/<str:username>/', views.profile, name='profile'),
     path('profile/<str:username>/edit/', views.edit_profile, name='edit_profile'),
+    path('profile/<str:username>/followers/', views.followers, name='followers'),
+    path('profile/<str:username>/following/', views.following, name='following'),
     path('chaining/', include('smart_selects.urls')),
     path('follow/', views.follow, name='follow'),
     path('search/', views.search, name='search'),
-    path('profile/<str:username>/followers/', views.followers, name='followers'),
-    path('profile/<str:username>/following/', views.following, name='following'),
 ]
