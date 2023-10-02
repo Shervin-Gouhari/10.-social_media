@@ -1,10 +1,10 @@
 a,
 body,
 footer,
-li,
+.footer-nav > ul li,
 nav,
 span,
-ul {
+.footer-nav > ul {
     margin: 0;
     padding: 0;
     border: 0;
@@ -134,4 +134,22 @@ span.language {
 }
 .swal2-show {
     border: 1px solid gray;
+}
+.alert-success {
+    list-style-image: url("/../../static/image/icon-success.svg");
+}
+.alert-info {
+    list-style-image: url("/../../static/image/icon-info.svg");
+}
+.alert-warning {
+    list-style-image: url("/../../static/image/icon-warning.svg");
+}
+.alert-danger {
+    list-style-image: url("/../../static/image/icon-danger.svg");
+}
+.alert-success,
+.alert-info,
+.alert-warning,
+.alert-danger {
+    font-weight: bold;
 }
