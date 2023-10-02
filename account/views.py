@@ -179,3 +179,17 @@ def search(request):
         search_result = User.objects.filter(username__icontains=query)
         return JsonResponse({"response": render_to_string("loader/search.html", {"search_result": search_result}, request=request)})
     return JsonResponse({"response": "failure"})
+
+
+@require_GET
+def following(request, username):
+    user = get_object_or_404(User, username=username)
+    search_result = user.rel_from_set.all().order_by("-followed_at")
+    return JsonResponse({"response": render_to_string("loader/following.html", {"search_result": search_result}, request=request)})
+
+
+@require_GET
+def followers(request, username):
+    user = get_object_or_404(User, username=username)
+    search_result = user.rel_to_set.all().order_by("-followed_at")
+    return JsonResponse({"response": render_to_string("loader/followers.html", {"search_result": search_result}, request=request)})

@@ -15,8 +15,8 @@
                 <div class="title row">
                     <h2 style="font-weight: bold;">{{user}}</h2>
                     {% if request.user == user %}
-                        <a href="{% url 'edit_profile' request.user %}" class="btn btn-primary">Edit Profile</a>
-                        <button id="post-pop-up-button"><i style="color: dodgerblue;" class="far fa-plus-square"></i></button>
+                        <a href="{% url 'edit_profile' request.user %}" class="btn btn-dark">Edit Profile</a>
+                        <button id="post-pop-up-button1" class="btn profile-settings-btn"><i style="color: dodgerblue; font-size: 30px;" class="far fa-plus-square"></i></button>
                     {% else %}
                         <button class="btn btn-outline-primary" id="follow-btn" data-userId="{{user.id}}" data-userAction="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
                             {% if request.user in user.followers.all %}Unfollow{% else %}Follow{% endif %}  
@@ -28,8 +28,8 @@
                     <div class="details row">
                         <ul>
                             <li><span>{{user.posts.all|length}}</span> posts</li>
-                            <li><span id="followers-counter">{{user.followers.all|length}}</span> followers</li>
-                            <li><span>{{user.following.all|length}}</span> following</li>
+                            <li style="cursor: pointer;"><span id="followers-counter">{{user.followers.all|length}}</span><span id="followers-button"> followers</span></li>
+                            <li style="cursor: pointer;"><span>{{user.following.all|length}}</span><span id="following-button"> following</span></li>
                         </ul>
                     </div>
                     <div class="descriptions row last" style="display: block;">
@@ -48,9 +48,6 @@
             </div>
             <div class="title">TESTING</div>
         </li>
-        <button class="slider-button-next desktop-only">
-            <div class="arrow-right-icon"></div>
-        </button>
     </ul>
     <div class="desktop-only">
         <div class="tabs">
@@ -71,21 +68,23 @@
                 </svg>
                 <span>POSTS</span>
             </div>
-            <div class="tab-item" style="margin-right: 60px">
-                <svg
-                    aria-label="Posts"
-                    class="_8-yf5"
-                    fill="#8e8e8e"
-                    height="12"
-                    viewBox="0 0 48 48"
-                    width="12"
-                >
-                    <path
-                        d="M41 10c-2.2-2.1-4.8-3.5-10.4-3.5h-3.3L30.5 3c.6-.6.5-1.6-.1-2.1-.6-.6-1.6-.5-2.1.1L24 5.6 19.7 1c-.6-.6-1.5-.6-2.1-.1-.6.6-.7 1.5-.1 2.1l3.2 3.5h-3.3C11.8 6.5 9.2 7.9 7 10c-2.1 2.2-3.5 4.8-3.5 10.4v13.1c0 5.7 1.4 8.3 3.5 10.5 2.2 2.1 4.8 3.5 10.4 3.5h13.1c5.7 0 8.3-1.4 10.5-3.5 2.1-2.2 3.5-4.8 3.5-10.4V20.5c0-5.7-1.4-8.3-3.5-10.5zm.5 23.6c0 5.2-1.3 7-2.6 8.3-1.4 1.3-3.2 2.6-8.4 2.6H17.4c-5.2 0-7-1.3-8.3-2.6-1.3-1.4-2.6-3.2-2.6-8.4v-13c0-5.2 1.3-7 2.6-8.3 1.4-1.3 3.2-2.6 8.4-2.6h13.1c5.2 0 7 1.3 8.3 2.6 1.3 1.4 2.6 3.2 2.6 8.4v13zM34.6 25l-9.1 2.8v-3.7c0-.5-.2-.9-.6-1.2-.4-.3-.9-.4-1.3-.2l-11.1 3.4c-.8.2-1.2 1.1-1 1.9.2.8 1.1 1.2 1.9 1l9.1-2.8v3.7c0 .5.2.9.6 1.2.3.2.6.3.9.3.1 0 .3 0 .4-.1l11.1-3.4c.8-.2 1.2-1.1 1-1.9s-1.1-1.2-1.9-1z"
-                    ></path>
-                </svg>
-                <span>SAVED</span>
-            </div>
+            {% if user == request.user %}
+                <div class="tab-item" style="margin-right: 60px">
+                    <svg
+                        aria-label="Posts"
+                        class="_8-yf5"
+                        fill="#8e8e8e"
+                        height="12"
+                        viewBox="0 0 48 48"
+                        width="12"
+                    >
+                        <path
+                            d="M41 10c-2.2-2.1-4.8-3.5-10.4-3.5h-3.3L30.5 3c.6-.6.5-1.6-.1-2.1-.6-.6-1.6-.5-2.1.1L24 5.6 19.7 1c-.6-.6-1.5-.6-2.1-.1-.6.6-.7 1.5-.1 2.1l3.2 3.5h-3.3C11.8 6.5 9.2 7.9 7 10c-2.1 2.2-3.5 4.8-3.5 10.4v13.1c0 5.7 1.4 8.3 3.5 10.5 2.2 2.1 4.8 3.5 10.4 3.5h13.1c5.7 0 8.3-1.4 10.5-3.5 2.1-2.2 3.5-4.8 3.5-10.4V20.5c0-5.7-1.4-8.3-3.5-10.5zm.5 23.6c0 5.2-1.3 7-2.6 8.3-1.4 1.3-3.2 2.6-8.4 2.6H17.4c-5.2 0-7-1.3-8.3-2.6-1.3-1.4-2.6-3.2-2.6-8.4v-13c0-5.2 1.3-7 2.6-8.3 1.4-1.3 3.2-2.6 8.4-2.6h13.1c5.2 0 7 1.3 8.3 2.6 1.3 1.4 2.6 3.2 2.6 8.4v13zM34.6 25l-9.1 2.8v-3.7c0-.5-.2-.9-.6-1.2-.4-.3-.9-.4-1.3-.2l-11.1 3.4c-.8.2-1.2 1.1-1 1.9.2.8 1.1 1.2 1.9 1l9.1-2.8v3.7c0 .5.2.9.6 1.2.3.2.6.3.9.3.1 0 .3 0 .4-.1l11.1-3.4c.8-.2 1.2-1.1 1-1.9s-1.1-1.2-1.9-1z"
+                        ></path>
+                    </svg>
+                    <span>SAVED</span>
+                </div>
+            {% endif %}
             <div class="tab-item">
                 <svg
                     aria-label="Tagged"
@@ -103,6 +102,19 @@
             </div>
         </div>
     </div>
+    {% if not posts_orderByCreationAscending and user == request.user %}
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+            <?xml version="1.0" encoding="utf-8"?>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100" height="100">
+                <path d="M19.09375 5C18.011719 5 17.105469 5.625 16.5625 6.4375C16.5625 6.449219 16.5625 6.457031 16.5625 6.46875L14.96875 9L6 9C3.253906 9 1 11.253906 1 14L1 38C1 40.746094 3.253906 43 6 43L44 43C46.746094 43 49 40.746094 49 38L49 14C49 11.253906 46.746094 9 44 9L34.9375 9L33.34375 6.46875C33.34375 6.457031 33.34375 6.449219 33.34375 6.4375C32.800781 5.625 31.894531 5 30.8125 5 Z M 19.09375 7L30.8125 7C31.132813 7 31.398438 7.175781 31.65625 7.5625L33.5625 10.53125C33.746094 10.820313 34.0625 11 34.40625 11L44 11C45.65625 11 47 12.34375 47 14L47 38C47 39.65625 45.65625 41 44 41L6 41C4.34375 41 3 39.65625 3 38L3 14C3 12.34375 4.34375 11 6 11L15.5 11C15.84375 11 16.160156 10.820313 16.34375 10.53125L18.21875 7.5625L18.25 7.53125C18.5 7.179688 18.789063 7 19.09375 7 Z M 10 13C8.355469 13 7 14.355469 7 16C7 17.644531 8.355469 19 10 19C11.644531 19 13 17.644531 13 16C13 14.355469 11.644531 13 10 13 Z M 10 15C10.554688 15 11 15.445313 11 16C11 16.554688 10.554688 17 10 17C9.445313 17 9 16.554688 9 16C9 15.445313 9.445313 15 10 15 Z M 25 15C18.9375 15 14 19.9375 14 26C14 32.0625 18.9375 37 25 37C31.0625 37 36 32.0625 36 26C36 19.9375 31.0625 15 25 15 Z M 25 17C29.980469 17 34 21.019531 34 26C34 30.980469 29.980469 35 25 35C20.019531 35 16 30.980469 16 26C16 21.019531 20.019531 17 25 17Z" fill="#323232" />
+            </svg>
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+            <h1 style="color: white; font-weight: bold; font-size: 30px; padding-bottom: 25px;">Share photos</h1>
+            <p style="color: white; padding-bottom: 20px;">When you share photos, they will appear on your profile.</p>
+            <a href="" id="post-pop-up-button2" style="font-weight: bold;">Share your first photo</a>
+        </div>
+    {% endif %}
     <div class="gallery" id="gallery">
         {% for post in posts_orderByCreationAscending %}
             <a class="gallery-item" tabindex="0" href="{{ post.get_absolute_url }}">
@@ -169,5 +181,6 @@
 <script src="{% static 'js/profile/create_post.js' %}"></script>
 <script src="{% static 'js/profile/post_loader.js' %}"></script>
 <script src="{% static 'js/profile/follow_unfollow.js' %}"></script>
+<script src="{% static 'js/profile/followers_following.js' %}"></script>
 {% endblock content %}
 
