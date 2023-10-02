@@ -15,4 +15,5 @@ urlpatterns = [
     path('chaining/', include('smart_selects.urls')),
     path('follow/', views.follow, name='follow'),
     path('search/', views.search, name='search'),
+    path('following/', views.following, name='following'),
 ]

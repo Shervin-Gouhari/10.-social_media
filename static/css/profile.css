@@ -710,16 +710,13 @@ user agent stylesheet a:-webkit-any-link {
     font-weight: 600;
 }
 
-.btn-primary {
-    line-height: 1.8;
-    border: 0.1rem solid #dbdbdb;
-    border-radius: 0.3rem;
-    padding: 0 1.2rem;
+.btn-dark {
+    border-radius: 8px;
+    padding: 5px 10px;
     margin-left: 2rem;
     font-weight: 600;
 }
 #post-pop-up-button > .fa-plus-square {
-    font-size: 30px;
     cursor: pointer;
 }
 
