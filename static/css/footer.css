@@ -136,16 +136,28 @@ span.language {
     border: 1px solid gray;
 }
 .alert-success {
-    list-style-image: url("/../../static/image/icon-success.svg");
+    background-image: url("/../../static/image/icon-success.svg");
+    background-repeat: no-repeat;
+    background-position: 10px;
+    text-indent: 20px;
 }
 .alert-info {
-    list-style-image: url("/../../static/image/icon-info.svg");
+    background-image: url("/../../static/image/icon-info.svg");
+    background-repeat: no-repeat;
+    background-position: 10px;
+    text-indent: 20px;
 }
 .alert-warning {
-    list-style-image: url("/../../static/image/icon-warning.svg");
+    background-image: url("/../../static/image/icon-warning.svg");
+    background-repeat: no-repeat;
+    background-position: 10px;
+    text-indent: 20px;
 }
 .alert-danger {
-    list-style-image: url("/../../static/image/icon-danger.svg");
+    background-image: url("/../../static/image/icon-danger.svg");
+    background-repeat: no-repeat;
+    background-position: 10px;
+    text-indent: 20px;
 }
 .alert-success,
 .alert-info,
