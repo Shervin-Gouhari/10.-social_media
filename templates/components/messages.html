@@ -13,8 +13,8 @@
 </script>
 
 {% if messages %}
-    <ul>
         {% for message in messages %} 
+        
             {% if message.tags == "error" %}
                 <li class="alert alert-danger messages" role="alert">{{message}}</li>
             {% elif message.tags == "warning" %}
@@ -33,5 +33,4 @@
             {% endif %}
             
         {% endfor %}
-    </ul>
 {% endif %}
