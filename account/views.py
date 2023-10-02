@@ -42,7 +42,6 @@ def verification_code(request):
                 if new_user['id'] == None:
                     user = User.objects.create(**new_user)
                     del request.session['new_user']
-                    logout(request)
                     auth_login(request, user)
                     messages.success(request, 'Profile created successfully.')
                     send_mail(user)
