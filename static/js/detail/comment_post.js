@@ -8,7 +8,7 @@ commentPostButton.addEventListener("click", (e) => {
     e.preventDefault();
     if (requestUserId != "None") {
         fd = new FormData();
-        fd.append("csrfmiddlewaretoken", "{{csrf_token}}");
+        fd.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
         fd.append("text", commentTextForm.value);
         axios
             .post("", fd)

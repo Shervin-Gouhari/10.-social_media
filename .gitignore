@@ -7,4 +7,5 @@ media/
 config/local_settings.py
 account/kavenegar.py
 static/test.html
+static/test.css
 static/test.js

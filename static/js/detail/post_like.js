@@ -8,7 +8,7 @@ postLikeButton.addEventListener("click", (e) => {
     if (requestUserId != "None") {
         e.preventDefault();
         var fd = new FormData();
-        fd.append("csrfmiddlewaretoken", "{{csrf_token}}");
+        fd.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
         fd.append("post_id", postLikeButton.getAttribute("data-postId"));
         let action;
         if (postLikeButton.firstElementChild.classList.contains("fa-solid")) {

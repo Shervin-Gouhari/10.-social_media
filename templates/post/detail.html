@@ -17,13 +17,34 @@
         </a>
       </div>
       <div class="param">
-        <svg aria-label="Plus d’options" class="_8-yf5 " fill="#262626" height="16" role="img" viewBox="0 0 48 48"
-          width="16">
-          <circle clip-rule="evenodd" cx="8" cy="24" fill-rule="evenodd" r="4.5"></circle>
-          <circle clip-rule="evenodd" cx="24" cy="24" fill-rule="evenodd" r="4.5"></circle>
-          <circle clip-rule="evenodd" cx="40" cy="24" fill-rule="evenodd" r="4.5"></circle>
-        </svg>
+        <button id="param-button" style="background-color: inherit; border: 0; position: absolute; top: 10px; left: 740px;" class="btn">
+          <?xml version="1.0" encoding="utf-8"?>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="25" height="25">
+            <path d="M39 30c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6S42.309 30 39 30zM9 30c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6S12.309 30 9 30zM24 30c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6S27.309 30 24 30z" fill="#323232" />
+          </svg>
+        </button>
       </div>
+
+      {% if request.user.is_authenticated %}
+        <div id="param-container" class="param-container profile-box display-none">
+          {% if post.user == request.user %}
+            <a href="" class="param-item">
+              <i class="fas fa-edit" style="color: #333;"></i>
+              <span style="font-weight: bold;">Edit</span>
+            </a>
+            <a href="{% url 'post:delete' post.slug %}" id="post-delete-button" class="param-item">
+              <i class="fa-solid fa-trash" style="color: red;"></i>
+              <span style="color: red; font-weight: bold;">Delete</span>
+            </a>
+          {% else %}
+            <a href="{% url 'profile' request.user %}" class="param-item">
+              <i class="fa-solid fa-save" style="color: #333;"></i>
+              <span style="font-weight: bold;">Save</span>
+            </a>
+          {% endif %}
+        </div><hr>
+      {% endif %}
+
     </div>
     <div class="img-container">
       <div class="post__content">
@@ -113,8 +134,8 @@
   {% if comments_orderByLikesAscending|length > 1 %}
     <div class="d-flex mb-3">
       <div id="numberOfComments" class="mr-auto">Number of comments: <div class="d-inline-block">{{post.comments.all|length}}</div></div>
-      <div id="topComments" class="btn btn-dark rounded mr-1">Top</div>
-      <div id="newestComments" class="btn btn-dark rounded">Newest</div>
+      <div id="topComments" post-slug="{{post.slug}}" class="btn btn-dark rounded mr-1">Top</div>
+      <div id="newestComments" post-slug="{{post.slug}}" class="btn btn-dark rounded">Newest</div>
     </div>
   {% endif %}
   <div id="comment-container">
@@ -157,4 +178,7 @@
 <script src="{% static 'js/detail/comment_post.js' %}"></script>
 <script src="{% static 'js/detail/comment_like.js' %}"></script>
 <script src="{% static 'js/detail/comment_order.js' %}"></script>
+<script src="{% static 'js/detail/param_button.js' %}"></script>
+<script src="{% static 'js/detail/post_save.js' %}"></script>
+<script src="{% static 'js/detail/post_delete.js' %}"></script>
 {% endblock content %}

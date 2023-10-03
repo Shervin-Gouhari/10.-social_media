@@ -9,7 +9,7 @@ const commentLikeListener = function () {
                 let commentLikeNumber = document.getElementsByClassName("comment-likes")[i].firstElementChild;
                 let commentLikeOrLikes = commentLikeNumber.nextElementSibling;
                 var fd = new FormData();
-                fd.append("csrfmiddlewaretoken", "{{csrf_token}}");
+                fd.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
                 fd.append("comment_id", commentId);
                 fd.append("comment_action", commentAction);
                 axios

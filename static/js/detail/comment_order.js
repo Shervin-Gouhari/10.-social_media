@@ -1,12 +1,11 @@
 let topComments = document.getElementById("topComments");
 let newestComments = document.getElementById("newestComments");
-const orderBy = function (by) {
+const orderBy = function (by, postSlug) {
     axios
-        .get(`/post/detail/{{post.slug}}/API`, { params: { by: by } })
+        .get(`/post/detail/${postSlug}/API`, { params: { by: by } })
         .then((res) => {
             if (res.data.response != undefined) {
-                let comments = res.data.response;
-                commentContainer.innerHTML = comments;
+                commentContainer.innerHTML = res.data.response;
                 commentLikeListener();
             } else {
                 console.log("error");
@@ -18,8 +17,8 @@ const orderBy = function (by) {
 };
 
 topComments.addEventListener("click", (e) => {
-    orderBy("comments_orderByLikesAscending");
+    orderBy("comments_orderByLikesAscending", topComments.getAttribute("post-slug"));
 });
 newestComments.addEventListener("click", (e) => {
-    orderBy("comments_orderByCreationAscending");
+    orderBy("comments_orderByCreationAscending", newestComments.getAttribute("post-slug"));
 });

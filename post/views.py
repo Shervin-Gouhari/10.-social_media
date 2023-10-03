@@ -50,6 +50,15 @@ def post_create(request):
         return JsonResponse({"response": response})
 
 
+@login_required
+def post_delete(request, slug):
+    if request.method == "POST":
+        Post.objects.get(slug=slug).delete()
+        return redirect('profile', request.user)
+    post = Post.objects.get(slug=slug)
+    return JsonResponse({"response": render_to_string("loader/post_delete.html", {"post": post}, request=request)})
+    
+
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     comments_orderByCreationAscending = post.comments.order_by("-created", "-total_likes")
