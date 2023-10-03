@@ -28,7 +28,7 @@
       {% if request.user.is_authenticated %}
         <div id="param-container" class="param-container profile-box display-none">
           {% if post.user == request.user %}
-            <a href="" class="param-item">
+            <a href="{% url 'post:edit' post.slug %}" id="post-edit-button" class="param-item">
               <i class="fas fa-edit" style="color: #333;"></i>
               <span style="font-weight: bold;">Edit</span>
             </a>
@@ -181,4 +181,5 @@
 <script src="{% static 'js/detail/param_button.js' %}"></script>
 <script src="{% static 'js/detail/post_save.js' %}"></script>
 <script src="{% static 'js/detail/post_delete.js' %}"></script>
+<script src="{% static 'js/detail/post_edit.js' %}"></script>
 {% endblock content %}

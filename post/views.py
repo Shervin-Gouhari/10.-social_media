@@ -52,11 +52,26 @@ def post_create(request):
 
 @login_required
 def post_delete(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     if request.method == "POST":
-        Post.objects.get(slug=slug).delete()
+        post.delete()
         return redirect('profile', request.user)
-    post = Post.objects.get(slug=slug)
     return JsonResponse({"response": render_to_string("loader/post_delete.html", {"post": post}, request=request)})
+
+
+@login_required
+def post_edit(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.method == "POST":
+        form = PostCreateForm(data=request.POST, instance=post)
+        if form.is_valid():
+            if post.is_edited == False:
+                post.is_edited = True
+                post.save()
+            form.save()
+            return redirect('post:detail', slug)
+    form = PostCreateForm(initial=post.__dict__)
+    return JsonResponse({"response": render_to_string("loader/post_edit.html", {"post": post, "form": form}, request=request)})
     
 
 def post_detail(request, slug):
