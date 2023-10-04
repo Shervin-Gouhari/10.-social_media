@@ -81,6 +81,9 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
     
+    def get_all_post_saves(self, order_by="-saved_at"):
+        return [post.post_to for post in self.post_saves.all().order_by(order_by)]
+    
     
 class Contact(models.Model):
     user_from = models.ForeignKey(User, related_name="rel_from_set", on_delete=models.CASCADE)

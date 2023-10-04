@@ -108,15 +108,13 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 @login_required
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    
     arrangement = request.GET.get("arrangement", None)
     if arrangement == "SAVED":
-        posts = [post.post_to for post in user.post_saves.all().order_by("-saved_at")]
+        posts = user.get_all_post_saves()
     elif arrangement == "TAGGED":
         pass
     else:
-        posts = Post.objects.filter(user=user).order_by("-created")
-        
+        posts = user.posts.all().order_by("-created")
     paginator = Paginator(posts, 6)
     page = request.GET.get("page", None)
     if page:
@@ -126,9 +124,7 @@ def profile(request, username):
             return JsonResponse({"response": "failure"})
         return JsonResponse({"response": render_to_string("loader/profile.html", {"posts": posts}, request=request),
                              "next_response": posts.has_next()}) 
-    context = {"user": user,
-               "posts": paginator.page(1)}
-    return render(request, 'account/profile.html', context)
+    return render(request, 'account/profile.html', {"user": user, "posts": paginator.page(1)})
 
 
 @login_required_message
