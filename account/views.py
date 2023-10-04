@@ -105,7 +105,7 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 @require_GET 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    arrangement = request.GET.get("arrangement", "POSTS")
+    arrangement = request.GET.get("arrangement", None)
     if arrangement == "SAVED":
         posts = [post.post_to for post in user.post_saves.all().order_by("-saved_at")]
     elif arrangement == "TAGGED":
