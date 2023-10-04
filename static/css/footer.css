@@ -166,6 +166,6 @@ span.language {
     font-weight: bold;
 }
 
-.fa-heart:hover {
+.fa-heart:hover:not(.gallery-item-info ul > li > svg) {
     color: red;
 }

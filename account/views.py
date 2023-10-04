@@ -19,6 +19,7 @@ from action.utils import action_create
 
 from .forms import *
 from .utils import send_sms, send_mail
+from .decorators import login_required_message
 
 
 def registration(request):
@@ -102,7 +103,9 @@ class PasswordResetConfirm(PasswordResetConfirmView):
         return response
      
    
-@require_GET 
+@require_GET
+@login_required_message
+@login_required
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     
@@ -128,6 +131,7 @@ def profile(request, username):
     return render(request, 'account/profile.html', context)
 
 
+@login_required_message
 @login_required
 def edit_profile(request, username):
     form = UserChangeForm(instance=request.user)
@@ -155,6 +159,7 @@ def edit_profile(request, username):
     return render(request, 'account/edit_profile.html', {'form': form})
 
 
+@login_required_message
 @login_required
 @require_POST
 def follow(request):

@@ -8,11 +8,13 @@ from django.template.loader import render_to_string
 from rest_framework.views import APIView
 
 from action.utils import action_create
+from account.decorators import login_required_message
 from .forms import PostCreateForm, MediaCreateForm, CommentCreateForm
 from .models import Post, Comment
 from .serializers import CommentSerializer
 
 
+@login_required_message
 @login_required
 def post_create(request):
     if request.method == "POST":
@@ -50,6 +52,7 @@ def post_create(request):
         return JsonResponse({"response": response})
 
 
+@login_required_message
 @login_required
 def post_delete(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -59,6 +62,7 @@ def post_delete(request, slug):
     return JsonResponse({"response": render_to_string("loader/post_delete.html", {"post": post}, request=request)})
 
 
+@login_required_message
 @login_required
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -118,6 +122,7 @@ class PostDetailAPI(APIView):
         return JsonResponse({'status': 'success', 'response': response})
 
 
+@login_required_message
 @login_required
 @require_POST
 def post_like(request):
@@ -136,7 +141,8 @@ def post_like(request):
         except:
             return JsonResponse({'status': 'failure'}) 
         
-        
+     
+@login_required_message   
 @login_required
 @require_POST
 def post_save(request):
@@ -154,6 +160,7 @@ def post_save(request):
             return JsonResponse({'status': 'failure'}) 
 
 
+@login_required_message
 @login_required
 @require_POST
 def comment_like(request):

@@ -8,9 +8,11 @@ from django.views.decorators.http import require_GET
 from user.models import User
 from post.models import Post
 from action.models import Action
+from account.decorators import login_required_message
 
 
-@login_required(login_url='login')
+@login_required_message
+@login_required
 @require_GET
 def home(request):
     user_posts = Post.objects.filter(user=request.user)

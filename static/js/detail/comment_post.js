@@ -1,7 +1,6 @@
 let commentPostButton = document.getElementById("comment-post-button");
 let commentTextForm = document.getElementById("comment-text-form");
 let commentContainer = document.getElementById("comment-container");
-let comments = document.getElementsByClassName("comments");
 let numberOfComments = document.querySelector("#numberOfComments > div");
 
 commentPostButton.addEventListener("click", (e) => {
@@ -21,13 +20,6 @@ commentPostButton.addEventListener("click", (e) => {
                         numberOfComments.innerText = parseInt(numberOfComments.innerText) + 1;
                     }
                     commentLikeListener();
-                    window.setInterval(() => {
-                        for (let item of comments) {
-                            if (item.classList.contains("animate__fadeInDown")) {
-                                item.classList.remove("animate__fadeInDown");
-                            }
-                        }
-                    }, 1000);
                 } else {
                     console.log("error");
                 }

@@ -39,13 +39,13 @@
                         <img class="profile-box" src="{{request.user.avatar.url}}" alt="" />
                     </div>
                 {% else %}
-                    <a href="{% url 'login' %}"><i class="far fa-heart"></i></a>
-                    <a href="{% url 'login' %}"><div class="profile profile-box" is-authenticated="{{request.user.is_authenticated}}"><img class="profile-box" src="{% static 'image/no_user_avatar.png' %}" /></div>
+                    <a href="{% url 'page:home' %}"><i class="far fa-heart"></i></a>
+                    <a href="{% url 'page:home' %}"><div class="profile profile-box" is-authenticated="{{request.user.is_authenticated}}"><img class="profile-box" src="{% static 'image/no_user_avatar.png' %}" /></div>
                 {% endif %}
             </div>
         </div>
     </div>
-    <div class="actions-container animate__animated">
+    <div class="actions-container">
         {% for action in actions %}
             <div class="action">
                 <div class="action-user-image">
