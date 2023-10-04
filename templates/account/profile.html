@@ -51,7 +51,7 @@
     </ul>
     <div class="desktop-only">
         <div class="tabs">
-            <div class="tab-item active" style="margin-right: 60px">
+            <div id="POSTS-button" request-user="{{request.user}}" class="tab-item active" style="margin-right: 60px">
                 <svg
                     aria-label="Posts"
                     class="_8-yf5"
@@ -69,7 +69,7 @@
                 <span>POSTS</span>
             </div>
             {% if user == request.user %}
-                <div class="tab-item" style="margin-right: 60px">
+                <div id="SAVED-button" request-user="{{request.user}}" class="tab-item" style="margin-right: 60px">
                     <svg
                         aria-label="Posts"
                         class="_8-yf5"
@@ -85,7 +85,7 @@
                     <span>SAVED</span>
                 </div>
             {% endif %}
-            <div class="tab-item">
+            <div id="TAGGED-button" request-user="{{request.user}}" class="tab-item">
                 <svg
                     aria-label="Tagged"
                     class="_8-yf5"
@@ -102,7 +102,7 @@
             </div>
         </div>
     </div>
-    {% if not posts_orderByCreationAscending and user == request.user %}
+    {% if not posts and user == request.user %}
         <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
             <?xml version="1.0" encoding="utf-8"?>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="100" height="100">
@@ -116,7 +116,7 @@
         </div>
     {% endif %}
     <div class="gallery" id="gallery">
-        {% for post in posts_orderByCreationAscending %}
+        {% for post in posts %}
             <a class="gallery-item" tabindex="0" href="{{ post.get_absolute_url }}">
                 {% if post.media.first|extension == 'image' %}
                     <img src="{{post.media.first.media.url}}" alt="gallery-post">
@@ -173,7 +173,7 @@
             </a>
         {% endfor %}
     </div>
-    {% if user.posts.all|length > 6 %}
+    {% if posts.has_next %}
         <div style="display: flex; justify-content: center; margin: 20px;"><button id="load-more-button" class="btn btn-dark">load more</button></div>
     {% endif %}
 </main>
@@ -182,5 +182,6 @@
 <script src="{% static 'js/profile/post_loader.js' %}"></script>
 <script src="{% static 'js/profile/follow_unfollow.js' %}"></script>
 <script src="{% static 'js/profile/followers_following.js' %}"></script>
+<script src="{% static 'js/profile/SAVED.js' %}"></script>
 {% endblock content %}
 

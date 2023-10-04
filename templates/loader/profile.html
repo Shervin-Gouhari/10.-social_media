@@ -1,6 +1,6 @@
 {% load post_tags %}
 
-{% for post in posts_orderByCreationAscending %}
+{% for post in posts %}
     <a class="gallery-item animate__animated animate__fadeInUp" tabindex="0" href="{{ post.get_absolute_url }}">
         {% if post.media.first|extension == 'image' %}
             <img src="{{post.media.first.media.url}}" alt="gallery-post">
