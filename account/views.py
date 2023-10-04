@@ -105,6 +105,7 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 @require_GET 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
+    
     arrangement = request.GET.get("arrangement", None)
     if arrangement == "SAVED":
         posts = [post.post_to for post in user.post_saves.all().order_by("-saved_at")]
@@ -112,22 +113,18 @@ def profile(request, username):
         pass
     else:
         posts = Post.objects.filter(user=user).order_by("-created")
+        
     paginator = Paginator(posts, 6)
     page = request.GET.get("page", None)
     if page:
         try:
-            posts_orderByCreationAscending = paginator.page(page)
+            posts = paginator.page(page)
         except(EmptyPage, PageNotAnInteger):
             return JsonResponse({"response": "failure"})
-        try:
-            next_response = paginator.page(int(page) + 1)
-            next_response = "success"
-        except(EmptyPage, PageNotAnInteger):
-            next_response = "failure"
-        return JsonResponse({"response": render_to_string("loader/profile.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request),
-                             "next_response": next_response}) 
+        return JsonResponse({"response": render_to_string("loader/profile.html", {"posts": posts}, request=request),
+                             "next_response": posts.has_next()}) 
     context = {"user": user,
-               "posts_orderByCreationAscending": paginator.page(1)}
+               "posts": paginator.page(1)}
     return render(request, 'account/profile.html', context)
 
 
