@@ -135,6 +135,23 @@ def post_like(request):
             return JsonResponse({'status': 'success'})
         except:
             return JsonResponse({'status': 'failure'}) 
+        
+        
+@login_required
+@require_POST
+def post_save(request):
+    post_id = request.POST.get('post_id', None)
+    post_action = request.POST.get('post_action', None)
+    if post_id and post_action:
+        try:
+            post = Post.objects.get(id=post_id)
+            if post_action == 'save':
+                post.saves.add(request.user)
+            else:
+                post.saves.remove(request.user)
+            return JsonResponse({'status': 'success'})
+        except:
+            return JsonResponse({'status': 'failure'}) 
 
 
 @login_required
