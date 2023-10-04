@@ -763,3 +763,6 @@ header {
 .swal2-confirm[type="submit"] {
     background-color: #343a40;
 }
+.tab-item:hover {
+    cursor: pointer;
+}

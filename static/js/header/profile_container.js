@@ -2,7 +2,9 @@ let profileModalContainer = document.getElementsByClassName("profile-modal-conta
 let profile = document.getElementsByClassName("profile")[0];
 
 profile.addEventListener("click", () => {
-    profileModalContainer.classList.toggle("display-none");
+    if (profile.getAttribute("is-authenticated") == "True") {
+        profileModalContainer.classList.toggle("display-none");
+    }
 });
 document.addEventListener("click", (e) => {
     if (!e.target.classList.contains("profile-box")) {

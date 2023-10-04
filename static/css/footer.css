@@ -165,3 +165,7 @@ span.language {
 .alert-danger {
     font-weight: bold;
 }
+
+.fa-heart:hover {
+    color: red;
+}

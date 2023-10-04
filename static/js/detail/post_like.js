@@ -6,7 +6,6 @@ let postLikeOrLikes = document.getElementById("like-or-likes");
 
 postLikeButton.addEventListener("click", (e) => {
     if (requestUserId != "None") {
-        e.preventDefault();
         var fd = new FormData();
         fd.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
         fd.append("post_id", postLikeButton.getAttribute("data-postId"));

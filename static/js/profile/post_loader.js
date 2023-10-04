@@ -21,7 +21,7 @@ loadMoreButton.addEventListener("click", (e) => {
                     }
                 }, 1000);
             }
-            if (res.data.next_response === "failure") {
+            if (res.data.next_response === false) {
                 loadMoreButton.remove();
             }
         })

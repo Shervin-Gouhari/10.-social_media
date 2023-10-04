@@ -24,9 +24,9 @@
         </div>
         <div class="comment-like" data-commentId="{{cm.id}}" data-commentAction="{% if request.user.id in cm.likes %}dis{% endif %}like">
             {% if request.user.id in cm.likes %}
-                <i class="fas fa-heart heart-active"></i>
+                <i style="font-size: 20px;" class="fas fa-heart heart-active"></i>
             {% else %}
-                <i class="far fa-heart"></i>
+                <i style="font-size: 20px;" class="far fa-heart"></i>
             {% endif %}
         </div>
     </div><hr />

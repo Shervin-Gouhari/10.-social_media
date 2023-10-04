@@ -165,6 +165,9 @@ a {
     grid-template-columns: auto auto;
     align-items: center;
 }
+.user:hover {
+    color: gray;
+}
 .user > a > img {
     height: 3em;
     width: 3em;
