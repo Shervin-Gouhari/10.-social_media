@@ -72,19 +72,12 @@
       {% endif %}
     </div>
     <div class="toolbar">
-      <a href="#" class="like" data-postId="{{post.id}}">
+      <a class="like" data-postId="{{post.id}}">
         {% if request.user in post.likes.all %}
           <i class="fa-solid fa-heart"></i>
         {% else %}
           <i class="fa-regular fa-heart"></i>
         {% endif %}
-      </a>
-      <a class="comment">
-        <svg fill="#262626" height="24" role="img" viewBox="0 0 48 48" width="24">
-          <path clip-rule="evenodd"
-            d="M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z"
-            fill-rule="evenodd"></path>
-        </svg>
       </a>
       <a class="transfer">
         <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24">
@@ -93,12 +86,12 @@
           </path>
         </svg>
       </a>
-      <a class="signet">
-        <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24">
-          <path
-            d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z">
-          </path>
-        </svg>
+      <a class="signet" data-postId="{{post.id}}">
+        {% if request.user in post.saves.all %}
+          <i class="fa-solid fa-bookmark" style="color: #262626; fill: #262626;"></i>
+        {% else %}
+          <i class="fa-regular fa-bookmark" style="color: #262626; fill: #262626;"></i>
+        {% endif %}
       </a>
       <div class="post__indicators">
         {% if post.media.count > 1 %}
@@ -128,7 +121,7 @@
   <div class="comment-form">
     <form action="" method="POST">
         {% csrf_token %} {{form|crispy}}
-        <button class="btn btn-dark" id="comment-post-button" type="submit">post</button>
+        <button class="btn btn-dark" id="comment-post-button" type="submit">Comment</button>
     </form>
   </div>
   {% if comments_orderByLikesAscending|length > 1 %}
@@ -163,9 +156,9 @@
         </div>
         <div class="comment-like" data-commentId="{{cm.id}}" data-commentAction="{% if request.user in cm.likes.all %}dis{% endif %}like">
           {% if request.user in cm.likes.all %}
-            <i class="fas fa-heart heart-active"></i>
+            <i style="font-size: 20px;" class="fas fa-heart heart-active"></i>
           {% else %}
-            <i class="far fa-heart"></i>
+            <i style="font-size: 20px;" class="far fa-heart"></i>
           {% endif %}
         </div>
       </div><hr>
