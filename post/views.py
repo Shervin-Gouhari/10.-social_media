@@ -9,9 +9,10 @@ from rest_framework.views import APIView
 
 from action.utils import action_create
 from account.decorators import login_required_message
-from .forms import PostCreateForm, MediaCreateForm, CommentCreateForm
-from .models import Post, Comment
-from .serializers import CommentSerializer
+from comment.forms import CommentCreateForm
+from comment.serializers import CommentSerializer
+from .forms import PostCreateForm, MediaCreateForm
+from .models import Post
 
 
 @login_required_message
@@ -159,20 +160,3 @@ def post_save(request):
         except:
             return JsonResponse({'status': 'failure'}) 
 
-
-@login_required_message
-@login_required
-@require_POST
-def comment_like(request):
-    comment_id = request.POST.get('comment_id', None)
-    comment_action = request.POST.get('comment_action', None)
-    if comment_id and comment_action:
-        try:
-            comment = Comment.objects.get(id=comment_id)
-            if comment_action == 'like':
-                comment.likes.add(request.user)
-            else:
-                comment.likes.remove(request.user)
-            return JsonResponse({'status': 'success'})
-        except:
-            return JsonResponse({'status': 'failure'})    

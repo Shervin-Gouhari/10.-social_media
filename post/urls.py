@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'post'
@@ -11,5 +11,6 @@ urlpatterns = [
     path('detail/<slug:slug>/API', views.PostDetailAPI.as_view(), name='detail_API'),
     path('post-like/', views.post_like, name='post_like'),
     path('post-save/', views.post_save, name='post_save'),
-    path('comment-like/', views.comment_like, name='comment_like'),
+    path('', include('comment.urls')),
 ]
+
