@@ -24,10 +24,10 @@ def home(request):
     page = request.GET.get("page", None)
     if page:
         try:
-            posts_orderByCreationAscending = paginator.page(page)
+            posts = paginator.page(page)
         except (EmptyPage, PageNotAnInteger):
             return JsonResponse({"response": "failure"})
-        return JsonResponse({"response": render_to_string("loader/home.html", {"posts_orderByCreationAscending": posts_orderByCreationAscending}, request=request)})
+        return JsonResponse({"response": render_to_string("loader/home.html", {"posts": posts}, request=request)})
     
     actions = Action.objects.exclude(user=request.user)
     friends_ids = request.user.following.values_list("id", flat=True)
@@ -41,7 +41,7 @@ def home(request):
                 suggestion = User.objects.filter(id=suggestion.id)
                 suggestion_list |= suggestion
     
-    context = {"posts_orderByCreationAscending": paginator.page(1),
+    context = {"posts": paginator.page(1),
                "actions": actions,
                "suggestion_list": suggestion_list[:5]}
     return render(request, "page/home.html", context)
