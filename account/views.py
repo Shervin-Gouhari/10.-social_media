@@ -26,7 +26,7 @@ def registration(request):
     form = UserCreationForm()
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid() and form.clean_password2():
+        if form.is_valid():
             new_user = form.save(commit=False)
             request.session['new_user'] = model_to_dict(new_user, exclude=['avatar', 'following'])
             return redirect('verification_code')
@@ -135,12 +135,8 @@ def edit_profile(request, username):
         phone_number = request.user.phone_number
         form = UserChangeForm(instance=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
-            password = form.cleaned_data['password2']
-            update_fields = ['avatar', 'username', 'email','first_name', 'last_name', 'date_of_birth', 'biography', 'password']
-            if password != '': form.clean_password2()
-            user = form.save(commit=False)
-            user.save(update_fields=update_fields)
-            if password != '': login(request, user)
+            user = form.save(commit=False, request=request)
+            user.save(update_fields=User.objects.editable_fields.remove('phone_number'))
             if phone_number != form.cleaned_data['phone_number']:
                 new_user = {
                     'id': user.id,
@@ -179,10 +175,8 @@ def follow(request):
 @require_GET
 def search(request):
     query = request.GET.get('query', None)
-    if query:
-        search_result = User.objects.filter(username__icontains=query)
-        return JsonResponse({"response": render_to_string("loader/search.html", {"search_result": search_result}, request=request)})
-    return JsonResponse({"response": "failure"})
+    search_result = User.objects.filter(username__icontains=query)
+    return JsonResponse({"response": render_to_string("loader/search.html", {"search_result": search_result}, request=request)})
 
 
 @require_GET

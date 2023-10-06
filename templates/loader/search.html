@@ -1,6 +1,6 @@
 <div>
-    <ul>
-        {% if search_result.count >= 1 %}
+    {% if search_result.count >= 1 %}
+        <ul>
             {% for user in search_result %}
                 <li style="list-style-type: none">
                     <div style="display: grid; grid-template-columns: 30% 60%;">
@@ -21,8 +21,8 @@
                     </div>
                 </li><hr style="color: #333; background-color: #333; background: #333;">
             {% endfor %}
-        {% else %}
-            <div>No users and tags found.</div>
-        {% endif %}
-    </ul>
+        </ul>
+    {% else %}
+        <div>No users and tags found.</div>
+    {% endif %}
 </div>

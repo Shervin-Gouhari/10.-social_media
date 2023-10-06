@@ -3,6 +3,7 @@ from datetime import datetime
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import login
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit
@@ -44,11 +45,12 @@ class UserCreationForm(forms.ModelForm):
                 return self.add_error('password1', error)
         return password2
 
-    def save(self, commit=True):
+    def save(self, commit=True, request=None):
         password = self.cleaned_data['password2']
         user = super().save(commit=False)
-        if password != '':
+        if password != '' and request:
             user.set_password(password)
+            login(request, user)
         if commit:
             user.save()
         return user

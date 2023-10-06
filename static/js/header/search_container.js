@@ -6,17 +6,13 @@ let searchContainer = document.querySelector("div.search-container");
         searchContainer.innerText = "Searching...";
         let searchQuery = e.target.value;
         axios
-            .get("/account/search/", {
+            .get(searchBar.getAttribute("url"), {
                 params: {
                     query: searchQuery,
                 },
             })
             .then((res) => {
-                if (res.data.response !== "failure") {
-                    searchContainer.innerHTML = res.data.response;
-                } else {
-                    searchContainer.classList.add("display-none");
-                }
+                searchContainer.innerHTML = res.data.response;
             })
             .catch((err) => {
                 console.log(err);

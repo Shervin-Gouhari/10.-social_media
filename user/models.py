@@ -38,6 +38,13 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+    
+    
+    @property
+    def editable_fields(self):
+        return ['avatar', 'phone_number', 'username', 'email',
+                'first_name', 'last_name', 'gender', 'date_of_birth',
+                'country', 'city', 'biography', 'password']
 
 
 class User(AbstractBaseUser):
