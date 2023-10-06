@@ -14,7 +14,6 @@ from django.http import JsonResponse
 
 from user.models import User, Contact
 from user.forms import *
-from post.models import Post
 from action.utils import action_create
 
 from .forms import *
